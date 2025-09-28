@@ -1,0 +1,164 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    background: #fff;
+}
+/*------------------------------------*/
+/*--|estilo_base_menu_de_navegacion|--*/
+/*------------------------------------*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 40px;
+    background: #fff;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    background: #222;
+    color: white;
+    padding: 8px 12px;
+    margin-left: -30px;
+    border-radius: 4px;
+}
+.logo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    border-radius: 50%;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+.nav-links li a {
+    text-decoration: none;
+    color: white;
+    background: #222;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.nav-links li a:hover {
+    background: #444;
+}
+.icons {
+    display: flex;
+    gap: 30px;   
+}
+.icons a {
+    color: black;
+    font-size: 20px;
+    transition: 0.3s;
+}
+.icons a:hover {
+    color: #8a2be2;
+}
+/*------------------------------*/
+/*--|estilo_base_presentacion|--*/
+/*------------------------------*/
+.hero {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    height: 100vh;            
+    text-align: center;
+    background: #fff;
+    margin-top: -185px;
+}
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+.perfil {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #000;
+    line-height: 1;
+    margin-top: -50px;
+}
+.btn {
+    display: inline-block;
+    padding: 20px 50px;
+    font-size: 1.3rem;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: -25px;
+    transition: 0.3s;
+}
+.btn:hover {
+    background: #8a2be2;
+}
+/*-------------------------------------------*/
+/*--|estilo_base_demostracion_de_proyectos|--*/
+/*-------------------------------------------*/
+.carousel-container {
+    text-align: center;
+    margin-top: -160px;
+}
+.carousel {
+    display: flex;
+    gap: 15px;
+    overflow: hidden;
+    width: 900px;
+    margin: auto;
+}
+.card {
+    min-width: 160px;
+    height: 100px;
+    background: #222;
+    border-radius: 6px;
+}
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+}
+button {
+    background: #222;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+button:hover {
+    background: #444;
+}
+.dots {
+    display: flex;
+    gap: 8px;
+}
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #2e6cf6;
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.dot.active {
+    opacity: 1;
+}
