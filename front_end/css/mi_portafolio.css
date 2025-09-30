@@ -36,6 +36,7 @@ body {
     list-style: none;
     display: flex;
     gap: 15px;
+    margin-top: 2px;
 }
 .nav-links1 li a {
     text-decoration: none;
@@ -61,6 +62,12 @@ body {
 }
 .icons1 a:hover {
     color: #8a2be2;
+}
+.hamburguesa {
+    display: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #000;
 }
 /*------------------------------*/
 /*--|estilo_base_presentacion|--*/
@@ -285,7 +292,7 @@ button:hover {
 .proyectos {
     text-align: center;
     padding: 40px 20px;
-    margin-top: -762px;
+    margin-top: -757px;
     margin-left: 655px;
 }
 .proyectos h1 {
@@ -306,7 +313,7 @@ button:hover {
 }
 .linea-central {
     width: 3px;
-    height: 630px;
+    height: 493px;
     background: #000;
     position: relative;
 }
@@ -350,7 +357,7 @@ button:hover {
 .footer {
     background: #c7c7c7;
     padding: 20px;
-    margin-top: -30px;
+    margin-top: 90px;
     text-align: center;
     font-family: Arial, sans-serif;
     position: relative;

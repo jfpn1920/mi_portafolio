@@ -1,3 +1,13 @@
+//--------------------------------------//
+//--|funcionalidad_menu_de_navegacion|--//
+//--------------------------------------//
+const hamburguesa = document.getElementById("hamburguesa");
+const navLinks = document.getElementById("nav-links1");
+const icons = document.getElementById("icons1");
+hamburguesa.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+    icons.classList.toggle("active");
+});
 //---------------------------------------------//
 //--|funcionalidad_demostracion_de_proyectos|--//
 //---------------------------------------------//
