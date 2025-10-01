@@ -72,48 +72,51 @@ body {
 /*------------------------------*/
 /*--|estilo_base_presentacion|--*/
 /*------------------------------*/
-.hero2 {
+.perfil2 {
     display: flex;
-    justify-content: center;  
-    align-items: center;      
-    height: 100vh;            
-    text-align: center;
-    background: #fff;
-    margin-top: -185px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-top: -150px;
+    padding: 80px 20px;
 }
-.hero-content2 {
+.perfil-contenedor2 {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    text-align: center;
+    max-width: 600px;
 }
-.perfil2 {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
+.perfil-img2 {
+    width: 280px;
+    height: 280px;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
-.hero2 .titulo_presentador2 {
-    font-size: 3.5rem;
+.perfil-nombre2 {
+    font-size: 42px;
     font-weight: 900;
-    color: #000;
-    line-height: 1;
+    line-height: 1.2;
     margin-top: -50px;
+    text-transform: uppercase;
+    color: #222;
+    letter-spacing: 2px;
 }
-.btn2 {
+.btn-cv2 {
     display: inline-block;
-    padding: 20px 50px;
-    font-size: 1.3rem;
-    background: #000;
+    padding: 14px 36px;
+    background: #111;
     color: #fff;
+    margin-top: -20px;
+    font-weight: 700;
     text-decoration: none;
     border-radius: 10px;
-    font-weight: bold;
-    margin-top: -25px;
-    transition: 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
 }
-.btn2:hover {
-    background: #8a2be2;
+.btn-cv2:hover {
+    background: #444;
 }
 /*-------------------------------------------*/
 /*--|estilo_base_demostracion_de_proyectos|--*/
