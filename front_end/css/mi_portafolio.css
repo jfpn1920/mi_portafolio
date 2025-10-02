@@ -123,7 +123,7 @@ body {
 /*-------------------------------------------*/
 .carousel-container3 {
     text-align: center;
-    margin-top: -160px;
+    margin-top: -60px;
 }
 .carousel3 {
     display: flex;
@@ -133,8 +133,10 @@ body {
     margin: auto;
 }
 .card3 {
-    min-width: 160px;
+    width: 94px;
     height: 100px;
+    margin-left: 3px;
+    flex-shrink: 0;
     background: #222;
     border-radius: 6px;
 }
@@ -173,20 +175,20 @@ button:hover {
     opacity: 1;
 }
 .bloqueo1{
-    width: 270px;
+    width: 263px;
     height: 100px;
     margin-top: -142px;
     margin-left: 0px;
     position: relative;
-    background-color: #ffffff;
+    background-color: #583232;
 }
 .bloqueo2{
     width: 295px;
     height: 100px;
     margin-top: -100px;
-    margin-left: 1130px;
+    margin-left: 1123px;
     position: relative;
-    background-color: #ffffff;
+    background-color: #5a6f81;
 }
 /*--------------------------*/
 /*--|estilo_base_sobre_mi|--*/
