@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>panel de control</title>
+    <link rel="stylesheet" href="../css/carrusel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="../js/carrusel.js" defer></script>
+</head>
+<body>
+    <!----------------------------------->
+    <!--|estructura_menu_de_navegacion|-->
+    <!----------------------------------->
+    <header class="panel-header">
+        <h1>Panel de control</h1>
+        <div class="panel-icons">
+            <i class="fa-duotone fa-solid fa-download"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2>Herramientas</h2>
+        </div>
+    </aside>
+    <div class="contenedor_gris"></div>
+    <div class="contenedor_de_opciones">
+        <ul class="menu" id="menu">
+            <li><a href="../html/panel_de_control.html" class="enlace_opciones"><i class="fas fa-tachometer-alt"></i> Panel de control</a></li>
+            <li><a href="../html/paginas.html" class="enlace_opciones"><i class="fas fa-file-code"></i> Páginas</a></li>
+            <li><a href="../html/carrusel.html" class="enlace_opciones"><i class="fas fa-images"></i> Carrusel</a></li>
+            <li><a href="../html/contenido.html" class="enlace_opciones"><i class="fas fa-pencil-alt"></i> Contenido</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-shoe-prints"></i> Pie de página</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-robot"></i> Chatbot</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-envelope"></i> Comunicaciones</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-desktop"></i> Plataforma</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-handshake"></i> Aliados</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-box-open"></i> Pedidos</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-plug"></i> Instaladores</a></li>
+        </ul>
+    </div>
+    <!------------------------------->
+    <!--|estructura_agregar_imagen|-->
+    <!------------------------------->
+    <div class="imagen-container">
+        <div class="imagen-header">
+            <h3 class="imagen-title">Agregar imagen</h3>
+            <button class="imagen-btn">Agregar img</button>
+        </div>
+        <div class="imagen-body">
+            <div class="imagen-box">
+                <i class="fa-regular fa-image"></i>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------>
+    <!--|estructura_seleccionar_controladores|-->
+    <!------------------------------------------>
+    <div class="controladores-container">
+        <div class="controladores-header">
+            <h2 class="controladores-title">Seleccionar controladores</h2>
+            <button class="controladores-btn">añadir control</button>
+        </div>
+        <div class="controladores-body">
+            <label class="controladores-subtitulo"><b>Seleccionar el tiempo</b></label>
+            <div class="controladores-select">
+                <select>
+                    <option selected>Ningun tiempo</option>
+                    <option>5 segundos</option>
+                    <option>10 segundos</option>
+                    <option>15 segundos</option>
+                </select>
+            </div>
+            <div class="controladores-opciones">
+                <label><input type="checkbox"> <b>Automático</b></label>
+                <label><input type="checkbox"> <b>Indicadores</b></label>
+                <label><input type="checkbox"> <b>Controladores</b></label>
+                <label><input type="checkbox"> <b>Animación</b></label>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------>
+    <!--|estructura_tablero_de_imagenes|-->
+    <!------------------------------------>
+    <div class="contenedor-principal">
+        <div class="fila-superior">
+            <div class="titulo">Tablero de imágenes</div>
+            <div class="boton-contenedor">
+                <button class="boton">Agregar todo</button>
+            </div>
+        </div>
+        <div class="encabezado">
+            <div class="columna imagenes">Imágenes</div>
+            <div class="columna acciones">Acciones</div>
+        </div>
+        <div class="zona-tablero"></div>
+    </div>
+    <!------------------------------------------>
+    <!--|estructura_vista_previa_del_carrusel|-->
+    <!------------------------------------------>
+    <div class="contenedor-carrusel">
+        <div class="encabezado-carrusel">
+            <span class="titulo-carrusel">Vista previa del carrusel</span>
+            <button class="btn-enviar">enviar carrusel</button>
+        </div>
+        <div class="zona-carrusel">
+            <button class="btn-lateral izquierda"></button>
+            <div class="carrusel-blanco">
+                <button class="btn-centro"></button>
+            </div>
+            <button class="btn-lateral derecha"></button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>panel de control</title>
+    <link rel="stylesheet" href="../css/paginas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="../js/paginas.js" defer></script>
+</head>
+<body>
+    <!----------------------------------->
+    <!--|estructura_menu_de_navegacion|-->
+    <!----------------------------------->
+    <header class="panel-header">
+        <h1>Panel de control</h1>
+        <div class="panel-icons">
+            <i class="fa-duotone fa-solid fa-download"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2>Herramientas</h2>
+        </div>
+    </aside>
+    <div class="contenedor_gris"></div>
+    <div class="contenedor_de_opciones">
+        <ul class="menu" id="menu">
+            <li><a href="../html/panel_de_control.html" class="enlace_opciones"><i class="fas fa-tachometer-alt"></i> Panel de control</a></li>
+            <li><a href="../html/paginas.html" class="enlace_opciones"><i class="fas fa-file-code"></i> Páginas</a></li>
+            <li><a href="../html/carrusel.html" class="enlace_opciones"><i class="fas fa-images"></i> Carrusel</a></li>
+            <li><a href="../html/contenido.html" class="enlace_opciones"><i class="fas fa-pencil-alt"></i> Contenido</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-shoe-prints"></i> Pie de página</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-robot"></i> Chatbot</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-envelope"></i> Comunicaciones</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-desktop"></i> Plataforma</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-handshake"></i> Aliados</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-box-open"></i> Pedidos</a></li>
+            <li><a href="" class="enlace_opciones"><i class="fas fa-plug"></i> Instaladores</a></li>
+        </ul>
+    </div>
+    <!-------------------------------->
+    <!--|estructura_agregar_paginas|-->
+    <!-------------------------------->
+    <div class="contenedor-agregar-paginas">
+        <div class="cabecera">
+            <div class="titulo">agregar paginas</div>
+            <button class="crear">Crear</button>
+        </div>
+        <div class="contenido">
+            <div class="icono">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="campo">
+                <input type="text" placeholder="Escribe la pagina deseada">
+            </div>
+        </div>
+    </div>
+    <!----------------------------------------->
+    <!--|estructura_crear_menu_de_navegacion|-->
+    <!----------------------------------------->
+    <div class="contenedor-menu-navegacion1">
+        <div class="cabecera1">
+            <div class="titulo1">Crear menu de navegacion</div>
+            <button class="crear1">Crear menu</button>
+        </div>
+        <div class="contenido1">
+            <div class="campo-titulo1">
+                <div class="logo-perfil1"></div>
+                <input type="text" placeholder="Escribir el menu de navegacion">
+            </div>
+            <div class="bloques1">
+                <div class="bloque1">
+                    <div class="subtitulo1">Logo</div>
+                    <div class="caja1">
+                        <span class="mas1">+</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bloques2">
+                <div class="bloque2">
+                    <div class="subtitulo2">Seleccionar iconos</div>
+                    <div class="cajas-iconos2">
+                        <div class="caja2"><span class="mas2">+</span></div>
+                        <div class="caja2"><span class="mas2">+</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bloque paginas1">
+                <div class="subtitulo-azul1">Seleccionar paginas</div>
+                <div class="lista-paginas1"></div>
+            </div>
+        </div>
+    </div>
+    <!------------------------>
+    <!--|estructura_submenu|-->
+    <!------------------------>
+    <div class="submenu-container">
+        <div class="submenu-header">
+            <div class="submenu-title">Páginas submenu</div>
+            <button class="submenu-create-btn">Crear submenu</button>
+        </div>
+        <div class="submenu-body">
+            <div class="submenu-select">
+                <div class="submenu-icon">
+                    <i class="fa-solid fa-link"></i>
+                </div>
+                <div class="submenu-dropdown">
+                    <select id="selectSubmenu">
+                        <option selected>Seleccionar submenu</option>
+                        <option>Submenu 1</option>
+                        <option>Submenu 2</option>
+                        <option>Submenu 3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="submenu-list-header">
+                Seleccionar páginas
+            </div>
+            <div class="submenu-list"></div>
+        </div>
+    </div>
+    <!------------------------------------------->
+    <!--|estructura_tablero_de_paginas_creados|-->
+    <!------------------------------------------->
+    <div class="contenedor-tablero">
+        <div class="encabezado-tablero">
+            <div class="titulo-tablero">Tablero de páginas creados</div>
+            <button class="btn-agregar">Agregar todo</button>
+        </div>
+        <table class="tabla-paginas">
+            <thead>
+                <tr>
+                    <th>Páginas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se agregarán dinámicamente las páginas -->
+            </tbody>
+        </table>
+    </div>
+    <!-------------------------------------------------->
+    <!--|estructura_despliegue_del_menu_de_navegacion|-->
+    <!-------------------------------------------------->
+    <div class="contenedor">
+        <div class="barra-superior">
+            <button class="btn">Despliegue del menú de navegación</button>
+            <input type="text" class="campo-texto">
+            <button class="btn">Despliegue</button>
+        </div>
+        <table class="tabla-menu">
+            <thead>
+                <tr>
+                    <th>Logo</th>
+                    <th>Opciones</th>
+                    <th>Submenu</th>
+                    <th>Iconos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
