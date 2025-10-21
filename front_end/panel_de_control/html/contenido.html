@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>panel de control</title>
-    <link rel="stylesheet" href="../css/carrusel.css">
+    <link rel="stylesheet" href="../css/contenido.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <script src="../js/carrusel.js" defer></script>
+    <script src="../js/contenido.js" defer></script>
 </head>
 <body>
     <!----------------------------------->
@@ -35,7 +35,7 @@
             <li><a href="../html/paginas.html" class="enlace_opciones"><i class="fas fa-file-code"></i> Páginas</a></li>
             <li><a href="../html/carrusel.html" class="enlace_opciones"><i class="fas fa-images"></i> Carrusel</a></li>
             <li><a href="../html/contenido.html" class="enlace_opciones"><i class="fas fa-pencil-alt"></i> Contenido</a></li>
-            <li><a href="" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="../html/categorias.html" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
             <li><a href="" class="enlace_opciones"><i class="fas fa-shoe-prints"></i> Pie de página</a></li>
             <li><a href="" class="enlace_opciones"><i class="fas fa-robot"></i> Chatbot</a></li>
             <li><a href="" class="enlace_opciones"><i class="fas fa-envelope"></i> Comunicaciones</a></li>
@@ -44,6 +44,100 @@
             <li><a href="" class="enlace_opciones"><i class="fas fa-box-open"></i> Pedidos</a></li>
             <li><a href="" class="enlace_opciones"><i class="fas fa-plug"></i> Instaladores</a></li>
         </ul>
+    </div>
+    <!------------------------------->
+    <!--|estructura_agregar_imagen|-->
+    <!------------------------------->
+    <div class="imagen-container">
+        <div class="imagen-header">
+            <h3 class="imagen-title">Agregar imagen</h3>
+            <button class="imagen-btn">Agregar img</button>
+        </div>
+        <div class="imagen-body">
+            <div class="imagen-box">
+                <i class="fa-regular fa-image"></i>
+            </div>
+        </div>
+    </div>
+    <!----------------------------------->
+    <!--|estructura_seleccionar_pagina|-->
+    <!----------------------------------->
+    <div class="panel-pagina4">
+        <div class="panel-header4">
+            <div class="panel-titulo4">Seleccionar pagina</div>
+            <button class="panel-boton4">Agregar</button>
+        </div>
+        <div class="panel-body4">
+            <div class="panel-caja4"></div>
+        </div>
+    </div>
+    <!-------------------------------------------->
+    <!--|estructura_tablero_editor_de_contenido|-->
+    <!-------------------------------------------->
+    <div class="editor-contenido-container5">
+        <div class="editor-header5">
+            <div class="editor-titulo5">Tablero editor de contenido</div>
+            <button class="editor-boton5">Agregar contenido</button>
+        </div>
+        <div class="editor-opciones5">
+            <div class="fila-opciones5">
+                <div class="grupo-opcion5">
+                    <span>Tipo de Texto</span>
+                    <select class="selector5">
+                        <option value="">Seleccionar...</option>
+                        <option value="titulo">Título</option>
+                        <option value="subtitulo">Subtítulo</option>
+                        <option value="parrafo">Párrafo</option>
+                    </select>
+                </div>
+                <div class="grupo-opcion5">
+                    <span>Seleccionar tamaño</span>
+                    <select class="selector5">
+                        <option value="">Seleccionar...</option>
+                        <option value="12px">12 px</option>
+                        <option value="14px">14 px</option>
+                        <option value="16px">16 px</option>
+                        <option value="18px">18 px</option>
+                    </select>
+                </div>
+                <div class="grupo-opcion5">
+                    <span>Ordenar el texto</span>
+                    <select class="selector5">
+                        <option value="">Seleccionar...</option>
+                        <option value="izquierda">Izquierda</option>
+                        <option value="centro">Centro</option>
+                        <option value="derecha">Derecha</option>
+                        <option value="justificado">Justificado</option>
+                    </select>
+                </div>
+                <div class="grupo-opcion5">
+                    <span>Ajustar texto</span>
+                    <select class="selector5">
+                        <option value="">Seleccionar...</option>
+                        <option value="ajustado">Ajustado</option>
+                        <option value="no-ajustado">No ajustado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fila-opciones5">
+                <div class="grupo-estiloss5">
+                    <span>Marcar el tipo</span>
+                    <div class="botones-estilo5">
+                        <button class="btn-estilo5">B</button>
+                        <button class="btn-estilo5"><i>K</i></button>
+                        <button class="btn-estilo5"><em>S</em></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="editor-tabla5">
+            <div class="fila-tabla5">
+                <div class="columna-texto5"></div>
+                <button class="columna-btn5">Contenido</button>
+                <button class="columna-btneliminar5 eliminar">Eliminar</button>
+            </div>
+            <div class="contenido-area5"></div>
+        </div>
     </div>
 </body>
 </html>
