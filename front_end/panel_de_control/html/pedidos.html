@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>panel de control</title>
+    <link rel="stylesheet" href="../css/pedidos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="../js/pedidos.js" defer></script>
+</head>
+<body>
+    <!----------------------------------->
+    <!--|estructura_menu_de_navegacion|-->
+    <!----------------------------------->
+    <header class="panel-header">
+        <h1>Panel de control</h1>
+        <div class="panel-icons">
+            <i class="fa-duotone fa-solid fa-download"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2>Herramientas</h2>
+        </div>
+    </aside>
+    <div class="contenedor_gris"></div>
+    <div class="contenedor_de_opciones">
+        <ul class="menu" id="menu">
+            <li><a href="../html/panel_de_control.html" class="enlace_opciones"><i class="fas fa-tachometer-alt"></i> Panel de control</a></li>
+            <li><a href="../html/paginas.html" class="enlace_opciones"><i class="fas fa-file-code"></i> Páginas</a></li>
+            <li><a href="../html/carrusel.html" class="enlace_opciones"><i class="fas fa-images"></i> Carrusel</a></li>
+            <li><a href="../html/contenido.html" class="enlace_opciones"><i class="fas fa-pencil-alt"></i> Contenido</a></li>
+            <li><a href="../html/categorias.html" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="../html/pie_de_pagina.html" class="enlace_opciones"><i class="fas fa-shoe-prints"></i> Pie de página</a></li>
+            <li><a href="../html/chatbot.html" class="enlace_opciones"><i class="fas fa-robot"></i> Chatbot</a></li>
+            <li><a href="../html/comunicaciones.html" class="enlace_opciones"><i class="fas fa-envelope"></i> Comunicaciones</a></li>
+            <li><a href="../html/plataforma.html" class="enlace_opciones"><i class="fas fa-desktop"></i> Plataforma</a></li>
+            <li><a href="../html/aliados.html" class="enlace_opciones"><i class="fas fa-handshake"></i> Aliados</a></li>
+            <li><a href="../html/pedidos.html" class="enlace_opciones"><i class="fas fa-box-open"></i> Pedidos</a></li>
+            <li><a href="../html/instaladores.html" class="enlace_opciones"><i class="fas fa-plug"></i> Instaladores</a></li>
+        </ul>
+    </div>
+    <!------------------------------------>
+    <!--|estructura_busqueda_del_pedido|-->
+    <!------------------------------------>
+    <div class="contenedor-busqueda">
+        <div class="titulo-busqueda">Búsqueda del pedido</div>
+        <div class="barra-busqueda">
+            <button class="btn-filtro">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+            <input type="text" class="input-busqueda" placeholder="Buscar pedido" />
+            <button class="btn-buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+    <!-------------------------------->
+    <!--|estructura_tablero_pedidos|-->
+    <!-------------------------------->
+    <div class="contenedor-tablero">
+        <div class="encabezado-tablero">
+            <div class="titulo-tablero">Tablero de pendientes</div>
+            <div class="botones-tablero">
+                <button class="btn-agregar">Enviar todo</button>
+                <button class="btn-eliminar">Eliminar todo</button>
+            </div>
+        </div>
+        <table class="tabla-paginas">
+            <thead>
+                <tr>
+                    <th>Perfil</th>
+                    <th>Nombre del usuario</th>
+                    <th>Plataforma</th>
+                    <th>Proyecto</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se agregarán dinámicamente las páginas -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

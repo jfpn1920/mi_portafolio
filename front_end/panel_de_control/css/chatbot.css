@@ -441,3 +441,66 @@ body {
     font-size: 13px;
     color: #333;
 }
+/*-----------------------------------*/
+/*--|estilo_base_chatbot_guardados|--*/
+/*-----------------------------------*/
+.contenedor-chatbot2 {
+    width: 728.4px;
+    height: 454px;
+    margin-left: 690px;
+    margin-top: 5px;
+    background-color: #bfbfbf;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    display: flex;
+    z-index: 2px;
+    flex-direction: column;
+}
+.encabezado-chatbot2 {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-bottom: 1px solid #000;
+    border-radius: 5px 5px 0px 0px;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+.titulo-chatbot2 {
+    flex: 1;
+    padding: 8px 0;
+}
+.boton-chatbot2 {
+    flex: 0.6;
+    padding: 8px 0;
+    border-left: 1px solid #000;
+    cursor: pointer;
+}
+.boton-chatbot2:hover {
+    background-color: #f0f0f0;
+}
+.tabla-contenedor2 {
+    flex: 1;
+    background-color: #e0e0e0;
+    margin: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.tabla-chatbot2 {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+.tabla-chatbot2 th {
+    background-color: #d4d4d4;
+    border: 1px solid #000;
+    text-align: left;
+    padding: 6px;
+    font-weight: bold;
+}
+.tabla-chatbot2 td {
+    border: 1px solid #000;
+    padding: 6px;
+}

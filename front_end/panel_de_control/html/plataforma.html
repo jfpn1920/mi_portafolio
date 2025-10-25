@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>panel de control</title>
+    <link rel="stylesheet" href="../css/plataforma.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="../js/plataforma.js" defer></script>
+</head>
+<body>
+    <!----------------------------------->
+    <!--|estructura_menu_de_navegacion|-->
+    <!----------------------------------->
+    <header class="panel-header">
+        <h1>Panel de control</h1>
+        <div class="panel-icons">
+            <i class="fa-duotone fa-solid fa-download"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2>Herramientas</h2>
+        </div>
+    </aside>
+    <div class="contenedor_gris"></div>
+    <div class="contenedor_de_opciones">
+        <ul class="menu" id="menu">
+            <li><a href="../html/panel_de_control.html" class="enlace_opciones"><i class="fas fa-tachometer-alt"></i> Panel de control</a></li>
+            <li><a href="../html/paginas.html" class="enlace_opciones"><i class="fas fa-file-code"></i> Páginas</a></li>
+            <li><a href="../html/carrusel.html" class="enlace_opciones"><i class="fas fa-images"></i> Carrusel</a></li>
+            <li><a href="../html/contenido.html" class="enlace_opciones"><i class="fas fa-pencil-alt"></i> Contenido</a></li>
+            <li><a href="../html/categorias.html" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="../html/pie_de_pagina.html" class="enlace_opciones"><i class="fas fa-shoe-prints"></i> Pie de página</a></li>
+            <li><a href="../html/chatbot.html" class="enlace_opciones"><i class="fas fa-robot"></i> Chatbot</a></li>
+            <li><a href="../html/comunicaciones.html" class="enlace_opciones"><i class="fas fa-envelope"></i> Comunicaciones</a></li>
+            <li><a href="../html/plataforma.html" class="enlace_opciones"><i class="fas fa-desktop"></i> Plataforma</a></li>
+            <li><a href="../html/aliados.html" class="enlace_opciones"><i class="fas fa-handshake"></i> Aliados</a></li>
+            <li><a href="../html/pedidos.html" class="enlace_opciones"><i class="fas fa-box-open"></i> Pedidos</a></li>
+            <li><a href="../html/instaladores.html" class="enlace_opciones"><i class="fas fa-plug"></i> Instaladores</a></li>
+        </ul>
+    </div>
+    <!----------------------------------------->
+    <!--|estructura_formulario_de_plataforma|-->
+    <!----------------------------------------->
+    <div class="contenedor-plataforma">
+        <div class="cabecera-plataforma">
+            <h3 class="titulo-formulario">Formulario de plataforma</h3>
+            <button class="btn-crear">Crear plataforma</button>
+        </div>
+        <div class="contenido-plataforma">
+            <label class="etiqueta">Nombre de la plataforma</label>
+            <input type="text" class="input-texto" placeholder="Escribe la plataforma">
+            <label class="etiqueta">Añade icono representativo</label>
+            <div class="select-grupo">
+                <select class="select-icono">
+                    <option>Ningún icono</option>
+                </select>
+            </div>
+            <h4 class="titulo-paginas">Páginas vinculadas</h4>
+            <div class="contenedor-paginas"></div>
+        </div>
+    </div>
+    <!-------------------------------------->
+    <!--|estructura_plataformas_guardadas|-->
+    <!-------------------------------------->
+    <div class="contenedor-plataforma-guardadas">
+        <div class="cabecera-guardadas">
+            <h3 class="titulo-guardadas">Plataformas guardadas</h3>
+            <button class="btn-ver-plataforma">Ver plataforma</button>
+        </div>
+        <div class="contenido-vista">
+            <!-- Aquí irá la vista o contenido de la plataforma -->
+        </div>
+    </div>
+    <!---------------------------------------------->
+    <!--|estructura_vista_previa_de_la_plataforma|-->
+    <!---------------------------------------------->
+    <div class="contenedor-vista-plataforma">
+        <div class="cabecera-vista">
+            <h3 class="titulo-vista">Vista previa de la plataforma</h3>
+            <button class="btn-desplegar">Desplegar</button>
+        </div>
+        <div class="contenido-vista">
+            <!-- Aquí irá la vista o contenido de la plataforma -->
+        </div>
+    </div>
+    <!----------------------------------->
+    <!--|estructura_tablero_plataforma|-->
+    <!----------------------------------->
+    <div class="contenedor-tablero">
+        <div class="encabezado-tablero">
+            <div class="titulo-tablero">Tablero de plataforma</div>
+            <button class="btn-agregar">Agregar todo</button>
+        </div>
+        <table class="tabla-paginas">
+            <thead>
+                <tr>
+                    <th>Icono</th>
+                    <th>Plataforma</th>
+                    <th>Vinculados</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se agregarán dinámicamente las páginas -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
