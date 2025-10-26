@@ -136,7 +136,16 @@ body {
     width: 79.9%;
     box-sizing: border-box;
 }
-
+.estado-edicion {
+    background-color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16.5px;
+    color: #000;
+    margin-left: -75px;
+    width: 490px;
+}
 .titulo-programa {
     background-color: #fff;
     padding: 5px 10px;
