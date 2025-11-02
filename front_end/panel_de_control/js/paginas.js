@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
     botonCrear.addEventListener("click", () => {
         const nombrePagina = inputPagina.value.trim();
         if (nombrePagina === "") {
-            mostrarMensaje("Debes escribir el nombre de la página para poder crearla.", "error");
+            mostrarMensaje("Debes escribir el nombre de la página para poder crearla", "error");
             return;
         }
         let paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
         if (paginas.length >= LIMITE_PAGINAS) {
-            mostrarMensaje("No puedes agregar más páginas. Has alcanzado el límite máximo permitido.", "warning");
+            mostrarMensaje("Has alcanzado el límite máximo de paginas permitidos.", "warning");
             return;
         }
         paginas.push({
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fecha: new Date().toLocaleString()
         });
         localStorage.setItem("paginasCreadas", JSON.stringify(paginas));
-        mostrarMensaje(`La página "${nombrePagina}" ha sido creada exitosamente.`, "success");
+        mostrarMensaje(`La página "${nombrePagina}" ha sido creada exitosamente`, "success");
         inputPagina.value = "";
     });
 });
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     menuActual.paginasSeleccionadas = menuActual.paginasSeleccionadas.filter(p => p !== nombrePagina);
                 }
-                console.log("📄 Páginas seleccionadas:", menuActual.paginasSeleccionadas);
+                console.log(" Páginas seleccionadas:", menuActual.paginasSeleccionadas);
             });
         });
         mostrarMensaje("Páginas cargadas correctamente.", "success");
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const menuesGuardados = JSON.parse(localStorage.getItem("menusCreados")) || [];
         menuesGuardados.push(menuActual);
         localStorage.setItem("menusCreados", JSON.stringify(menuesGuardados));
-        console.log("✅ Menú creado con éxito:", menuActual);
+        console.log("Menú creado con éxito:", menuActual);
         mostrarMensaje(`Menú "${menuActual.nombre}" creado correctamente.`, "success");
         const evento = new CustomEvent("menuCreado", { detail: menuActual });
         window.dispatchEvent(evento);
@@ -175,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
         listaSubmenu.innerHTML = "";
         if (paginasAgregadas.length === 0) {
             listaSubmenu.innerHTML = `<p style="text-align:center; margin-top:10px;">No hay submenús disponibles.</p>`;
+            mostrarMensaje("No hay páginas agregadas al menú para crear submenús.", "warning");
             return;
         }
         paginasAgregadas.forEach((pagina) => {
@@ -195,27 +196,27 @@ document.addEventListener("DOMContentLoaded", () => {
             item.appendChild(texto);
             listaSubmenu.appendChild(item);
         });
+        mostrarMensaje("Submenús cargados correctamente.", "success");
     }
     listaSubmenu.addEventListener("change", (e) => {
         if (e.target.classList.contains("check-submenu")) {
             const nombre = e.target.value;
             if (e.target.checked) {
-                console.log(`✅ Página "${nombre}" seleccionada para añadir al submenú.`);
+                mostrarMensaje(`Página "${nombre}" añadida al submenú.`, "info");
             } else {
-                console.log(`❌ Página "${nombre}" deseleccionada.`);
+                mostrarMensaje(`Página "${nombre}" deseleccionada.`, "warning");
             }
         }
     });
     btnCrearSubmenu.addEventListener("click", () => {
-        console.log("📌 Botón 'Crear submenu' presionado");
         const nombreSubmenu = selectSubmenu.value;
         const checkboxesSeleccionados = document.querySelectorAll(".check-submenu:checked");
         if (nombreSubmenu === "Seleccionar submenu" || nombreSubmenu.trim() === "") {
-            alert("⚠️ No hay nombre de submenú seleccionado.");
+            mostrarMensaje(" No hay nombre de submenú seleccionado.", "error");
             return;
         }
         if (checkboxesSeleccionados.length === 0) {
-            alert("⚠️ No has seleccionado ninguna página para el submenú.");
+            mostrarMensaje(" No has seleccionado ninguna página para el submenú.", "error");
             return;
         }
         const paginasSeleccionadas = Array.from(checkboxesSeleccionados).map(cb => cb.value);
@@ -228,17 +229,16 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("submenusCreados", JSON.stringify(submenusGuardados));
         const evento = new CustomEvent("submenuCreado", { detail: nuevoSubmenu });
         window.dispatchEvent(evento);
-        console.log(`✅ Submenú "${nombreSubmenu}" guardado con:`, paginasSeleccionadas);
-        alert(`✅ Submenú "${nombreSubmenu}" creado correctamente.`);
+        mostrarMensaje(`Submenú "${nombreSubmenu}" creado correctamente.`, "success");
         checkboxesSeleccionados.forEach(cb => cb.checked = false);
         selectSubmenu.selectedIndex = 0;
     });
-    cargarSubmenus();
     window.addEventListener("storage", (e) => {
         if (e.key === "paginasAgregadasMenu") {
             cargarSubmenus();
         }
     });
+    cargarSubmenus();
 });
 //----------------------------------------------//
 //--|funcionalidad_tablero_de_paginas_creados|--//
@@ -262,10 +262,16 @@ document.addEventListener("DOMContentLoaded", () => {
             fila.innerHTML = `
                 <td>${pagina.nombre}</td>
                 <td>
-                    <button class="btn-eliminar" data-index="${index}">
+                    <button class="btn-editar" data-index="${index}" title="Editar nombre">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn-visualizar" data-index="${index}" title="Visualizar página">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <button class="btn-eliminar" data-index="${index}" title="Eliminar página">
                         <i class="fa-solid fa-trash"></i>
                     </button>
-                    <button class="btn-anadir" data-index="${index}">
+                    <button class="btn-anadir" data-index="${index}" title="Añadir al menú">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </td>
@@ -287,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 key: "paginasAgregadasMenu", 
                 newValue: JSON.stringify(paginasAgregadas)
             }));
-            mostrarMensaje(`La página "${nombreEliminado}" ha sido eliminada.`, "warning");
+            mostrarMensaje(`La página "${nombreEliminado}" ha sido eliminada`, "warning");
             mostrarPaginas();
         }
         if (e.target.closest(".btn-anadir")) {
@@ -296,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const pagina = paginas[index];
             let paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
             if (paginasAgregadas.some(p => p.nombre === pagina.nombre)) {
-                mostrarMensaje(`La página "${pagina.nombre}" ya está añadida en la selección.`, "info");
+                mostrarMensaje(`La página "${pagina.nombre}" ya está añadida al menú`, "info");
                 return;
             }
             paginasAgregadas.push({ nombre: pagina.nombre });
@@ -305,13 +311,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 key: "paginasAgregadasMenu", 
                 newValue: JSON.stringify(paginasAgregadas)
             }));
-            mostrarMensaje(`Página "${pagina.nombre}" añadida correctamente a la sección de selección.`, "success");
+            mostrarMensaje(`Página "${pagina.nombre}" añadida correctamente al menú`, "success");
+        }
+        if (e.target.closest(".btn-editar")) {
+            const index = e.target.closest(".btn-editar").dataset.index;
+            let paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
+            const nombreActual = paginas[index].nombre;
+            const nuevoNombre = prompt(`Editar nombre de la página "${nombreActual}":`, nombreActual);
+            if (!nuevoNombre || nuevoNombre.trim() === "") {
+                mostrarMensaje("El nombre no puede estar vacío.", "warning");
+                return;
+            }
+            if (paginas.some((p, i) => p.nombre === nuevoNombre && i !== parseInt(index))) {
+                mostrarMensaje(`Ya existe una página con el nombre "${nuevoNombre}".`, "error");
+                return;
+            }
+            paginas[index].nombre = nuevoNombre.trim();
+            localStorage.setItem("paginasCreadas", JSON.stringify(paginas));
+            mostrarPaginas();
+            mostrarMensaje(`El nombre de la página fue cambiado a "${nuevoNombre}".`, "success");
+        }
+        if (e.target.closest(".btn-visualizar")) {
+            const index = e.target.closest(".btn-visualizar").dataset.index;
+            const paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
+            const pagina = paginas[index];
+            mostrarMensaje(`Vista previa de "${pagina.nombre}"`, "info");
         }
     });
     btnAgregarTodo.addEventListener("click", () => {
         const paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
         if (paginas.length === 0) {
-            mostrarMensaje("No hay páginas creadas para agregar.", "error");
+            mostrarMensaje("No hay páginas creadas para agregar", "error");
             return;
         }
         let paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
@@ -319,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
             pagina => !paginasAgregadas.some(p => p.nombre === pagina.nombre)
         );
         if (nuevasPaginas.length === 0) {
-            mostrarMensaje("Todas las páginas ya están agregadas.", "info");
+            mostrarMensaje("Todas las páginas ya están agregadas", "info");
             return;
         }
         paginasAgregadas = [...paginasAgregadas, ...nuevasPaginas];
@@ -329,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
             key: "paginasAgregadasMenu", 
             newValue: JSON.stringify(paginasAgregadas)
         }));
-        mostrarMensaje(`Se han agregado ${nuevasPaginas.length} páginas al submenú correctamente.`, "success");
+        mostrarMensaje(`Se han agregado ${nuevasPaginas.length} páginas`, "success");
     });
     mostrarPaginas();
 });
@@ -341,13 +371,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnDespliegue = document.querySelector(".btn");
     const tablaBody = document.querySelector(".tabla-menu tbody");
     const nombreMenuActual = document.getElementById("nombreMenuActual");
+    function mostrarMensaje(texto, tipo = "info") {
+        const estado = document.getElementById("estadoEdicion");
+        if (!estado) return; 
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", tipo);
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
+    }
     function mostrarMenu(dataMenus, dataSubmenus) {
         tablaBody.innerHTML = "";
         if (!dataMenus || dataMenus.length === 0) {
             tablaBody.innerHTML = `<tr><td colspan="4">No hay elementos en el menú</td></tr>`;
             nombreMenuActual.textContent = "Sin menú";
+            mostrarMensaje(" No hay menús disponibles para mostrar.", "warning");
             return false;
         }
+        mostrarMensaje("Menú de navegación cargado correctamente.", "success");
         dataMenus.forEach(item => {
             const logo = item.logo || "fa-solid fa-circle-question";
             const paginas = Array.isArray(item.paginasSeleccionadas)
@@ -378,13 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 <!-- Opciones -->
                 <td style="text-align:left; width:40%; padding-left:10px;">
                     ${paginas.length
-                        ? `<ul style="margin:4px 0 4px 18px; padding:0; list-style:disc;">
+                        ? `<ul style="font-size: 13.4px; margin:4px 0 4px 18px; padding:0; list-style:disc; margin-left: 5px;">
                             ${paginas.map(p => `<li>${p}</li>`).join("")}
                             </ul>`
                         : "—"}
                 </td>
                 <!-- Submenú -->
-                <td style="text-align:center; width:25%;">
+                <td style="text-align:center; width:25%; font-size: 13.4px;">
                     ${listaSubmenus}
                 </td>
                 <!-- Iconos -->
@@ -399,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 submenu.addEventListener("click", () => {
                     const nombre = submenu.dataset.nombre;
                     const opciones = JSON.parse(submenu.dataset.opciones);
-                    alert(`📋 El submenú "${nombre}" contiene las siguientes opciones:\n\n- ${opciones.join("\n- ")}`);
+                    mostrarMensaje(` Submenú "${nombre}" contiene ${opciones.length} opciones.`, "info");
                 });
             });
         });
@@ -415,13 +456,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const exito = cargarMenus();
         if (exito) {
             const nombre = nombreMenuActual.textContent || "sin nombre";
-            alert(`✅ Se ha desplegado el menú de navegación "${nombre}" con éxito.`);
+            mostrarMensaje(`"${nombre}" se ha desplegado con éxito.`, "success");
         } else {
-            alert("⚠️ Debes añadir los datos para así crear el menú de navegación.");
+            mostrarMensaje(" Debes añadir los datos para así crear el menú de navegación.", "warning");
         }
     });
-    window.addEventListener("submenuCreado", () => cargarMenus());
-    window.addEventListener("menuCreado", () => cargarMenus());
+    window.addEventListener("submenuCreado", () => {
+        cargarMenus();
+        mostrarMensaje("Submenú creado y añadido correctamente al menú.", "info");
+    });
+    window.addEventListener("menuCreado", () => {
+        cargarMenus();
+        mostrarMensaje("Nuevo menú creado correctamente.", "info");
+    });
     cargarMenus();
     console.log("✅ Funcionalidad del despliegue lista.");
 });
