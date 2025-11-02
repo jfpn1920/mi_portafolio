@@ -6,6 +6,18 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//-------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_pagina|--//
+//-------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //-----------------------------------//
 //--|funcionalidad_agregar_paginas|--//
 //-----------------------------------//
@@ -17,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
     botonCrear.addEventListener("click", () => {
         const nombrePagina = inputPagina.value.trim();
         if (nombrePagina === "") {
-            alert("Debes escribir el nombre de la página para poder crearla.");
+            mostrarMensaje("Debes escribir el nombre de la página para poder crearla.", "error");
             return;
         }
         let paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
         if (paginas.length >= LIMITE_PAGINAS) {
-            alert("No puedes agregar más páginas. Has alcanzado el límite máximo permitido.");
+            mostrarMensaje("No puedes agregar más páginas. Has alcanzado el límite máximo permitido.", "warning");
             return;
         }
         paginas.push({
@@ -30,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fecha: new Date().toLocaleString()
         });
         localStorage.setItem("paginasCreadas", JSON.stringify(paginas));
-        alert(`La página "${nombrePagina}" ha sido creada exitosamente.`);
+        mostrarMensaje(`La página "${nombrePagina}" ha sido creada exitosamente.`, "success");
         inputPagina.value = "";
     });
 });
@@ -58,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
         if (paginasAgregadas.length === 0) {
             listaPaginas.innerHTML = `<p style="text-align:center; opacity:0.6;">No hay páginas añadidas aún.</p>`;
+            mostrarMensaje("No hay páginas añadidas aún para crear un menú.", "warning");
             return;
         }
         paginasAgregadas.forEach((pagina) => {
@@ -82,16 +95,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("📄 Páginas seleccionadas:", menuActual.paginasSeleccionadas);
             });
         });
+        mostrarMensaje("Páginas cargadas correctamente.", "success");
     }
     window.agregarPaginaAlMenu = function(nombrePagina) {
         let paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
         if (paginasAgregadas.some(p => p.nombre === nombrePagina)) {
-            alert(`La página "${nombrePagina}" ya está en la lista de selección.`);
+            mostrarMensaje(`La página "${nombrePagina}" ya está en la lista de selección.`, "info");
             return;
         }
         paginasAgregadas.push({ nombre: nombrePagina });
         localStorage.setItem("paginasAgregadasMenu", JSON.stringify(paginasAgregadas));
-        alert(`Página "${nombrePagina}" añadida a la sección de selección.`);
+        mostrarMensaje(`Página "${nombrePagina}" añadida correctamente a la lista.`, "success");
         cargarPaginasDisponibles();
     };
     function abrirModalParaCaja(caja) {
@@ -108,13 +122,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 modalIconos.style.display = "none";
                 if (cajaSeleccionada.classList.contains("caja1")) {
                     menuActual.logo = nombreIcono;
-                    console.log("🖼️ Logo seleccionado:", menuActual.logo);
+                    mostrarMensaje("Logo seleccionado correctamente.", "success");
                 }
                 if (cajaSeleccionada.classList.contains("caja2")) {
                     if (!menuActual.iconos.includes(nombreIcono)) {
                         menuActual.iconos.push(nombreIcono);
+                        mostrarMensaje("Icono añadido correctamente.", "success");
+                    } else {
+                        mostrarMensaje("Ese icono ya está seleccionado.", "info");
                     }
-                    console.log("🎨 Iconos seleccionados:", menuActual.iconos);
                 }
             }
         });
@@ -123,18 +139,18 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCrearMenu.addEventListener("click", () => {
         menuActual.nombre = inputNombreMenu.value.trim();
         if (!menuActual.nombre) {
-            alert("Por favor, escribe un nombre para el menú.");
+            mostrarMensaje("Por favor, escribe un nombre para el menú.", "error");
             return;
         }
         if (menuActual.paginasSeleccionadas.length === 0) {
-            alert("Selecciona al menos una página para el menú.");
+            mostrarMensaje("Selecciona al menos una página para el menú.", "warning");
             return;
         }
         const menuesGuardados = JSON.parse(localStorage.getItem("menusCreados")) || [];
         menuesGuardados.push(menuActual);
         localStorage.setItem("menusCreados", JSON.stringify(menuesGuardados));
         console.log("✅ Menú creado con éxito:", menuActual);
-        alert(`Menú "${menuActual.nombre}" creado correctamente.`);
+        mostrarMensaje(`Menú "${menuActual.nombre}" creado correctamente.`, "success");
         const evento = new CustomEvent("menuCreado", { detail: menuActual });
         window.dispatchEvent(evento);
         menuActual = { nombre: "", logo: null, iconos: [], paginasSeleccionadas: [] };
@@ -231,7 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAgregarTodo = document.querySelector(".btn-agregar");
     const tablaBody = document.querySelector(".tabla-paginas tbody");
     console.log("Script del tablero cargado correctamente ✅");
-    const LIMITE = 18;
     function mostrarPaginas() {
         tablaBody.innerHTML = "";
         const paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
@@ -239,6 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const filaVacia = document.createElement("tr");
             filaVacia.innerHTML = `<td colspan="2" style="text-align:center;">No hay páginas creadas</td>`;
             tablaBody.appendChild(filaVacia);
+            mostrarMensaje("No hay páginas creadas", "error");
             return;
         }
         paginas.forEach((pagina, index) => {
@@ -271,17 +287,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 key: "paginasAgregadasMenu", 
                 newValue: JSON.stringify(paginasAgregadas)
             }));
-            alert(`La página "${nombreEliminado}" ha sido eliminada.`);
+            mostrarMensaje(`La página "${nombreEliminado}" ha sido eliminada.`, "warning");
             mostrarPaginas();
         }
         if (e.target.closest(".btn-anadir")) {
             const index = e.target.closest(".btn-anadir").dataset.index;
             const paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
-            const pagina = paginas[index];   
-            alert(`Has presionado añadir en "${pagina.nombre}".`);
+            const pagina = paginas[index];
             let paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
             if (paginasAgregadas.some(p => p.nombre === pagina.nombre)) {
-                alert(`La página "${pagina.nombre}" ya está añadida en la selección.`);
+                mostrarMensaje(`La página "${pagina.nombre}" ya está añadida en la selección.`, "info");
                 return;
             }
             paginasAgregadas.push({ nombre: pagina.nombre });
@@ -290,14 +305,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 key: "paginasAgregadasMenu", 
                 newValue: JSON.stringify(paginasAgregadas)
             }));
-            alert(`Página "${pagina.nombre}" añadida correctamente a la sección de selección.`);
+            mostrarMensaje(`Página "${pagina.nombre}" añadida correctamente a la sección de selección.`, "success");
         }
     });
     btnAgregarTodo.addEventListener("click", () => {
-        console.log("Botón 'Agregar todo' presionado 🧩");
         const paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
         if (paginas.length === 0) {
-            alert("⚠️ No hay páginas creadas para agregar.");
+            mostrarMensaje("No hay páginas creadas para agregar.", "error");
             return;
         }
         let paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
@@ -305,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
             pagina => !paginasAgregadas.some(p => p.nombre === pagina.nombre)
         );
         if (nuevasPaginas.length === 0) {
-            alert("ℹ️ Todas las páginas ya están agregadas.");
+            mostrarMensaje("Todas las páginas ya están agregadas.", "info");
             return;
         }
         paginasAgregadas = [...paginasAgregadas, ...nuevasPaginas];
@@ -315,29 +329,8 @@ document.addEventListener("DOMContentLoaded", () => {
             key: "paginasAgregadasMenu", 
             newValue: JSON.stringify(paginasAgregadas)
         }));
-        alert(`✅ Se han agregado ${nuevasPaginas.length} páginas al submenú correctamente.`);
+        mostrarMensaje(`Se han agregado ${nuevasPaginas.length} páginas al submenú correctamente.`, "success");
     });
-    function mostrarListaPaginas() {
-        const listaPaginas = document.querySelector(".lista-paginas1");
-        if (!listaPaginas) return;
-        const paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
-        listaPaginas.innerHTML = "";
-        if (paginasAgregadas.length === 0) {
-            listaPaginas.innerHTML = `<p style="text-align:center;">No hay páginas añadidas aún.</p>`;
-            return;
-        }
-        paginasAgregadas.forEach((pagina) => {
-            const item = document.createElement("div");
-            item.classList.add("item-pagina");
-            item.innerHTML = `
-                <label>
-                    <input type="checkbox" class="check-pagina" value="${pagina.nombre}">
-                    ${pagina.nombre}
-                </label>
-            `;
-            listaPaginas.appendChild(item);
-        });
-    }
     mostrarPaginas();
 });
 //-----------------------------------------------------//
