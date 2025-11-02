@@ -112,6 +112,20 @@
             </div>
         </div>
     </div>
+    <div class="modal-iconos" id="modalIconos">
+        <div class="modal-contenido">
+            <h3>Selecciona un icono</h3>
+            <div class="iconos-grid">
+                <i class="fa-solid fa-house"></i>
+                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-gear"></i>
+                <i class="fa-solid fa-envelope"></i>
+                <i class="fa-solid fa-bell"></i>
+                <i class="fa-solid fa-camera"></i>
+            </div>
+            <button id="cerrarModal">Cerrar</button>
+        </div>
+    </div>
     <!------------------------>
     <!--|estructura_submenu|-->
     <!------------------------>
@@ -135,7 +149,7 @@
                 </div>
             </div>
             <div class="submenu-list-header">
-                Seleccionar páginas
+                Añadir al páginas
             </div>
             <div class="submenu-list"></div>
         </div>
@@ -165,8 +179,10 @@
     <!-------------------------------------------------->
     <div class="contenedor">
         <div class="barra-superior">
-            <button class="btn">Despliegue del menú de navegación</button>
-            <input type="text" class="campo-texto">
+            <h2 class="titulo-seccion">Despliegue del menú de navegación</h2>
+            <div class="contenedor-nombre-menu">
+                <span class="nombre-menu" id="nombreMenuActual">Sin menú</span>
+            </div>
             <button class="btn">Despliegue</button>
         </div>
         <table class="tabla-menu">
@@ -174,16 +190,13 @@
                 <tr>
                     <th>Logo</th>
                     <th>Opciones</th>
-                    <th>Submenu</th>
+                    <th>Submenú</th>
                     <th>Iconos</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="4" style="text-align:center;">No hay datos disponibles</td>
                 </tr>
             </tbody>
         </table>
