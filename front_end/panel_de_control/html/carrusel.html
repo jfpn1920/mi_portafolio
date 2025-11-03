@@ -59,6 +59,23 @@
             <i class="fa-solid fa-trash"></i> Contenedor
         </button>
     </div>
+    <!--------------------------------->
+    <!--|estructura_agregar_carrusel|-->
+    <!--------------------------------->
+    <div class="contenedor-agregar-paginas">
+        <div class="cabecera">
+            <div class="titulo">agregar carrusel</div>
+            <button class="crear">Crear</button>
+        </div>
+        <div class="contenido">
+            <div class="icono">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="campo">
+                <input type="text" placeholder="Escribe el carrusel deseado">
+            </div>
+        </div>
+    </div>
     <!------------------------------->
     <!--|estructura_agregar_imagen|-->
     <!------------------------------->
@@ -102,18 +119,32 @@
     <!------------------------------------>
     <!--|estructura_tablero_de_imagenes|-->
     <!------------------------------------>
-    <div class="contenedor-principal">
-        <div class="fila-superior">
-            <div class="titulo">Tablero de imágenes</div>
-            <div class="boton-contenedor">
-                <button class="boton">Agregar todo</button>
-            </div>
+    <div class="contenedor-tablero">
+        <div class="encabezado-tablero">
+            <div class="titulo-tablero">Tablero de carruseles creados</div>
+            <button class="btn-agregar">Agregar todo</button>
         </div>
-        <div class="encabezado">
-            <div class="columna imagenes">Imágenes</div>
-            <div class="columna acciones">Acciones</div>
-        </div>
-        <div class="zona-tablero"></div>
+        <table class="tabla-carruseles">
+            <thead>
+                <tr>
+                    <th>Carrusel</th>
+                    <th>Imágenes</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ejemplo Carrusel 1</td>
+                    <td class="celda-imagenes">Sin imágenes</td>
+                    <td>
+                        <button class="btn-anadir">Añadir</button>
+                        <button class="btn-visualizar">Ver</button>
+                        <button class="btn-editar">Editar</button>
+                        <button class="btn-eliminar">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <!------------------------------------------>
     <!--|estructura_vista_previa_del_carrusel|-->
