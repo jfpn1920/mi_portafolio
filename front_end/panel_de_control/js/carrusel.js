@@ -28,6 +28,55 @@ document.addEventListener("DOMContentLoaded", () => {
         inputPagina.value = "";
     });
 });
+//----------------------------------//
+//--|funcionalidad_agregar_imagen|--//
+//----------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ Script de agregar imagen cargado correctamente.");
+    const imagenBox = document.querySelector(".imagen-box");
+    const botonAgregar = document.querySelector(".imagen-btn");
+    const inputImagen = document.createElement("input");
+    inputImagen.type = "file";
+    inputImagen.accept = "image/*";
+    inputImagen.multiple = true;
+    inputImagen.style.display = "none";
+    document.body.appendChild(inputImagen);
+    let imagenesSeleccionadas = [];
+    imagenBox.addEventListener("click", () => {
+        inputImagen.click();
+    });
+    inputImagen.addEventListener("change", (e) => {
+        const archivos = Array.from(e.target.files);
+        if (archivos.length === 0) return;
+        imagenesSeleccionadas = archivos;
+        imagenBox.innerHTML = ""; 
+        archivos.forEach((archivo) => {
+            const lector = new FileReader();
+            lector.onload = (evento) => {
+                const img = document.createElement("img");
+                img.src = evento.target.result;
+                img.style.width = "100px";
+                img.style.height = "100px";
+                img.style.objectFit = "cover";
+                img.style.margin = "5px";
+                img.style.borderRadius = "5px";
+                imagenBox.appendChild(img);
+            };
+            lector.readAsDataURL(archivo);
+        });
+    });
+    botonAgregar.addEventListener("click", () => {
+        if (imagenesSeleccionadas.length === 0) {
+            alert("⚠️ No hay imágenes seleccionadas.");
+            return;
+        }
+        localStorage.setItem("imagenesSeleccionadas", imagenesSeleccionadas.length);
+        alert(`✅ Se han agregado ${imagenesSeleccionadas.length} imágenes con éxito.`);
+        imagenesSeleccionadas = [];
+        inputImagen.value = "";
+        imagenBox.innerHTML = `<i class="fa-regular fa-image"></i>`;
+    });
+});
 //---------------------------------------//
 //--|funcionalidad_tablero_de_imagenes|--//
 //---------------------------------------//
@@ -41,25 +90,47 @@ document.addEventListener("DOMContentLoaded", () => {
         if (carruseles.length === 0) {
             const filaVacia = document.createElement("tr");
             filaVacia.classList.add("fila-vacia");
-            filaVacia.innerHTML = `<td colspan="3" style="text-align:center; color:#555;">No hay carruseles creados</td>`;
+            filaVacia.innerHTML = `
+                <td colspan="3" style="text-align:center; color:#555;">
+                    No hay carruseles creados
+                </td>
+            `;
             tablaBody.appendChild(filaVacia);
             return;
         }
+        const cantidadImagenes = localStorage.getItem("imagenesSeleccionadas") || 0;
         carruseles.forEach((carrusel, index) => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${carrusel.nombre}</td>
-                <td class="celda-imagenes">Sin imágenes</td>
-                <td>
-                    <button class="btn-anadir" data-index="${index}">Añadir</button>
-                    <button class="btn-visualizar" data-index="${index}">Ver</button>
-                    <button class="btn-editar" data-index="${index}">Editar</button>
-                    <button class="btn-eliminar" data-index="${index}">Eliminar</button>
+                <td class="celda-imagenes">${
+                    cantidadImagenes > 0
+                        ? `${cantidadImagenes} imágenes`
+                        : "Sin imágenes"
+                }</td>
+                <td class="acciones">
+                    <button class="btn-icono btn-anadir" data-index="${index}" title="Añadir">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="btn-icono btn-visualizar" data-index="${index}" title="Ver">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <button class="btn-icono btn-editar" data-index="${index}" title="Editar">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn-icono btn-eliminar" data-index="${index}" title="Eliminar">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
                 </td>
             `;
             tablaBody.appendChild(fila);
         });
     }
+    window.addEventListener("storage", (e) => {
+        if (e.key === "imagenesSeleccionadas") {
+            mostrarCarruseles();
+        }
+    });
     tablaBody.addEventListener("click", (e) => {
         const carruseles = JSON.parse(localStorage.getItem("carruselesCreados")) || [];
         if (e.target.closest(".btn-eliminar")) {
@@ -73,7 +144,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.closest(".btn-editar")) {
             const index = e.target.closest(".btn-editar").dataset.index;
             const nombreActual = carruseles[index].nombre;
-            const nuevoNombre = prompt(`Editar nombre del carrusel "${nombreActual}":`, nombreActual);
+            const nuevoNombre = prompt(
+                `Editar nombre del carrusel "${nombreActual}":`,
+                nombreActual
+            );
             if (!nuevoNombre || nuevoNombre.trim() === "") return;
             carruseles[index].nombre = nuevoNombre.trim();
             localStorage.setItem("carruselesCreados", JSON.stringify(carruseles));
