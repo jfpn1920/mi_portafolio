@@ -180,6 +180,15 @@ body {
 .btn-contenedor:hover {
     background-color: #f0f0f0;
 }
+.mensaje {
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: justify;
+}
+.mensaje.info {
+    color: #000;
+}
 /*----------------------------------*/
 /*--|estilo_base_agregar_carrusel|--*/
 /*----------------------------------*/

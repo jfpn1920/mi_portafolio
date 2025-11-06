@@ -6,6 +6,18 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//---------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_carrusel|--//
+//---------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //------------------------------------//
 //--|funcionalidad_agregar_carrusel|--//
 //------------------------------------//
@@ -14,10 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const botonCrear = document.querySelector(".crear");
     const inputPagina = document.querySelector(".campo input");
     const contenedorBlanco = document.querySelector(".contenedor-blanco");
+    const estado = document.getElementById("estadoEdicion");
+    function mostrarMensaje(texto, tipo = "info") {
+        if (!estado) return;
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", tipo);
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
+    }
     botonCrear.addEventListener("click", () => {
         const nombreCarrusel = inputPagina.value.trim();
         if (nombreCarrusel === "") {
-            alert("⚠️ No hay carrusel creado");
+            mostrarMensaje("No hay carrusel creado", "error");
             inputPagina.focus();
             return;
         }
@@ -26,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         carruseles.push(nuevoCarrusel);
         localStorage.setItem("carruselesCreados", JSON.stringify(carruseles));
         contenedorBlanco.textContent = nombreCarrusel;
-        alert(`✅ El carrusel "${nombreCarrusel}" ha sido creado`);
+        mostrarMensaje(`El carrusel ${nombreCarrusel} ha sido creado`, "exito");
         inputPagina.value = "";
     });
 });
@@ -38,12 +59,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const imagenBox = document.querySelector(".imagen-box");
     const botonAgregar = document.querySelector(".imagen-btn");
     const inputImagen = document.createElement("input");
+    const estado = document.getElementById("estadoEdicion");
     inputImagen.type = "file";
     inputImagen.accept = "image/*";
     inputImagen.multiple = true;
     inputImagen.style.display = "none";
     document.body.appendChild(inputImagen);
     let imagenesSeleccionadas = [];
+    function mostrarMensaje(texto, tipo = "info") {
+        if (!estado) return;
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", tipo);
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
+    }
     imagenBox.addEventListener("click", () => {
         inputImagen.click();
     });
@@ -67,14 +97,15 @@ document.addEventListener("DOMContentLoaded", () => {
             };
             lector.readAsDataURL(archivo);
         });
+        mostrarMensaje(`🖼️ ${archivos.length} imagen(es) seleccionada(s).`, "info");
     });
     botonAgregar.addEventListener("click", () => {
         if (imagenesSeleccionadas.length === 0) {
-            alert("⚠️ No hay imágenes seleccionadas.");
+            mostrarMensaje("No hay imágenes seleccionadas.", "error");
             return;
         }
         localStorage.setItem("imagenesCarrusel", JSON.stringify(imagenesSeleccionadas));
-        alert(`✅ Se han agregado ${imagenesSeleccionadas.length} imágenes con éxito.`);
+        mostrarMensaje(`Se han agregado ${imagenesSeleccionadas.length} imágenes con éxito.`, "exito");
         imagenBox.innerHTML = `<i class="fa-regular fa-image"></i>`;
         inputImagen.value = "";
         imagenesSeleccionadas = [];
@@ -91,6 +122,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkboxAutomatico = checkboxes[0];
     const checkboxIndicadores = checkboxes[1];
     const checkboxControladores = checkboxes[2];
+    const estado = document.getElementById("estadoEdicion");
+    function mostrarMensaje(texto, tipo = "info") {
+        if (!estado) return;
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", tipo);
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
+    }
     function actualizarConfiguracion() {
         const tiempoTexto = selectTiempo.value;
         let tiempoMs = 0;
@@ -110,30 +150,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     selectTiempo.addEventListener("change", (e) => {
         const tiempoSeleccionado = e.target.value;
-        console.log(`⏱️ Tiempo seleccionado: ${tiempoSeleccionado}`);
+        mostrarMensaje(`⏱️ Tiempo seleccionado: ${tiempoSeleccionado}`, "info");
         actualizarConfiguracion();
     });
     checkboxAutomatico.addEventListener("change", (e) => {
-        const estado = e.target.checked ? "activado" : "desactivado";
-        console.log(`🔘 Automático ${estado}`);
+        const estadoTexto = e.target.checked ? "activado" : "desactivado";
+        mostrarMensaje(`🔘 Automático ${estadoTexto}`, "info");
         actualizarConfiguracion();
     });
     checkboxIndicadores.addEventListener("change", (e) => {
-        const estado = e.target.checked ? "activados" : "desactivados";
-        console.log(`🔘 Indicadores ${estado}`);
+        const estadoTexto = e.target.checked ? "activados" : "desactivados";
+        mostrarMensaje(`🔘 Indicadores ${estadoTexto}`, "info");
         actualizarConfiguracion();
-        aplicarConfiguracion();
+        aplicarConfiguracion?.();
     });
     checkboxControladores.addEventListener("change", (e) => {
-        const estado = e.target.checked ? "visibles" : "ocultos";
-        console.log(`🎮 Controladores ${estado}`);
+        const estadoTexto = e.target.checked ? "visibles" : "ocultos";
+        mostrarMensaje(`🎮 Controladores ${estadoTexto}`, "info");
         actualizarConfiguracion();
     });
     checkboxes.forEach((checkbox, index) => {
         if (index < 3) return;
         checkbox.addEventListener("change", (e) => {
-            const estado = e.target.checked ? "activado" : "desactivado";
-            console.log(`🔘 ${e.target.nextSibling.textContent.trim()} ${estado}`);
+            const estadoTexto = e.target.checked ? "activado" : "desactivado";
+            mostrarMensaje(`🔘 ${e.target.nextSibling.textContent.trim()} ${estadoTexto}`, "info");
         });
     });
     btnAgregarControl.addEventListener("click", () => {
@@ -142,9 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const algoAñadido =
             config.automatico || config.indicadores || config.controladores || config.tiempo > 0;
         if (algoAñadido) {
-            alert("✅ Se ha añadido todo el control por completo.");
+            mostrarMensaje("Se ha añadido todo el control por completo.", "exito");
         } else {
-            alert("⚠️ No has añadido nada.");
+            mostrarMensaje("No has añadido nada.", "error");
         }
     });
 });
@@ -204,7 +244,17 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(`⏺️ Imagen actual: ${indiceActual + 1} / ${imagenesGuardadas.length}`);
     });
     btnEnviar.addEventListener("click", () => {
-        console.log("🚀 Despliegue del carrusel iniciado");
+        const nombreCarrusel = contenedorBlanco.textContent.trim();
+        const estado = document.getElementById("estadoEdicion");
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", "info");
+        if (nombreCarrusel && nombreCarrusel !== "") {
+            mensaje.textContent = `"${nombreCarrusel}" se ha enviado correctamente.`;
+        } else {
+            mensaje.textContent = "No hay un carrusel en la vista previa.";
+        }
+        estado.appendChild(mensaje);
     });
     function actualizarIndicadores() {
         const config = JSON.parse(localStorage.getItem("configCarrusel")) || {};
@@ -230,13 +280,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const btnIzq = document.querySelector(".btn-lateral.izquierda");
             const btnDer = document.querySelector(".btn-lateral.derecha");
             if (btnIzq && btnDer) {
-                if (estado) {
-                    btnIzq.style.display = "flex";
-                    btnDer.style.display = "flex";
-                } else {
-                    btnIzq.style.display = "none";
-                    btnDer.style.display = "none";
-                }
+                btnIzq.style.display = estado ? "flex" : "none";
+                btnDer.style.display = estado ? "flex" : "none";
             }
         };
         if (config.controladores) {
