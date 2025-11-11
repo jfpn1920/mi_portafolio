@@ -108,7 +108,92 @@ document.addEventListener("DOMContentLoaded", () => {
 //--------------------------------------//
 //--|funcionalidad_seleccionar_pagina|--//
 //--------------------------------------//
-
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ Script del panel de selección cargado correctamente.");
+    const panel = document.querySelector(".panel-pagina4");
+    const btnAgregar = document.querySelector(".panel-boton4");
+    const contenedorCajas = document.querySelector(".panel-caja4");
+    const contenedorBlanco = document.querySelector(".contenedor-blanco"); 
+    let paginaSeleccionada = null;
+    function mostrarPaginasEnPanel() {
+        contenedorCajas.innerHTML = "";
+        const paginas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
+        if (paginas.length === 0) {
+            const mensaje = document.createElement("p");
+            mensaje.textContent = "No hay páginas añadidas al panel.";
+            mensaje.style.textAlign = "center";
+            mensaje.style.color = "#666";
+            mensaje.style.fontSize = "13px";
+            contenedorCajas.appendChild(mensaje);
+            return;
+        }
+        paginas.forEach(pagina => {
+            const nuevaPagina = document.createElement("div");
+            nuevaPagina.classList.add("pagina-item");
+            nuevaPagina.textContent = pagina.nombre;
+            nuevaPagina.style.padding = "8px";
+            nuevaPagina.style.margin = "6px 0";
+            nuevaPagina.style.borderRadius = "4px";
+            nuevaPagina.style.fontSize = "13px";
+            nuevaPagina.style.textAlign = "justify";
+            contenedorCajas.appendChild(nuevaPagina);
+        });
+    }
+    function mostrarPaginasEnBlanco() {
+        contenedorBlanco.innerHTML = "";
+        const paginasBlanco = JSON.parse(localStorage.getItem("paginasEnBlanco")) || [];
+        paginasBlanco.forEach(nombre => {
+            const nuevaCaja = document.createElement("div");
+            nuevaCaja.classList.add("pagina-en-blanco");
+            nuevaCaja.textContent = nombre;
+            nuevaCaja.style.padding = "3px 5px";
+            nuevaCaja.style.margin = "0px 0px 0px 0px";
+            nuevaCaja.style.fontSize = "14px";
+            contenedorBlanco.appendChild(nuevaCaja);
+        });
+    }
+    contenedorCajas.addEventListener("click", (e) => {
+        if (e.target.classList.contains("pagina-item")) {
+            contenedorCajas.querySelectorAll(".pagina-item").forEach(item => item.classList.remove("seleccionada"));
+            e.target.classList.add("seleccionada");
+            paginaSeleccionada = e.target.textContent;
+            console.log(`📄 Página seleccionada: ${paginaSeleccionada}`);
+        }
+    });
+    btnAgregar.addEventListener("click", () => {
+        console.log("🟢 Botón 'Agregar' presionado.");
+        if (paginaSeleccionada) {
+            const paginasBlanco = JSON.parse(localStorage.getItem("paginasEnBlanco")) || [];
+            if (!paginasBlanco.includes(paginaSeleccionada)) {
+                paginasBlanco.push(paginaSeleccionada);
+                localStorage.setItem("paginasEnBlanco", JSON.stringify(paginasBlanco));
+            }
+            mostrarPaginasEnBlanco();
+            console.log(`🧩 Página '${paginaSeleccionada}' agregada al contenedor blanco.`);
+        } else {
+            alert("⚠️ Debes seleccionar una página antes de agregarla.");
+        }
+    });
+    window.addEventListener("storage", (e) => {
+        if (e.key === "paginasAgregadasMenu") {
+            console.log("🔄 Panel actualizado por cambio en localStorage.");
+            mostrarPaginasEnPanel();
+        }
+        if (e.key === "paginasEnBlanco") {
+            console.log("🔄 Contenedor blanco actualizado por cambio en localStorage.");
+            mostrarPaginasEnBlanco();
+        }
+    });
+    const paginas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
+    btnAgregar.addEventListener("dblclick", () => {
+        const nuevaPagina = { nombre: `Página ${paginas.length + 1}` };
+        paginas.push(nuevaPagina);
+        localStorage.setItem("paginasAgregadasMenu", JSON.stringify(paginas));
+        mostrarPaginasEnPanel();
+    });
+    mostrarPaginasEnPanel();
+    mostrarPaginasEnBlanco();
+});
 //-----------------------------------------------//
 //--|funcionalidad_tablero_editor_de_contenido|--//
 //-----------------------------------------------//
@@ -134,9 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnEliminar,
         areaContenido
     });
-    //---------------------------------------------------//
-    //--|🧩 Vincular el selector “Tipo de texto” con el contenido|--//
-    //---------------------------------------------------//
     selectTipoTexto.addEventListener("change", () => {
         const tipo = selectTipoTexto.value;
         const titulo = areaContenido.querySelector(".titulo");
@@ -215,11 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return false;
         }
     }
-    //---------------------------------------------------//
-    //--|🧩 Vincular el selector “Tamaño de texto” con la selección|--//
-    //---------------------------------------------------//
     let savedRangeForSize = null;
-    // Guardar selección antes de abrir el selector
     selectTamanoTexto.addEventListener("mousedown", () => {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0) savedRangeForSize = sel.getRangeAt(0).cloneRange();
@@ -289,11 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error aplicando tamaño:", err);
         }
     }
-    //---------------------------------------------------//
-    //--|🧩 Vincular el selector “Ordenar el texto” con el contenido|--//
-    //---------------------------------------------------//
     let savedRangeForAlign = null;
-    // Guardamos el rango antes de abrir el menú (para mantener selección)
     selectOrdenTexto.addEventListener("mousedown", () => {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0) savedRangeForAlign = sel.getRangeAt(0).cloneRange();
@@ -309,7 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const parrafo = areaContenido.querySelector(".parrafo");
         const subtitulo = areaContenido.querySelector(".subtitulo");
         const activo = document.activeElement;
-        // Mapeamos valores del selector a propiedades CSS
         let alignValue = "";
         switch (orden) {
             case "izquierda":
@@ -325,21 +398,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 alignValue = "justify";
                 break;
         }
-        //---------------------------------------------------
-        //--| 1️⃣ Si el usuario tiene el foco directo en un bloque editable
-        //---------------------------------------------------
         if (activo === titulo || activo === parrafo || activo === subtitulo) {
             activo.style.textAlign = alignValue;
             console.log(`📏 ${activo.className.toUpperCase()} alineado a: ${orden}`);
         } 
-        //---------------------------------------------------
-        //--| 2️⃣ Si hay texto seleccionado (con o sin foco)
-        //---------------------------------------------------
         else {
             const sel = window.getSelection();
             const range = sel && sel.rangeCount > 0 ? sel.getRangeAt(0) : savedRangeForAlign;
             if (range && !range.collapsed && areaContenido.contains(range.commonAncestorContainer)) {
-                // buscamos el contenedor más cercano que sea título, párrafo o subtítulo
                 let contenedor = range.commonAncestorContainer;
                 if (contenedor.nodeType === 3) contenedor = contenedor.parentElement;
                 const bloqueEditable = contenedor.closest(".titulo, .parrafo, .subtitulo");
@@ -356,12 +422,8 @@ document.addEventListener("DOMContentLoaded", () => {
         guardarContenidoEditable();
         savedRangeForAlign = null;
     });
-    //---------------------------------------------------//
-    //--|🧩 Vincular el selector “Fuente del texto” con la selección|--//
-    //---------------------------------------------------//
     const selectFuenteTexto = document.querySelector(".selector-fuente");
     let savedRangeForFont = null;
-    // Guardar selección antes de abrir el menú de fuentes
     selectFuenteTexto.addEventListener("mousedown", () => {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0) savedRangeForFont = sel.getRangeAt(0).cloneRange();
@@ -370,7 +432,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0) savedRangeForFont = sel.getRangeAt(0).cloneRange();
     });
-    // Cambio de fuente
     selectFuenteTexto.addEventListener("change", () => {
         const fuente = selectFuenteTexto.value;
         if (!fuente) return;
@@ -406,7 +467,6 @@ document.addEventListener("DOMContentLoaded", () => {
         guardarContenidoEditable();
         savedRangeForFont = null;
     });
-    // Función auxiliar para aplicar fuente a rango seleccionado
     function applyFontToRange(range, font) {
         try {
             const span = document.createElement("span");
@@ -425,15 +485,9 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error aplicando fuente:", err);
         }
     }
-    //---------------------------------------------------//
-    //--|Eventos base del editor|--//
-    //---------------------------------------------------//
     btnAgregarContenido.addEventListener("click", () => {
         console.log("🧩 Botón 'Agregar contenido' presionado.");
     });
-    //---------------------------------------------------//
-    //--|🖋 Funcionalidad de los botones B, K, S |--//
-    //---------------------------------------------------//
     botonesEstilo.forEach((boton) => {
         boton.addEventListener("click", () => {
             const tipo = boton.textContent.trim().toUpperCase();
@@ -443,7 +497,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             const range = sel.getRangeAt(0);
-            // Aseguramos que el contenido editable esté dentro del área del editor
             if (!areaContenido.contains(range.commonAncestorContainer)) {
                 console.log("❌ Selección fuera del área de contenido.");
                 return;
@@ -462,17 +515,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 default:
                     return;
             }
-            // Ejecutar comando nativo del navegador (similar a Word)
             document.execCommand(comando, false, null);
             guardarContenidoEditable();
-            // Marca visual del botón activo
             boton.classList.toggle("activo");
             console.log(`✅ Estilo aplicado: ${tipo}`);
         });
     });
-    //---------------------------------------------------//
-    //--|Construcción dinámica del contenido|--//
-    //---------------------------------------------------//
     function construirContenido(tipo) {
         console.log(`🔄 Reconstruyendo Contenido ${tipo}...`);
         if (tipo === "1") {
@@ -528,9 +576,6 @@ document.addEventListener("DOMContentLoaded", () => {
             areaContenido.innerHTML = `<p class="mensaje-temp">📗 Contenido 3 — Próximamente.</p>`;
         }
     }
-    //---------------------------------------------------//
-    //--|Actualización de imágenes en tiempo real|--//
-    //---------------------------------------------------//
     window.addEventListener("storage", (event) => {
         if (event.key === "ultimaImagenSeleccionada" || event.key === "imagenesCarrusel") {
             const contenedor = document.querySelector(".imagen");
@@ -547,9 +592,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-    //---------------------------------------------------//
-    //--|Funciones auxiliares|--//
-    //---------------------------------------------------//
     function guardarContenidoEditable() {
         const titulo = areaContenido.querySelector(".titulo")?.innerHTML || "";
         const parrafo = areaContenido.querySelector(".parrafo")?.innerHTML || "";
@@ -617,9 +659,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-    //---------------------------------------------------//
-    //--|Inicialización y menú lateral|--//
-    //---------------------------------------------------//
     const contenidoGuardado = localStorage.getItem("contenidoSeleccionado");
     if (contenidoGuardado) construirContenido(contenidoGuardado);
     btnContenido.addEventListener("click", () => {
