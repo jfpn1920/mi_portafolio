@@ -10,63 +10,105 @@ menuBtn.addEventListener('click', () => {
 //--|funcionalidad_agregar_imagen|--//
 //----------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script de agregar imagen cargado correctamente.");
-    const imagenBox = document.querySelector(".imagen-box");
-    const botonAgregar = document.querySelector(".imagen-btn");
-    const inputImagen = document.createElement("input");
-    const estado = document.getElementById("estadoEdicion");
-    inputImagen.type = "file";
-    inputImagen.accept = "image/*";
-    inputImagen.multiple = true;
-    inputImagen.style.display = "none";
-    document.body.appendChild(inputImagen);
-    let imagenesSeleccionadas = [];
-    function mostrarMensaje(texto, tipo = "info") {
-        if (!estado) return;
-        estado.innerHTML = "";
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("mensaje", tipo);
-        mensaje.textContent = texto;
-        estado.appendChild(mensaje);
+    console.log("✅ Script de AGREGAR IMAGEN (Panel de Contenido) cargado correctamente.");
+    const imagenBox_contenido = document.querySelector(".imagen-box");
+    const botonAgregar_contenido = document.querySelector(".imagen-btn");
+    const inputImagen_contenido = document.createElement("input");
+    const estado_contenido = document.getElementById("estadoEdicion");
+    inputImagen_contenido.type = "file";
+    inputImagen_contenido.accept = "image/*";
+    inputImagen_contenido.multiple = false;
+    inputImagen_contenido.style.display = "none";
+    document.body.appendChild(inputImagen_contenido);
+    let imagenSeleccionada_contenido = null;
+    function mostrarMensaje_contenido(texto, tipo = "info") {
+        if (!estado_contenido) return;
+        estado_contenido.innerHTML = "";
+        const mensaje_contenido = document.createElement("div");
+        mensaje_contenido.classList.add("mensaje", tipo);
+        mensaje_contenido.textContent = texto;
+        estado_contenido.appendChild(mensaje_contenido);
     }
-    imagenBox.addEventListener("click", () => {
-        inputImagen.click();
+    imagenBox_contenido.addEventListener("click", () => {
+        inputImagen_contenido.click();
     });
-    inputImagen.addEventListener("change", (e) => {
-        const archivos = Array.from(e.target.files);
-        if (archivos.length === 0) return;
-        imagenesSeleccionadas = [];
-        imagenBox.innerHTML = "";
-        archivos.forEach((archivo) => {
-            const lector = new FileReader();
-            lector.onload = (evento) => {
-                imagenesSeleccionadas.push(evento.target.result);
-                const img = document.createElement("img");
-                img.src = evento.target.result;
-                img.style.width = "100px";
-                img.style.height = "100px";
-                img.style.objectFit = "cover";
-                img.style.margin = "5px";
-                img.style.borderRadius = "5px";
-                imagenBox.appendChild(img);
-            };
-            lector.readAsDataURL(archivo);
-        });
-        mostrarMensaje(`🖼️ ${archivos.length} imagen(es) seleccionada(s).`, "info");
+    inputImagen_contenido.addEventListener("change", (e) => {
+        const archivo_contenido = e.target.files[0];
+        if (!archivo_contenido) return;
+        const lector_contenido = new FileReader();
+        lector_contenido.onload = (evento) => {
+            imagenSeleccionada_contenido = evento.target.result;
+            imagenBox_contenido.innerHTML = "";
+            const imgPreview_contenido = document.createElement("img");
+            imgPreview_contenido.src = imagenSeleccionada_contenido;
+            imgPreview_contenido.style.width = "100px";
+            imgPreview_contenido.style.height = "100px";
+            imgPreview_contenido.style.objectFit = "cover";
+            imgPreview_contenido.style.margin = "5px";
+            imgPreview_contenido.style.borderRadius = "5px";
+            imagenBox_contenido.appendChild(imgPreview_contenido);
+        };
+        lector_contenido.readAsDataURL(archivo_contenido);
+        mostrarMensaje_contenido(`🖼️ Imagen seleccionada correctamente.`, "info");
     });
-    botonAgregar.addEventListener("click", () => {
-        if (imagenesSeleccionadas.length === 0) {
-            mostrarMensaje("No hay imágenes seleccionadas.", "error");
+    botonAgregar_contenido.addEventListener("click", () => {
+        if (!imagenSeleccionada_contenido) {
+            mostrarMensaje_contenido("No hay imagen seleccionada.", "error");
             return;
         }
-        localStorage.setItem("imagenesCarrusel", JSON.stringify(imagenesSeleccionadas));
-        localStorage.setItem("ultimaImagenSeleccionada", imagenesSeleccionadas[imagenesSeleccionadas.length - 1]);
-        mostrarMensaje(`Se han agregado ${imagenesSeleccionadas.length} imágenes con éxito.`, "exito");
-        imagenBox.innerHTML = `<i class="fa-regular fa-image"></i>`;
-        inputImagen.value = "";
-        imagenesSeleccionadas = [];
+        localStorage.setItem("imagen_contenido", imagenSeleccionada_contenido);
+        localStorage.setItem("ultimaImagen_contenido", imagenSeleccionada_contenido);
+        mostrarImagenGuardadaEnDivs();
+        mostrarMensaje_contenido("✅ Imagen agregada al contenido correctamente.", "exito");
+        imagenBox_contenido.innerHTML = `<i class="fa-regular fa-image"></i>`;
+        inputImagen_contenido.value = "";
+        imagenSeleccionada_contenido = null;
+    });
+    function mostrarImagenGuardadaEnDivs() {
+        const imgData =
+            localStorage.getItem("imagen_contenido") ||
+            localStorage.getItem("ultimaImagen_contenido") ||
+            localStorage.getItem("ultimaImagenSeleccionada") ||
+            localStorage.getItem("ultimaImagen");
+        if (!imgData) return;
+        const contenedores = document.querySelectorAll(".imagen");
+        if (contenedores.length === 0) {
+            console.warn("⚠️ No se encontró ningún contenedor .imagen, reintentando...");
+            setTimeout(mostrarImagenGuardadaEnDivs, 300);
+            return;
+        }
+        contenedores.forEach(container => {
+            container.innerHTML = "";
+            const img = document.createElement("img");
+            img.src = imgData;
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.objectFit = "cover";
+            img.style.borderRadius = "5px";
+            container.appendChild(img);
+        });
+        console.log("✅ Imagen restaurada correctamente en los contenedores .imagen");
+    }
+    setTimeout(mostrarImagenGuardadaEnDivs, 500);
+    window.addEventListener("storage", (e) => {
+        if (!e.key) return;
+        const clavesImagen = [
+            "imagen_contenido",
+            "ultimaImagen_contenido",
+            "ultimaImagenSeleccionada",
+            "imagenesCarrusel"
+        ];
+        if (clavesImagen.includes(e.key)) {
+            setTimeout(() => {
+                mostrarImagenGuardadaEnDivs();
+            }, 50);
+        }
     });
 });
+//--------------------------------------//
+//--|funcionalidad_seleccionar_pagina|--//
+//--------------------------------------//
+
 //-----------------------------------------------//
 //--|funcionalidad_tablero_editor_de_contenido|--//
 //-----------------------------------------------//
@@ -92,14 +134,345 @@ document.addEventListener("DOMContentLoaded", () => {
         btnEliminar,
         areaContenido
     });
+    //---------------------------------------------------//
+    //--|🧩 Vincular el selector “Tipo de texto” con el contenido|--//
+    //---------------------------------------------------//
+    selectTipoTexto.addEventListener("change", () => {
+        const tipo = selectTipoTexto.value;
+        const titulo = areaContenido.querySelector(".titulo");
+        const parrafo = areaContenido.querySelector(".parrafo");
+        const subtitulo = areaContenido.querySelector(".subtitulo");
+        [titulo, parrafo, subtitulo].forEach(el => {
+            if (el) {
+                el.style.outline = "";
+                el.style.backgroundColor = "";
+            }
+        });
+        const aplicada = applyStyleToSelection(tipo);
+        if (aplicada) {
+            console.log(`✳️ Estilo "${tipo}" aplicado a la selección.`);
+            guardarContenidoEditable();
+            return;
+        }
+        if (tipo === "titulo" && titulo) {
+            titulo.focus();
+            titulo.style.outline = "2px solid #2196F3";
+            titulo.style.backgroundColor = "#e3f2fd";
+            console.log("🖋 Editando el TÍTULO (sin selección).");
+        } 
+        else if (tipo === "subtitulo" && subtitulo) {
+            subtitulo.focus();
+            subtitulo.style.outline = "2px solid #4CAF50";
+            subtitulo.style.backgroundColor = "#e8f5e9";
+            console.log("🖋 Editando el SUBTÍTULO (sin selección).");
+        } 
+        else if (tipo === "parrafo" && parrafo) {
+            parrafo.focus();
+            parrafo.style.outline = "2px solid #FF9800";
+            parrafo.style.backgroundColor = "#fff3e0";
+            console.log("🖋 Editando el PÁRRAFO (sin selección).");
+        } 
+        else {
+            console.log("ℹ️ No se ha seleccionado un tipo de texto válido o el elemento no existe.");
+        }
+    });
+    function applyStyleToSelection(tipo) {
+        const sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return false;
+        const range = sel.getRangeAt(0);
+        if (range.collapsed) return false;
+        const common = range.commonAncestorContainer;
+        if (!areaContenido.contains(common)) return false;
+        const span = document.createElement("span");
+        span.setAttribute("data-styled", tipo);
+        span.style.display = "inline";
+        if (tipo === "titulo") {
+            span.style.fontSize = "18px";
+            span.style.fontWeight = "700";
+            span.style.lineHeight = "1.1";
+        } else if (tipo === "subtitulo") {
+            span.style.fontSize = "14px";
+            span.style.fontWeight = "600";
+        } else if (tipo === "parrafo") {
+            span.style.fontSize = "13px";
+            span.style.fontWeight = "400";
+        } else {
+            return false;
+        }
+        try {
+            const contenido = range.extractContents();
+            span.appendChild(contenido);
+            range.insertNode(span);
+            sel.removeAllRanges();
+            const newRange = document.createRange();
+            newRange.setStartAfter(span);
+            newRange.collapse(true);
+            sel.addRange(newRange);
+            span.parentNode.normalize();
+            return true;
+        } catch (err) {
+            console.error("Error aplicando estilo a la selección:", err);
+            return false;
+        }
+    }
+    //---------------------------------------------------//
+    //--|🧩 Vincular el selector “Tamaño de texto” con la selección|--//
+    //---------------------------------------------------//
+    let savedRangeForSize = null;
+    // Guardar selección antes de abrir el selector
+    selectTamanoTexto.addEventListener("mousedown", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForSize = sel.getRangeAt(0).cloneRange();
+    });
+    selectTamanoTexto.addEventListener("touchstart", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForSize = sel.getRangeAt(0).cloneRange();
+    });
+    selectTipoTexto.addEventListener("mousedown", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForSize = sel.getRangeAt(0).cloneRange();
+    });
+    selectTipoTexto.addEventListener("touchstart", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForSize = sel.getRangeAt(0).cloneRange();
+    });
+    selectTamanoTexto.addEventListener("change", () => {
+        const size = selectTamanoTexto.value;
+        if (!size) return;
+        const titulo = areaContenido.querySelector(".titulo");
+        const parrafo = areaContenido.querySelector(".parrafo");
+        const subtitulo = areaContenido.querySelector(".subtitulo");
+        const activo = document.activeElement;
+        if (activo === titulo) {
+            titulo.style.fontSize = size;
+            console.log(`🔠 Tamaño del TÍTULO cambiado a ${size}`);
+        } 
+        else if (activo === parrafo) {
+            parrafo.style.fontSize = size;
+            console.log(`🔠 Tamaño del PÁRRAFO cambiado a ${size}`);
+        } 
+        else if (activo === subtitulo) {
+            subtitulo.style.fontSize = size;
+            console.log(`🔠 Tamaño del SUBTÍTULO cambiado a ${size}`);
+        } 
+        else {
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+                applySizeToRange(sel.getRangeAt(0), size);
+                console.log(`✳️ Tamaño aplicado a selección actual: ${size}`);
+            } else if (savedRangeForSize && !savedRangeForSize.collapsed && areaContenido.contains(savedRangeForSize.commonAncestorContainer)) {
+                applySizeToRange(savedRangeForSize, size);
+                console.log(`✳️ Tamaño aplicado a selección guardada: ${size}`);
+                savedRangeForSize = null;
+            } else {
+                console.log("ℹ️ No hay selección para aplicar el tamaño.");
+            }
+        }
+        guardarContenidoEditable();
+        savedRangeForSize = null;
+    });
+    function applySizeToRange(range, size) {
+        try {
+            const span = document.createElement("span");
+            span.style.fontSize = size;
+            const contenido = range.extractContents();
+            span.appendChild(contenido);
+            range.insertNode(span);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            const newRange = document.createRange();
+            newRange.setStartAfter(span);
+            newRange.collapse(true);
+            sel.addRange(newRange);
+            if (span.parentNode) span.parentNode.normalize();
+        } catch (err) {
+            console.error("Error aplicando tamaño:", err);
+        }
+    }
+    //---------------------------------------------------//
+    //--|🧩 Vincular el selector “Ordenar el texto” con el contenido|--//
+    //---------------------------------------------------//
+    let savedRangeForAlign = null;
+    // Guardamos el rango antes de abrir el menú (para mantener selección)
+    selectOrdenTexto.addEventListener("mousedown", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForAlign = sel.getRangeAt(0).cloneRange();
+    });
+    selectOrdenTexto.addEventListener("touchstart", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForAlign = sel.getRangeAt(0).cloneRange();
+    });
+    selectOrdenTexto.addEventListener("change", () => {
+        const orden = selectOrdenTexto.value;
+        if (!orden) return;
+        const titulo = areaContenido.querySelector(".titulo");
+        const parrafo = areaContenido.querySelector(".parrafo");
+        const subtitulo = areaContenido.querySelector(".subtitulo");
+        const activo = document.activeElement;
+        // Mapeamos valores del selector a propiedades CSS
+        let alignValue = "";
+        switch (orden) {
+            case "izquierda":
+                alignValue = "left";
+                break;
+            case "centro":
+                alignValue = "center";
+                break;
+            case "derecha":
+                alignValue = "right";
+                break;
+            case "justificado":
+                alignValue = "justify";
+                break;
+        }
+        //---------------------------------------------------
+        //--| 1️⃣ Si el usuario tiene el foco directo en un bloque editable
+        //---------------------------------------------------
+        if (activo === titulo || activo === parrafo || activo === subtitulo) {
+            activo.style.textAlign = alignValue;
+            console.log(`📏 ${activo.className.toUpperCase()} alineado a: ${orden}`);
+        } 
+        //---------------------------------------------------
+        //--| 2️⃣ Si hay texto seleccionado (con o sin foco)
+        //---------------------------------------------------
+        else {
+            const sel = window.getSelection();
+            const range = sel && sel.rangeCount > 0 ? sel.getRangeAt(0) : savedRangeForAlign;
+            if (range && !range.collapsed && areaContenido.contains(range.commonAncestorContainer)) {
+                // buscamos el contenedor más cercano que sea título, párrafo o subtítulo
+                let contenedor = range.commonAncestorContainer;
+                if (contenedor.nodeType === 3) contenedor = contenedor.parentElement;
+                const bloqueEditable = contenedor.closest(".titulo, .parrafo, .subtitulo");
+                if (bloqueEditable) {
+                    bloqueEditable.style.textAlign = alignValue;
+                    console.log(`📏 ${bloqueEditable.className.toUpperCase()} alineado (${orden}) por selección.`);
+                } else {
+                    console.log("ℹ️ Selección fuera de un bloque editable válido.");
+                }
+            } else {
+                console.log("ℹ️ No hay selección ni rango válido para alinear.");
+            }
+        }
+        guardarContenidoEditable();
+        savedRangeForAlign = null;
+    });
+    //---------------------------------------------------//
+    //--|🧩 Vincular el selector “Fuente del texto” con la selección|--//
+    //---------------------------------------------------//
+    const selectFuenteTexto = document.querySelector(".selector-fuente");
+    let savedRangeForFont = null;
+    // Guardar selección antes de abrir el menú de fuentes
+    selectFuenteTexto.addEventListener("mousedown", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForFont = sel.getRangeAt(0).cloneRange();
+    });
+    selectFuenteTexto.addEventListener("touchstart", () => {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) savedRangeForFont = sel.getRangeAt(0).cloneRange();
+    });
+    // Cambio de fuente
+    selectFuenteTexto.addEventListener("change", () => {
+        const fuente = selectFuenteTexto.value;
+        if (!fuente) return;
+        const titulo = areaContenido.querySelector(".titulo");
+        const parrafo = areaContenido.querySelector(".parrafo");
+        const subtitulo = areaContenido.querySelector(".subtitulo");
+        const activo = document.activeElement;
+        if (activo === titulo) {
+            titulo.style.fontFamily = fuente;
+            console.log(`🔤 Fuente del TÍTULO cambiada a ${fuente}`);
+        } 
+        else if (activo === parrafo) {
+            parrafo.style.fontFamily = fuente;
+            console.log(`🔤 Fuente del PÁRRAFO cambiada a ${fuente}`);
+        } 
+        else if (activo === subtitulo) {
+            subtitulo.style.fontFamily = fuente;
+            console.log(`🔤 Fuente del SUBTÍTULO cambiada a ${fuente}`);
+        } 
+        else {
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+                applyFontToRange(sel.getRangeAt(0), fuente);
+                console.log(`✳️ Fuente aplicada a selección: ${fuente}`);
+            } else if (savedRangeForFont && !savedRangeForFont.collapsed && areaContenido.contains(savedRangeForFont.commonAncestorContainer)) {
+                applyFontToRange(savedRangeForFont, fuente);
+                console.log(`✳️ Fuente aplicada a selección guardada: ${fuente}`);
+                savedRangeForFont = null;
+            } else {
+                console.log("ℹ️ No hay selección o bloque activo para aplicar la fuente.");
+            }
+        }
+        guardarContenidoEditable();
+        savedRangeForFont = null;
+    });
+    // Función auxiliar para aplicar fuente a rango seleccionado
+    function applyFontToRange(range, font) {
+        try {
+            const span = document.createElement("span");
+            span.style.fontFamily = font;
+            const contenido = range.extractContents();
+            span.appendChild(contenido);
+            range.insertNode(span);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            const newRange = document.createRange();
+            newRange.setStartAfter(span);
+            newRange.collapse(true);
+            sel.addRange(newRange);
+            if (span.parentNode) span.parentNode.normalize();
+        } catch (err) {
+            console.error("Error aplicando fuente:", err);
+        }
+    }
+    //---------------------------------------------------//
+    //--|Eventos base del editor|--//
+    //---------------------------------------------------//
     btnAgregarContenido.addEventListener("click", () => {
         console.log("🧩 Botón 'Agregar contenido' presionado.");
     });
-    botonesEstilo.forEach((boton, index) => {
+    //---------------------------------------------------//
+    //--|🖋 Funcionalidad de los botones B, K, S |--//
+    //---------------------------------------------------//
+    botonesEstilo.forEach((boton) => {
         boton.addEventListener("click", () => {
-            console.log(`🎨 Botón de estilo ${index + 1} presionado.`);
+            const tipo = boton.textContent.trim().toUpperCase();
+            const sel = window.getSelection();
+            if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
+                console.log("⚠️ No hay texto seleccionado para aplicar estilo.");
+                return;
+            }
+            const range = sel.getRangeAt(0);
+            // Aseguramos que el contenido editable esté dentro del área del editor
+            if (!areaContenido.contains(range.commonAncestorContainer)) {
+                console.log("❌ Selección fuera del área de contenido.");
+                return;
+            }
+            let comando = "";
+            switch (tipo) {
+                case "B":
+                    comando = "bold";
+                    break;
+                case "K":
+                    comando = "italic";
+                    break;
+                case "S":
+                    comando = "underline";
+                    break;
+                default:
+                    return;
+            }
+            // Ejecutar comando nativo del navegador (similar a Word)
+            document.execCommand(comando, false, null);
+            guardarContenidoEditable();
+            // Marca visual del botón activo
+            boton.classList.toggle("activo");
+            console.log(`✅ Estilo aplicado: ${tipo}`);
         });
     });
+    //---------------------------------------------------//
+    //--|Construcción dinámica del contenido|--//
+    //---------------------------------------------------//
     function construirContenido(tipo) {
         console.log(`🔄 Reconstruyendo Contenido ${tipo}...`);
         if (tipo === "1") {
@@ -127,12 +500,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const imagenesCarrusel = JSON.parse(localStorage.getItem("imagenesCarrusel") || "[]");
             if (imagenesCarrusel.length > 0) {
                 contenedorImagen.innerHTML = imagenesCarrusel.map(
-                    src => `<img src="${src}" alt="imagen carrusel" style="width:282px; border-radius:5px; margin-left: 0px; height: 378px;">`
+                    src => `<img src="${src}" alt="imagen carrusel" style="width:282px; border-radius:5px; margin-left:0; height: 378px;">`
                 ).join("");
-                console.log(`🖼️ ${imagenesCarrusel.length} imagen(es) cargadas desde agregar imagen.`);
+                console.log(`🖼️ ${imagenesCarrusel.length} imagen(es) cargadas.`);
             } else if (ultimaImagen) {
                 contenedorImagen.innerHTML = `<img src="${ultimaImagen}" alt="imagen seleccionada" style="width:100%; border-radius:10px; object-fit:cover;">`;
-                console.log("🖼️ Imagen principal cargada correctamente.");
             } else {
                 contenedorImagen.innerHTML = `<p style="color:#888;">No hay imagen seleccionada aún.</p>`;
             }
@@ -156,6 +528,9 @@ document.addEventListener("DOMContentLoaded", () => {
             areaContenido.innerHTML = `<p class="mensaje-temp">📗 Contenido 3 — Próximamente.</p>`;
         }
     }
+    //---------------------------------------------------//
+    //--|Actualización de imágenes en tiempo real|--//
+    //---------------------------------------------------//
     window.addEventListener("storage", (event) => {
         if (event.key === "ultimaImagenSeleccionada" || event.key === "imagenesCarrusel") {
             const contenedor = document.querySelector(".imagen");
@@ -164,15 +539,35 @@ document.addEventListener("DOMContentLoaded", () => {
             const ultimaImagen = localStorage.getItem("ultimaImagenSeleccionada");
             if (imagenesCarrusel.length > 0) {
                 contenedor.innerHTML = imagenesCarrusel.map(
-                    src => `<img src="${src}" alt="imagen carrusel" style="width:100%; margin-bottom:5px; border-radius: 5px; object-fit:cover;">`
+                    src => `<img src="${src}" alt="imagen carrusel" style="width:100%; margin-bottom:5px; border-radius:5px; object-fit:cover;">`
                 ).join("");
-                console.log("♻️ Carrusel actualizado desde otra pestaña.");
+                console.log("♻️ Carrusel actualizado.");
             } else if (ultimaImagen) {
-                contenedor.innerHTML = `<img src="${ultimaImagen}" alt="imagen actualizada" style="width:100%; border-radius: 5px; object-fit:cover;">`;
-                console.log("♻️ Imagen única actualizada desde otra pestaña.");
+                contenedor.innerHTML = `<img src="${ultimaImagen}" alt="imagen actualizada" style="width:100%; border-radius:5px; object-fit:cover;">`;
             }
         }
     });
+    //---------------------------------------------------//
+    //--|Funciones auxiliares|--//
+    //---------------------------------------------------//
+    function guardarContenidoEditable() {
+        const titulo = areaContenido.querySelector(".titulo")?.innerHTML || "";
+        const parrafo = areaContenido.querySelector(".parrafo")?.innerHTML || "";
+        const subtitulo = areaContenido.querySelector(".subtitulo")?.innerHTML || "";
+        localStorage.setItem("contenidoEditable", JSON.stringify({ titulo, parrafo, subtitulo }));
+        console.log("💾 Contenido editable guardado con estilos.");
+    }
+    function restaurarContenidoEditable() {
+        const datos = JSON.parse(localStorage.getItem("contenidoEditable"));
+        if (!datos) return;
+        const titulo = areaContenido.querySelector(".titulo");
+        const parrafo = areaContenido.querySelector(".parrafo");
+        const subtitulo = areaContenido.querySelector(".subtitulo");
+        if (titulo) titulo.innerHTML = datos.titulo || "";
+        if (parrafo) parrafo.innerHTML = datos.parrafo || "";
+        if (subtitulo) subtitulo.innerHTML = datos.subtitulo || "";
+        console.log("♻️ Contenido editable restaurado.");
+    }
     function inicializarBotonera() {
         const botones = areaContenido.querySelectorAll(".btn-add");
         botones.forEach((btn, index) => {
@@ -189,11 +584,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         const base64 = evento.target.result;
                         btn.innerHTML = `<img src="${base64}" alt="img" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
                         btn.style.padding = "0";
-                        const key = "imagenesBotonera";
-                        const arr = JSON.parse(localStorage.getItem(key) || "[]");
+                        const arr = JSON.parse(localStorage.getItem("imagenesBotonera") || "[]");
                         arr[index] = base64;
-                        localStorage.setItem(key, JSON.stringify(arr));
-                        console.log(`💾 Imagen guardada en botón #${index + 1}`);
+                        localStorage.setItem("imagenesBotonera", JSON.stringify(arr));
                     };
                     lector.readAsDataURL(archivo);
                 });
@@ -207,7 +600,7 @@ document.addEventListener("DOMContentLoaded", () => {
         botones.forEach((btn, i) => {
             const b64 = imagenesArray[i];
             if (b64) {
-                btn.innerHTML = `<img src="${b64}" alt="img" style="width:100%; height:100%; object-fit:cover; border-radius: 5px;">`;
+                btn.innerHTML = `<img src="${b64}" alt="img" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
                 btn.style.padding = "0";
             }
         });
@@ -224,32 +617,15 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-    function guardarContenidoEditable() {
-        const titulo = areaContenido.querySelector(".titulo")?.innerText || "";
-        const parrafo = areaContenido.querySelector(".parrafo")?.innerText || "";
-        const subtitulo = areaContenido.querySelector(".subtitulo")?.innerText || "";
-        localStorage.setItem("contenidoEditable", JSON.stringify({ titulo, parrafo, subtitulo }));
-        console.log("💾 Contenido editable guardado.");
-    }
-    function restaurarContenidoEditable() {
-        const datos = JSON.parse(localStorage.getItem("contenidoEditable"));
-        if (!datos) return;
-        const titulo = areaContenido.querySelector(".titulo");
-        const parrafo = areaContenido.querySelector(".parrafo");
-        const subtitulo = areaContenido.querySelector(".subtitulo");
-        if (titulo) titulo.innerText = datos.titulo;
-        if (parrafo) parrafo.innerText = datos.parrafo;
-        if (subtitulo) subtitulo.innerText = datos.subtitulo;
-    }
+    //---------------------------------------------------//
+    //--|Inicialización y menú lateral|--//
+    //---------------------------------------------------//
     const contenidoGuardado = localStorage.getItem("contenidoSeleccionado");
     if (contenidoGuardado) construirContenido(contenidoGuardado);
     btnContenido.addEventListener("click", () => {
         console.log("🗂 Botón 'Contenido' presionado.");
         let menu = document.querySelector(".menu-contenido");
-        if (menu) {
-            menu.remove();
-            return;
-        }
+        if (menu) return menu.remove();
         menu = document.createElement("div");
         menu.classList.add("menu-contenido");
         menu.innerHTML = `
