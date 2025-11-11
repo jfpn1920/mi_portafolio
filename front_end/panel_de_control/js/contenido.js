@@ -58,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         localStorage.setItem("imagen_contenido", imagenSeleccionada_contenido);
         localStorage.setItem("ultimaImagen_contenido", imagenSeleccionada_contenido);
+        localStorage.setItem("imagen_contenido2", imagenSeleccionada_contenido);
+        localStorage.setItem("ultimaImagen_contenido2", imagenSeleccionada_contenido);
         mostrarImagenGuardadaEnDivs();
         mostrarMensaje_contenido("✅ Imagen agregada al contenido correctamente.", "exito");
         imagenBox_contenido.innerHTML = `<i class="fa-regular fa-image"></i>`;
@@ -71,13 +73,24 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.getItem("ultimaImagenSeleccionada") ||
             localStorage.getItem("ultimaImagen");
         if (!imgData) return;
-        const contenedores = document.querySelectorAll(".imagen");
-        if (contenedores.length === 0) {
+        const contenedores1 = document.querySelectorAll(".imagen");
+        if (contenedores1.length === 0) {
             console.warn("⚠️ No se encontró ningún contenedor .imagen, reintentando...");
             setTimeout(mostrarImagenGuardadaEnDivs, 300);
-            return;
+        } else {
+            contenedores1.forEach(container => {
+                container.innerHTML = "";
+                const img = document.createElement("img");
+                img.src = imgData;
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "cover";
+                img.style.borderRadius = "5px";
+                container.appendChild(img);
+            });
         }
-        contenedores.forEach(container => {
+        const contenedores2 = document.querySelectorAll(".imagen2");
+        contenedores2.forEach(container => {
             container.innerHTML = "";
             const img = document.createElement("img");
             img.src = imgData;
@@ -87,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             img.style.borderRadius = "5px";
             container.appendChild(img);
         });
-        console.log("✅ Imagen restaurada correctamente en los contenedores .imagen");
+        console.log("✅ Imagen restaurada correctamente en .imagen y .imagen2");
     }
     setTimeout(mostrarImagenGuardadaEnDivs, 500);
     window.addEventListener("storage", (e) => {
@@ -95,8 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const clavesImagen = [
             "imagen_contenido",
             "ultimaImagen_contenido",
+            "imagen_contenido2",
+            "ultimaImagen_contenido2",
             "ultimaImagenSeleccionada",
-            "imagenesCarrusel"
+            "imagenesCarrusel",
+            "imagenesCarrusel2"
         ];
         if (clavesImagen.includes(e.key)) {
             setTimeout(() => {
@@ -376,29 +392,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0) savedRangeForAlign = sel.getRangeAt(0).cloneRange();
     });
+    //----------------------//
+    //--|ordenar_el_texto|--//
+    //----------------------//
     selectOrdenTexto.addEventListener("change", () => {
         const orden = selectOrdenTexto.value;
         if (!orden) return;
+        let alignValue = "";
+        switch (orden) {
+            case "izquierda": alignValue = "left"; break;
+            case "centro": alignValue = "center"; break;
+            case "derecha": alignValue = "right"; break;
+            case "justificado": alignValue = "justify"; break;
+        }
         const titulo = areaContenido.querySelector(".titulo");
         const parrafo = areaContenido.querySelector(".parrafo");
         const subtitulo = areaContenido.querySelector(".subtitulo");
+        const titulo2 = areaContenido.querySelector(".titulo2");
+        const parrafo2 = areaContenido.querySelector(".parrafo2");
+        const subtitulo2 = areaContenido.querySelector(".subtitulo2");
         const activo = document.activeElement;
-        let alignValue = "";
-        switch (orden) {
-            case "izquierda":
-                alignValue = "left";
-                break;
-            case "centro":
-                alignValue = "center";
-                break;
-            case "derecha":
-                alignValue = "right";
-                break;
-            case "justificado":
-                alignValue = "justify";
-                break;
-        }
-        if (activo === titulo || activo === parrafo || activo === subtitulo) {
+        if ([titulo, parrafo, subtitulo, titulo2, parrafo2, subtitulo2].includes(activo)) {
             activo.style.textAlign = alignValue;
             console.log(`📏 ${activo.className.toUpperCase()} alineado a: ${orden}`);
         } 
@@ -408,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (range && !range.collapsed && areaContenido.contains(range.commonAncestorContainer)) {
                 let contenedor = range.commonAncestorContainer;
                 if (contenedor.nodeType === 3) contenedor = contenedor.parentElement;
-                const bloqueEditable = contenedor.closest(".titulo, .parrafo, .subtitulo");
+                const bloqueEditable = contenedor.closest(".titulo, .parrafo, .subtitulo, .titulo2, .parrafo2, .subtitulo2");
                 if (bloqueEditable) {
                     bloqueEditable.style.textAlign = alignValue;
                     console.log(`📏 ${bloqueEditable.className.toUpperCase()} alineado (${orden}) por selección.`);
@@ -570,7 +584,51 @@ document.addEventListener("DOMContentLoaded", () => {
             restaurarContenidoEditable();
         }
         else if (tipo === "2") {
-            areaContenido.innerHTML = `<p class="mensaje-temp">📘 Contenido 2 — Próximamente.</p>`;
+            console.log("🔄 Reconstruyendo Contenido 2...");
+            const imagenesBotonera = JSON.parse(localStorage.getItem("imagenesBotonera2") || "[]");
+            areaContenido.innerHTML = `
+                <div class="contenido2">
+                    <div class="columna-izquierda2">
+                        <div class="titulo2" contenteditable="true">Aquí irá el título</div>
+                        <div class="parrafo2" contenteditable="true">Aquí irá el párrafo</div>
+                        <div class="subtitulo2" contenteditable="true">Aquí irá el subtítulo</div>
+                        <div class="botonera2">
+                            <button class="btn-add2">+</button>
+                            <button class="btn-add2">+</button>
+                            <button class="btn-add2">+</button>
+                            <button class="btn-add2">+</button>
+                        </div>
+                    </div>
+                    <div class="columna-derecha2">
+                        <div class="imagen2">Aquí irá la imagen</div>
+                    </div>
+                </div>
+            `;
+            const contenedorImagen = areaContenido.querySelector(".imagen2");
+            const ultimaImagen = localStorage.getItem("ultimaImagenSeleccionada2");
+            const imagenesCarrusel = JSON.parse(localStorage.getItem("imagenesCarrusel2") || "[]");
+            if (imagenesCarrusel.length > 0) {
+                contenedorImagen.innerHTML = imagenesCarrusel.map(
+                    src => `<img src="${src}" alt="imagen carrusel" style="width:100%; border-radius:8px; object-fit:cover;">`
+                ).join("");
+                console.log(`🖼️ ${imagenesCarrusel.length} imagen(es) cargadas (Contenido 2).`);
+            } else if (ultimaImagen) {
+                contenedorImagen.innerHTML = `<img src="${ultimaImagen}" alt="imagen seleccionada" style="width: 100%; border-radius:5px; object-fit:cover;">`;
+            } else {
+                contenedorImagen.innerHTML = `<p style="color:#fff;">Aquí irá la imagen</p>`;
+            }
+            inicializarBotonera2();
+            restaurarImagenesEnBotones2(imagenesBotonera);
+            const titulo = areaContenido.querySelector(".titulo2");
+            const parrafo = areaContenido.querySelector(".parrafo2");
+            const subtitulo = areaContenido.querySelector(".subtitulo2");
+            limitarTexto(titulo, "Has alcanzado el máximo de espacio.");
+            limitarTexto(parrafo, "Has llegado al máximo permitido.");
+            limitarTexto(subtitulo, "Has alcanzado el máximo de espacio.");
+            [titulo, parrafo, subtitulo].forEach((el) => {
+                el.addEventListener("input", guardarContenidoEditable);
+            });
+            restaurarContenidoEditable();
         }
         else if (tipo === "3") {
             areaContenido.innerHTML = `<p class="mensaje-temp">📗 Contenido 3 — Próximamente.</p>`;
@@ -588,7 +646,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).join("");
                 console.log("♻️ Carrusel actualizado.");
             } else if (ultimaImagen) {
-                contenedor.innerHTML = `<img src="${ultimaImagen}" alt="imagen actualizada" style="width:100%; border-radius:5px; object-fit:cover;">`;
+                contenedor.innerHTML = `<img src="${ultimaImagen}" alt="imagen actualizada" style="width: 100%; border-radius:5px; object-fit:cover;">`;
             }
         }
     });
@@ -643,6 +701,49 @@ document.addEventListener("DOMContentLoaded", () => {
             const b64 = imagenesArray[i];
             if (b64) {
                 btn.innerHTML = `<img src="${b64}" alt="img" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
+                btn.style.padding = "0";
+            }
+        });
+    }
+    //===================================================//
+    //--| Funcionalidad para los botones del Contenido 2 |--//
+    //===================================================//
+    function inicializarBotonera2() {
+        const botones = areaContenido.querySelectorAll(".btn-add2");
+        botones.forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                console.log(`🖱️ Botón +2 #${index + 1} presionado.`);
+                const inputFile = document.createElement("input");
+                inputFile.type = "file";
+                inputFile.accept = "image/*";
+                inputFile.addEventListener("change", (e) => {
+                    const archivo = e.target.files[0];
+                    if (!archivo) return;
+                    const lector = new FileReader();
+                    lector.onload = (evento) => {
+                        const base64 = evento.target.result;
+                        // Mostrar imagen dentro del botón
+                        btn.innerHTML = `<img src="${base64}" alt="img2" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
+                        btn.style.padding = "0";
+                        // Guardar en localStorage (para Contenido 2)
+                        const arr = JSON.parse(localStorage.getItem("imagenesBotonera2") || "[]");
+                        arr[index] = base64;
+                        localStorage.setItem("imagenesBotonera2", JSON.stringify(arr));
+                        console.log(`💾 Imagen guardada en imágenesBotonera2[${index}]`);
+                    };
+                    lector.readAsDataURL(archivo);
+                });
+                inputFile.click();
+            });
+        });
+    }
+    function restaurarImagenesEnBotones2(imagenesArray) {
+        if (!imagenesArray?.length) return;
+        const botones = areaContenido.querySelectorAll(".btn-add2");
+        botones.forEach((btn, i) => {
+            const b64 = imagenesArray[i];
+            if (b64) {
+                btn.innerHTML = `<img src="${b64}" alt="img2" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
                 btn.style.padding = "0";
             }
         });
