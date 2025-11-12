@@ -392,9 +392,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0) savedRangeForAlign = sel.getRangeAt(0).cloneRange();
     });
-    //----------------------//
-    //--|ordenar_el_texto|--//
-    //----------------------//
     selectOrdenTexto.addEventListener("change", () => {
         const orden = selectOrdenTexto.value;
         if (!orden) return;
@@ -411,8 +408,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const titulo2 = areaContenido.querySelector(".titulo2");
         const parrafo2 = areaContenido.querySelector(".parrafo2");
         const subtitulo2 = areaContenido.querySelector(".subtitulo2");
+        const titulo3 = areaContenido.querySelector(".titulo3");
+        const subtitulos3 = areaContenido.querySelectorAll(".subtitulo3");
+        const titulo3Derecha = areaContenido.querySelector(".titulo3-derecha");
+        const parrafo3 = areaContenido.querySelector(".parrafo3");
         const activo = document.activeElement;
-        if ([titulo, parrafo, subtitulo, titulo2, parrafo2, subtitulo2].includes(activo)) {
+        const editables = [
+            titulo, parrafo, subtitulo,
+            titulo2, parrafo2, subtitulo2,
+            titulo3, titulo3Derecha, parrafo3,
+            ...subtitulos3
+        ];
+        if (editables.includes(activo)) {
             activo.style.textAlign = alignValue;
             console.log(`📏 ${activo.className.toUpperCase()} alineado a: ${orden}`);
         } 
@@ -422,7 +429,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (range && !range.collapsed && areaContenido.contains(range.commonAncestorContainer)) {
                 let contenedor = range.commonAncestorContainer;
                 if (contenedor.nodeType === 3) contenedor = contenedor.parentElement;
-                const bloqueEditable = contenedor.closest(".titulo, .parrafo, .subtitulo, .titulo2, .parrafo2, .subtitulo2");
+                const bloqueEditable = contenedor.closest(`
+                    .titulo, .parrafo, .subtitulo,
+                    .titulo2, .parrafo2, .subtitulo2,
+                    .titulo3, .subtitulo3, .titulo3-derecha, .parrafo3
+                `);
                 if (bloqueEditable) {
                     bloqueEditable.style.textAlign = alignValue;
                     console.log(`📏 ${bloqueEditable.className.toUpperCase()} alineado (${orden}) por selección.`);
@@ -501,6 +512,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     btnAgregarContenido.addEventListener("click", () => {
         console.log("🧩 Botón 'Agregar contenido' presionado.");
+        const areaContenido = document.querySelector(".contenido-area5");
+        if (areaContenido && areaContenido.innerHTML.trim() !== "") {
+            alert("✅ El contenido ha sido creado con éxito.");
+            console.log("✅ El contenido ha sido creado con éxito.");
+        } else {
+            alert("⚠️ No hay ningún contenido.");
+            console.log("⚠️ No hay ningún contenido.");
+        }
     });
     botonesEstilo.forEach((boton) => {
         boton.addEventListener("click", () => {
@@ -631,7 +650,94 @@ document.addEventListener("DOMContentLoaded", () => {
             restaurarContenidoEditable();
         }
         else if (tipo === "3") {
-            areaContenido.innerHTML = `<p class="mensaje-temp">📗 Contenido 3 — Próximamente.</p>`;
+            console.log("🔄 Reconstruyendo Contenido 3...");
+            const imagenesBotonera = JSON.parse(localStorage.getItem("imagenesBotonera3") || "[]");
+            areaContenido.innerHTML = `
+                <div class="contenido3">
+                    <div class="columna-izquierda3">
+                        <div class="fila3 fila-titulo">
+                            <button class="btn-add3">+</button>
+                            <div class="titulo3" contenteditable="true">Aquí irá un título</div>
+                        </div>
+                        <div class="fila3">
+                            <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                        </div>
+                        <div class="fila3 fila-botones">
+                            <button class="btn-add3">+</button>
+                            <button class="btn-add3">+</button>
+                        </div>
+                        <div class="fila3">
+                            <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                        </div>
+                        <div class="fila3 fila-botones">
+                            <button class="btn-add3">+</button>
+                            <button class="btn-add3">+</button>
+                            <button class="btn-add3">+</button>
+                            <button class="btn-add3">+</button>
+                            <button class="btn-add3">+</button>
+                        </div>
+                        <div class="fila3">
+                            <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                        </div>
+                        <div class="fila3 fila-botones">
+                            <button class="btn-add3">+</button>
+                        </div>
+                        <div class="fila3">
+                            <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                        </div>
+                        <div class="fila3 fila-botones">
+                            <button class="btn-add3">+</button>
+                            <button class="btn-add3">+</button>
+                        </div>
+                    </div>
+                    <div class="columna-derecha3">
+                        <div class="titulo3-derecha" contenteditable="true">Aquí irá un título</div>
+                        <div class="imagen3">
+                            <div class="parrafo3" contenteditable="true">Aquí irá el párrafo</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            inicializarBotonera3();
+            restaurarImagenesEnBotones3(imagenesBotonera);
+            const titulo3 = areaContenido.querySelector(".titulo3");
+            const parrafo3 = areaContenido.querySelector(".parrafo3");
+            const subtitulos3 = areaContenido.querySelectorAll(".subtitulo3");
+            const titulo3Derecha = areaContenido.querySelector(".titulo3-derecha");
+            limitarTexto(titulo3, "Has alcanzado el máximo de espacio.");
+            limitarTexto(parrafo3, "Has llegado al máximo permitido.");
+            limitarTexto(titulo3Derecha, "Has alcanzado el máximo de espacio.");
+            subtitulos3.forEach(s => limitarTexto(s, "Has alcanzado el máximo de espacio."));
+            [titulo3, parrafo3, titulo3Derecha, ...subtitulos3].forEach((el) => {
+                el.addEventListener("input", guardarContenidoEditable);
+            });
+            restaurarContenidoEditable();
+            titulo3.addEventListener("input", () => {
+                if (titulo3.textContent.length > 40) {
+                    alert("⚠️ Has alcanzado el máximo permitido de 60 caracteres para el título.");
+                    titulo3.textContent = titulo3.textContent.substring(0, 60);
+                }
+            });
+            subtitulos3.forEach(sub => {
+                sub.addEventListener("input", () => {
+                    if (sub.textContent.length > 40) {
+                        alert("⚠️ Has alcanzado el máximo permitido de 80 caracteres para el subtítulo.");
+                        sub.textContent = sub.textContent.substring(0, 80);
+                    }
+                });
+            });
+            titulo3Derecha.addEventListener("input", () => {
+                if (titulo3Derecha.textContent.length > 40) {
+                    alert("⚠️ Has alcanzado el máximo permitido de 60 caracteres para el título derecho.");
+                    titulo3Derecha.textContent = titulo3Derecha.textContent.substring(0, 60);
+                }
+            });
+            parrafo3.addEventListener("input", () => {
+                if (parrafo3.textContent.length > 1000) {
+                    alert("⚠️ Has alcanzado el máximo permitido de 200 caracteres para el párrafo.");
+                    parrafo3.textContent = parrafo3.textContent.substring(0, 1000);
+                }
+            });
         }
     }
     window.addEventListener("storage", (event) => {
@@ -705,9 +811,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    //===================================================//
-    //--| Funcionalidad para los botones del Contenido 2 |--//
-    //===================================================//
     function inicializarBotonera2() {
         const botones = areaContenido.querySelectorAll(".btn-add2");
         botones.forEach((btn, index) => {
@@ -722,10 +825,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     const lector = new FileReader();
                     lector.onload = (evento) => {
                         const base64 = evento.target.result;
-                        // Mostrar imagen dentro del botón
                         btn.innerHTML = `<img src="${base64}" alt="img2" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
                         btn.style.padding = "0";
-                        // Guardar en localStorage (para Contenido 2)
                         const arr = JSON.parse(localStorage.getItem("imagenesBotonera2") || "[]");
                         arr[index] = base64;
                         localStorage.setItem("imagenesBotonera2", JSON.stringify(arr));
@@ -744,6 +845,44 @@ document.addEventListener("DOMContentLoaded", () => {
             const b64 = imagenesArray[i];
             if (b64) {
                 btn.innerHTML = `<img src="${b64}" alt="img2" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
+                btn.style.padding = "0";
+            }
+        });
+    }
+    function inicializarBotonera3() {
+        const botones = areaContenido.querySelectorAll(".btn-add3");
+        botones.forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                console.log(`🖱️ Botón +3 #${index + 1} presionado.`);
+                const inputFile = document.createElement("input");
+                inputFile.type = "file";
+                inputFile.accept = "image/*";
+                inputFile.addEventListener("change", (e) => {
+                    const archivo = e.target.files[0];
+                    if (!archivo) return;
+                    const lector = new FileReader();
+                    lector.onload = (evento) => {
+                        const base64 = evento.target.result;
+                        btn.innerHTML = `<img src="${base64}" alt="img3" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
+                        btn.style.padding = "0";
+                        const arr = JSON.parse(localStorage.getItem("imagenesBotonera3") || "[]");
+                        arr[index] = base64;
+                        localStorage.setItem("imagenesBotonera3", JSON.stringify(arr));
+                        console.log(`💾 Imagen guardada en imágenesBotonera3[${index}]`);
+                    };
+                    lector.readAsDataURL(archivo);
+                });
+                inputFile.click();
+            });
+        });
+    }
+    function restaurarImagenesEnBotones3(imagenesArray) {
+        if (!imagenesArray?.length) return;
+        const botones = areaContenido.querySelectorAll(".btn-add3");
+        botones.forEach((btn, i) => {
+            const b64 = imagenesArray[i];
+            if (b64) {
+                btn.innerHTML = `<img src="${b64}" alt="img3" style="width:100%; height:100%; object-fit:cover; border-radius:5px;">`;
                 btn.style.padding = "0";
             }
         });
