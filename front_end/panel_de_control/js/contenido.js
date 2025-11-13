@@ -6,6 +6,18 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//----------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_contenido|--//
+//----------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //----------------------------------//
 //--|funcionalidad_agregar_imagen|--//
 //----------------------------------//
@@ -26,7 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
         estado_contenido.innerHTML = "";
         const mensaje_contenido = document.createElement("div");
         mensaje_contenido.classList.add("mensaje", tipo);
-        mensaje_contenido.textContent = texto;
+        mensaje_contenido.innerHTML = `
+            <span class="icono">
+                ${tipo === "exito" ? "" :
+                    tipo === "error" ? "" :
+                    tipo === "info" ? "" : "💬"}
+            </span>
+            <span class="texto">${texto}</span>
+        `;
         estado_contenido.appendChild(mensaje_contenido);
     }
     imagenBox_contenido.addEventListener("click", () => {
@@ -49,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             imagenBox_contenido.appendChild(imgPreview_contenido);
         };
         lector_contenido.readAsDataURL(archivo_contenido);
-        mostrarMensaje_contenido(`🖼️ Imagen seleccionada correctamente.`, "info");
+        mostrarMensaje_contenido("Imagen seleccionada correctamente.", "info");
     });
     botonAgregar_contenido.addEventListener("click", () => {
         if (!imagenSeleccionada_contenido) {
@@ -61,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("imagen_contenido2", imagenSeleccionada_contenido);
         localStorage.setItem("ultimaImagen_contenido2", imagenSeleccionada_contenido);
         mostrarImagenGuardadaEnDivs();
-        mostrarMensaje_contenido("✅ Imagen agregada al contenido correctamente.", "exito");
+        mostrarMensaje_contenido("Imagen agregada al contenido correctamente.", "exito");
         imagenBox_contenido.innerHTML = `<i class="fa-regular fa-image"></i>`;
         inputImagen_contenido.value = "";
         imagenSeleccionada_contenido = null;
@@ -75,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!imgData) return;
         const contenedores1 = document.querySelectorAll(".imagen");
         if (contenedores1.length === 0) {
-            console.warn("⚠️ No se encontró ningún contenedor .imagen, reintentando...");
+            console.warn("No se encontró ningún contenedor .imagen, reintentando...");
             setTimeout(mostrarImagenGuardadaEnDivs, 300);
         } else {
             contenedores1.forEach(container => {
@@ -130,7 +149,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAgregar = document.querySelector(".panel-boton4");
     const contenedorCajas = document.querySelector(".panel-caja4");
     const contenedorBlanco = document.querySelector(".contenedor-blanco"); 
+    const estado_contenido = document.getElementById("estadoEdicion");
     let paginaSeleccionada = null;
+    function mostrarMensaje_contenido(texto, tipo = "info") {
+        if (!estado_contenido) return;
+        estado_contenido.innerHTML = "";
+        const mensaje_contenido = document.createElement("div");
+        mensaje_contenido.classList.add("mensaje", tipo);
+        mensaje_contenido.innerHTML = `
+            <span class="icono">
+                ${tipo === "exito" ? "" :
+                    tipo === "error" ? "" :
+                    tipo === "info" ? "" : "💬"}
+            </span>
+            <span class="texto">${texto}</span>
+        `;
+        estado_contenido.appendChild(mensaje_contenido);
+    }
     function mostrarPaginasEnPanel() {
         contenedorCajas.innerHTML = "";
         const paginas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
@@ -141,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mensaje.style.color = "#666";
             mensaje.style.fontSize = "13px";
             contenedorCajas.appendChild(mensaje);
+            mostrarMensaje_contenido(" No hay páginas añadidas al panel.", "info");
             return;
         }
         paginas.forEach(pagina => {
@@ -154,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
             nuevaPagina.style.textAlign = "justify";
             contenedorCajas.appendChild(nuevaPagina);
         });
+        mostrarMensaje_contenido("Páginas cargadas correctamente en el panel.", "exito");
     }
     function mostrarPaginasEnBlanco() {
         contenedorBlanco.innerHTML = "";
@@ -163,21 +200,21 @@ document.addEventListener("DOMContentLoaded", () => {
             nuevaCaja.classList.add("pagina-en-blanco");
             nuevaCaja.textContent = nombre;
             nuevaCaja.style.padding = "3px 5px";
-            nuevaCaja.style.margin = "0px 0px 0px 0px";
+            nuevaCaja.style.margin = "0px";
             nuevaCaja.style.fontSize = "14px";
             contenedorBlanco.appendChild(nuevaCaja);
         });
+        mostrarMensaje_contenido("Contenedor blanco actualizado correctamente.", "exito");
     }
     contenedorCajas.addEventListener("click", (e) => {
         if (e.target.classList.contains("pagina-item")) {
             contenedorCajas.querySelectorAll(".pagina-item").forEach(item => item.classList.remove("seleccionada"));
             e.target.classList.add("seleccionada");
             paginaSeleccionada = e.target.textContent;
-            console.log(`📄 Página seleccionada: ${paginaSeleccionada}`);
+            mostrarMensaje_contenido(`Página seleccionada: ${paginaSeleccionada}`, "info");
         }
     });
     btnAgregar.addEventListener("click", () => {
-        console.log("🟢 Botón 'Agregar' presionado.");
         if (paginaSeleccionada) {
             const paginasBlanco = JSON.parse(localStorage.getItem("paginasEnBlanco")) || [];
             if (!paginasBlanco.includes(paginaSeleccionada)) {
@@ -185,18 +222,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("paginasEnBlanco", JSON.stringify(paginasBlanco));
             }
             mostrarPaginasEnBlanco();
-            console.log(`🧩 Página '${paginaSeleccionada}' agregada al contenedor blanco.`);
+            mostrarMensaje_contenido(` Página '${paginaSeleccionada}' agregada al contenedor blanco.`, "exito");
         } else {
-            alert("⚠️ Debes seleccionar una página antes de agregarla.");
+            mostrarMensaje_contenido(" Debes seleccionar una página antes de agregarla.", "error");
         }
     });
     window.addEventListener("storage", (e) => {
         if (e.key === "paginasAgregadasMenu") {
-            console.log("🔄 Panel actualizado por cambio en localStorage.");
+            mostrarMensaje_contenido("Panel actualizado por cambio en localStorage.", "info");
             mostrarPaginasEnPanel();
         }
         if (e.key === "paginasEnBlanco") {
-            console.log("🔄 Contenedor blanco actualizado por cambio en localStorage.");
+            mostrarMensaje_contenido("Contenedor blanco actualizado por cambio en localStorage.", "info");
             mostrarPaginasEnBlanco();
         }
     });
@@ -206,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
         paginas.push(nuevaPagina);
         localStorage.setItem("paginasAgregadasMenu", JSON.stringify(paginas));
         mostrarPaginasEnPanel();
+        mostrarMensaje_contenido(` Página ${nuevaPagina.nombre} creada y añadida al panel.`, "exito");
     });
     mostrarPaginasEnPanel();
     mostrarPaginasEnBlanco();
