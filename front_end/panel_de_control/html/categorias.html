@@ -90,18 +90,18 @@
             <div class="select-contenedor">
                 <select class="select">
                     <option selected disabled>Seleccionar el tipo</option>
-                    <option value="tipo1">Tipo 1</option>
-                    <option value="tipo2">Tipo 2</option>
-                    <option value="tipo3">Tipo 3</option>
+                    <option value="tipo1">Paginas web</option>
+                    <option value="tipo2">Juegos</option>
+                    <option value="tipo3">Aplicacion</option>
                 </select>
             </div>
             <label class="etiqueta">Seleccionar el ícono</label>
             <div class="select-contenedor">
                 <select class="select">
                     <option selected disabled>Seleccionar el ícono</option>
-                    <option value="icono1">Icono 1</option>
-                    <option value="icono2">Icono 2</option>
-                    <option value="icono3">Icono 3</option>
+                    <option value="icono1">tienda</option>
+                    <option value="icono2">juegos</option>
+                    <option value="icono3">peliculas</option>
                 </select>
             </div>
         </div>
@@ -122,18 +122,26 @@
     <!---------------------------------->
     <!--|estructura_tablero_categoria|-->
     <!---------------------------------->
-    <div class="contenedor-principal">
-        <div class="fila-superior">
-            <div class="titulo">Tablero categoria</div>
-            <div class="boton-contenedor">
-                <button class="boton">Agregar todo</button>
-            </div>
+    <div class="contenedor-tablero">
+        <div class="encabezado-tablero">
+            <div class="titulo-tablero">Tablero de categorias</div>
+            <button class="btn-agregar">Agregar todo</button>
         </div>
-        <div class="encabezado">
-            <div class="columna imagenes">Categoria</div>
-            <div class="columna acciones">Acciones</div>
-        </div>
-        <div class="zona-tablero"></div>
+        <table class="tabla-paginas">
+            <thead>
+                <tr>
+                    <th>Categorias</th>
+                    <th>Imagen</th>
+                    <th>Tipo</th>
+                    <th>Icono</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las páginas creadas aparecerán aquí -->
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

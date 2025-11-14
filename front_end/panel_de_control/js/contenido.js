@@ -253,6 +253,18 @@ document.addEventListener("DOMContentLoaded", () => {
 //-----------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ Script de contenido.js cargado correctamente.");
+    function mostrarMensaje(texto, tipo = "info") {
+        const estado = document.getElementById("estadoEdicion");
+        if (!estado) return console.warn("⚠️ No se encontró el div #estadoEdicion");
+        estado.textContent = texto;
+        estado.className = "estado-edicion";
+        estado.classList.add(`msg-${tipo}`);
+        clearTimeout(estado._timeout);
+        estado._timeout = setTimeout(() => {
+            estado.textContent = "Datos no encontrados";
+            estado.className = "estado-edicion";
+        }, 4000);
+    }
     const btnAgregarContenido = document.querySelector(".editor-boton5");
     const selectTipoTexto = document.querySelectorAll(".selector5")[0];
     const selectTamanoTexto = document.querySelectorAll(".selector5")[1];
@@ -550,13 +562,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     btnAgregarContenido.addEventListener("click", () => {
         console.log("🧩 Botón 'Agregar contenido' presionado.");
-        const areaContenido = document.querySelector(".contenido-area5");
         if (areaContenido && areaContenido.innerHTML.trim() !== "") {
-            alert("✅ El contenido ha sido creado con éxito.");
+            mostrarMensaje("El contenido ha sido creado con éxito.", "ok");
             console.log("✅ El contenido ha sido creado con éxito.");
         } else {
-            alert("⚠️ No hay ningún contenido.");
-            console.log("⚠️ No hay ningún contenido.");
+            mostrarMensaje("No hay ningún contenido.", "warn");
+            console.log("No hay ningún contenido.");
         }
     });
     botonesEstilo.forEach((boton) => {
@@ -750,32 +761,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 el.addEventListener("input", guardarContenidoEditable);
             });
             restaurarContenidoEditable();
-            titulo3.addEventListener("input", () => {
-                if (titulo3.textContent.length > 40) {
-                    alert("⚠️ Has alcanzado el máximo permitido de 60 caracteres para el título.");
-                    titulo3.textContent = titulo3.textContent.substring(0, 60);
-                }
-            });
-            subtitulos3.forEach(sub => {
-                sub.addEventListener("input", () => {
-                    if (sub.textContent.length > 40) {
-                        alert("⚠️ Has alcanzado el máximo permitido de 80 caracteres para el subtítulo.");
-                        sub.textContent = sub.textContent.substring(0, 80);
+            function aplicarLimitesContenido3(titulo3, parrafo3, titulo3Derecha, subtitulos3) {
+                titulo3.addEventListener("input", () => {
+                    if (titulo3.textContent.length > 60) {
+                        mostrarMensaje("Has alcanzado el máximo permitido de 60 caracteres para el título.", "warn");
+                        titulo3.textContent = titulo3.textContent.substring(0, 60);
                     }
                 });
-            });
-            titulo3Derecha.addEventListener("input", () => {
-                if (titulo3Derecha.textContent.length > 40) {
-                    alert("⚠️ Has alcanzado el máximo permitido de 60 caracteres para el título derecho.");
-                    titulo3Derecha.textContent = titulo3Derecha.textContent.substring(0, 60);
-                }
-            });
-            parrafo3.addEventListener("input", () => {
-                if (parrafo3.textContent.length > 1000) {
-                    alert("⚠️ Has alcanzado el máximo permitido de 200 caracteres para el párrafo.");
-                    parrafo3.textContent = parrafo3.textContent.substring(0, 1000);
-                }
-            });
+                subtitulos3.forEach(sub => {
+                    sub.addEventListener("input", () => {
+                        if (sub.textContent.length > 80) {
+                            mostrarMensaje("Has alcanzado el máximo permitido de 80 caracteres para el subtítulo.", "warn");
+                            sub.textContent = sub.textContent.substring(0, 80);
+                        }
+                    });
+                });
+                titulo3Derecha.addEventListener("input", () => {
+                    if (titulo3Derecha.textContent.length > 60) {
+                        mostrarMensaje("Has alcanzado el máximo permitido de 60 caracteres para el título derecho.", "warn");
+                        titulo3Derecha.textContent = titulo3Derecha.textContent.substring(0, 60);
+                    }
+                });
+                parrafo3.addEventListener("input", () => {
+                    if (parrafo3.textContent.length > 1000) {
+                        mostrarMensaje("Has alcanzado el máximo permitido de 1000 caracteres para el párrafo.", "warn");
+                        parrafo3.textContent = parrafo3.textContent.substring(0, 1000);
+                    }
+                });
+            }
+            aplicarLimitesContenido3(titulo3, parrafo3, titulo3Derecha, subtitulos3);
         }
     }
     window.addEventListener("storage", (event) => {
@@ -932,7 +946,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const alturaContenido = elemento.scrollHeight;
                 if (alturaContenido > alturaVisible) {
                     elemento.innerText = elemento.innerText.trim().slice(0, -1);
-                    alert(mensaje);
+                    mostrarMensaje(mensaje, "warn");
                 }
             });
         });
