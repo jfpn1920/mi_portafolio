@@ -19,6 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
     inputImagen_categorias.style.display = "none";
     document.body.appendChild(inputImagen_categorias);
     let imagenSeleccionada_categorias = null;
+    const imagenGuardada = localStorage.getItem("imagenSeleccionada_categorias");
+    if (imagenGuardada) {
+        console.log("📦 Imagen encontrada en localStorage. Cargando en caja central...");
+        if (window.EstiloCategoria) {
+            EstiloCategoria.actualizarImagenCentral(imagenGuardada);
+        }
+        imagenBox_categorias.innerHTML = `<i class="fa-regular fa-image"></i>`;
+    }
     imagenBox_categorias.addEventListener("click", () => {
         inputImagen_categorias.click();
     });
@@ -29,8 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
         lector.onload = (evento) => {
             imagenSeleccionada_categorias = evento.target.result;
             imagenBox_categorias.innerHTML = `
-                <img src="${imagenSeleccionada_categorias}" 
-                        alt="Vista previa" 
+                <img src="${imagenSeleccionada_categorias}"
+                        alt="Vista previa"
                         style="width: 100%; height: 95%; object-fit:contain; border-radius:6px;">
             `;
         };
@@ -42,12 +50,18 @@ document.addEventListener("DOMContentLoaded", () => {
             console.warn("⚠️ No hay ninguna imagen seleccionada.");
             return;
         }
+        if (window.EstiloCategoria && typeof EstiloCategoria.actualizarImagenCentral === "function") {
+            EstiloCategoria.actualizarImagenCentral(imagenSeleccionada_categorias);
+        } else {
+            console.error("❌ EstiloCategoria.actualizarImagenCentral NO existe.");
+            return;
+        }
         localStorage.setItem("imagenSeleccionada_categorias", imagenSeleccionada_categorias);
         alert("La imagen ha sido agregada exitosamente");
         imagenBox_categorias.innerHTML = `<i class="fa-regular fa-image"></i>`;
         inputImagen_categorias.value = "";
         imagenSeleccionada_categorias = null;
-        console.log("✅ Imagen agregada y guardada con éxito.");
+        console.log("✅ Imagen enviada correctamente a la caja central.");
     });
 });
 //-------------------------------------------//
@@ -99,6 +113,59 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("📁 Categoría guardada en localStorage:", nuevaCategoria);
     });
 });
+//----------------------------------------//
+//--|funcionalidad_estilo_de_categorias|--//
+//----------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("📌 JS de categorías cargado.");
+    const btnAnadir = document.querySelector(".btn-anadir");
+    const vistaCategoria = document.querySelector(".vista-categoria");
+    const celda1 = vistaCategoria.querySelector(".col-1");
+    const celda2 = vistaCategoria.querySelector(".col-2");
+    const cajaCentral = vistaCategoria.querySelector(".caja-central");
+    const pieInfo = vistaCategoria.querySelector(".pie-info");
+    btnAnadir.addEventListener("click", () => {
+        console.log("➕ Botón 'Añadir categoría' presionado.");
+        celda1.textContent = "A";
+        celda2.textContent = "B";
+        cajaCentral.textContent = "Contenido cambiado";
+        pieInfo.innerHTML = `
+            <p><strong>Tipo:</strong> Ejemplo</p>
+            <p><strong>Precio:</strong> 000</p>
+        `;
+    });
+    function actualizarCeldas(superior1, superior2) {
+        celda1.textContent = superior1;
+        celda2.textContent = superior2;
+    }
+    function actualizarContenidoCentral(texto) {
+        cajaCentral.textContent = texto;
+    }
+    function actualizarPie(tipo, precio) {
+        pieInfo.innerHTML = `
+            <p><strong>Tipo:</strong> ${tipo}</p>
+            <p><strong>Precio:</strong> ${precio}</p>
+        `;
+    }
+    function actualizarImagenCentral(base64) {
+        cajaCentral.innerHTML = `
+            <img src="${base64}"
+                    alt="Imagen"
+                    style="width: 100%; height: 100%; object-fit:cover;">
+        `;
+    }
+    const imagenGuardada = localStorage.getItem("imagenSeleccionada_categorias");
+    if (imagenGuardada) {
+        console.log("📦 Mostrando imagen guardada en la vista categoría.");
+        actualizarImagenCentral(imagenGuardada);
+    }
+    window.EstiloCategoria = {
+        actualizarCeldas,
+        actualizarContenidoCentral,
+        actualizarPie,
+        actualizarImagenCentral
+    };
+});
 //-------------------------------------//
 //--|funcionalidad_tablero_categoria|--//
 //-------------------------------------//
@@ -134,10 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${categoria.nombre}</td>
-                <td>${categoria.imagen}</td>
-                <!-- TIPO → Mostrar el texto real -->
                 <td>${nombresTipo[categoria.tipo] || categoria.tipo}</td>
-                <!-- ICONO → Mostrar el ícono -->
                 <td>${iconosCategoria[categoria.icono] || categoria.icono}</td>
                 <td>${categoria.precio}</td>
                 <td>
@@ -150,6 +214,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="btn-visualizar" data-index="${index}">
                         <i class="fa-solid fa-eye"></i>
                     </button>
+                    <!-- 🔥 NUEVO BOTÓN AÑADIR -->
+                    <button class="btn-anadir2" data-index="${index}">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
                 </td>
             `;
             tablaBody.appendChild(tr);
@@ -159,7 +227,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let categorias = JSON.parse(localStorage.getItem("categorias_tablero")) || [];
         categorias.push({
             nombre: "no hay categoria",
-            imagen: "no hay imagen",
             tipo: "tipo1",
             icono: "icono1",
             precio: "no hay precio"
@@ -186,6 +253,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (btn.classList.contains("btn-visualizar")) {
             alert(`Vista previa de categoría: ${categorias[index].nombre}`);
+        }
+        if (btn.classList.contains("btn-anadir")) {
+            alert(`Aquí irá tu acción de AÑADIR para la categoría: ${categorias[index].nombre}`);
         }
     });
     mostrarCategorias();
