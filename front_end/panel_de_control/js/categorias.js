@@ -124,6 +124,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const celda2 = vistaCategoria.querySelector(".col-2");
     const cajaCentral = vistaCategoria.querySelector(".caja-central");
     const pieInfo = vistaCategoria.querySelector(".pie-info");
+    function guardarEstado() {
+        const estado = {
+            celda1: celda1.innerHTML,
+            celda2: celda2.textContent,
+            contenidoCentral: cajaCentral.innerHTML,
+            pie: pieInfo.innerHTML
+        };
+        localStorage.setItem("estado_categoria_vista", JSON.stringify(estado));
+        console.log("💾 Estado guardado.");
+    }
+    function cargarEstado() {
+        const estadoGuardado = JSON.parse(localStorage.getItem("estado_categoria_vista"));
+        if (!estadoGuardado) return;
+        celda1.innerHTML = estadoGuardado.celda1;
+        celda2.textContent = estadoGuardado.celda2;
+        cajaCentral.innerHTML = estadoGuardado.contenidoCentral;
+        pieInfo.innerHTML = estadoGuardado.pie;
+        console.log("📦 Estado restaurado.");
+    }
+    cargarEstado();
     btnAnadir.addEventListener("click", () => {
         console.log("➕ Botón 'Añadir categoría' presionado.");
         celda1.textContent = "A";
@@ -133,30 +153,35 @@ document.addEventListener("DOMContentLoaded", () => {
             <p><strong>Tipo:</strong> Ejemplo</p>
             <p><strong>Precio:</strong> 000</p>
         `;
+        guardarEstado();
     });
-    function actualizarCeldas(superior1, superior2) {
-        celda1.textContent = superior1;
-        celda2.textContent = superior2;
+    function actualizarCeldas(iconoHTML, nombre) {
+        celda1.innerHTML = iconoHTML;
+        celda2.textContent = nombre;
+        guardarEstado();
     }
     function actualizarContenidoCentral(texto) {
         cajaCentral.textContent = texto;
+        guardarEstado();
     }
     function actualizarPie(tipo, precio) {
         pieInfo.innerHTML = `
             <p><strong>Tipo:</strong> ${tipo}</p>
             <p><strong>Precio:</strong> ${precio}</p>
         `;
+        guardarEstado();
     }
     function actualizarImagenCentral(base64) {
         cajaCentral.innerHTML = `
             <img src="${base64}"
-                    alt="Imagen"
-                    style="width: 100%; height: 100%; object-fit:cover;">
+                alt="Imagen"
+                style="width: 100%; height: 100%; object-fit:cover;">
         `;
+        guardarEstado();
     }
     const imagenGuardada = localStorage.getItem("imagenSeleccionada_categorias");
     if (imagenGuardada) {
-        console.log("📦 Mostrando imagen guardada en la vista categoría.");
+        console.log("📦 Mostrando imagen guardada.");
         actualizarImagenCentral(imagenGuardada);
     }
     window.EstiloCategoria = {
@@ -214,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="btn-visualizar" data-index="${index}">
                         <i class="fa-solid fa-eye"></i>
                     </button>
-                    <!-- 🔥 NUEVO BOTÓN AÑADIR -->
+                    <!-- 🔥 BOTÓN AÑADIR A LA VISTA -->
                     <button class="btn-anadir2" data-index="${index}">
                         <i class="fa-solid fa-plus"></i>
                     </button>
@@ -254,8 +279,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (btn.classList.contains("btn-visualizar")) {
             alert(`Vista previa de categoría: ${categorias[index].nombre}`);
         }
-        if (btn.classList.contains("btn-anadir")) {
-            alert(`Aquí irá tu acción de AÑADIR para la categoría: ${categorias[index].nombre}`);
+        if (btn.classList.contains("btn-anadir2")) {
+            const categoria = categorias[index];
+            EstiloCategoria.actualizarCeldas(
+                iconosCategoria[categoria.icono],
+                categoria.nombre                  
+            );
+            EstiloCategoria.actualizarPie(
+                nombresTipo[categoria.tipo],      
+                categoria.precio
+            );
+            console.log("✔ Datos enviados a la vista de categorías.");
         }
     });
     mostrarCategorias();
