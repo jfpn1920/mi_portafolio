@@ -6,11 +6,23 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//-------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_pagina|--//
+//-------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //----------------------------------//
 //--|funcionalidad_agregar_imagen|--//
 //----------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script de agregar imagen (categorías) cargado correctamente.");
+    mostrarMensaje("Script de agregar imagen cargado correctamente.", "info");
     const imagenBox_categorias = document.querySelector(".imagen-box");
     const botonAgregar_categorias = document.querySelector(".imagen-btn");
     const inputImagen_categorias = document.createElement("input");
@@ -21,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let imagenSeleccionada_categorias = null;
     const imagenGuardada = localStorage.getItem("imagenSeleccionada_categorias");
     if (imagenGuardada) {
-        console.log("📦 Imagen encontrada en localStorage. Cargando en caja central...");
+        mostrarMensaje("Imagen encontrada en memoria. Cargada correctamente.", "info");
         if (window.EstiloCategoria) {
             EstiloCategoria.actualizarImagenCentral(imagenGuardada);
         }
@@ -41,34 +53,33 @@ document.addEventListener("DOMContentLoaded", () => {
                         alt="Vista previa"
                         style="width: 100%; height: 95%; object-fit:contain; border-radius:6px;">
             `;
+            mostrarMensaje("Imagen cargada para vista previa.", "info");
         };
         lector.readAsDataURL(archivo);
     });
     botonAgregar_categorias.addEventListener("click", () => {
         if (!imagenSeleccionada_categorias) {
-            alert("No has seleccionado ninguna imagen");
-            console.warn("⚠️ No hay ninguna imagen seleccionada.");
+            mostrarMensaje("No has seleccionado ninguna imagen.", "error");
             return;
         }
         if (window.EstiloCategoria && typeof EstiloCategoria.actualizarImagenCentral === "function") {
             EstiloCategoria.actualizarImagenCentral(imagenSeleccionada_categorias);
         } else {
-            console.error("❌ EstiloCategoria.actualizarImagenCentral NO existe.");
+            mostrarMensaje("Error: EstiloCategoria.actualizarImagenCentral no existe.", "error");
             return;
         }
         localStorage.setItem("imagenSeleccionada_categorias", imagenSeleccionada_categorias);
-        alert("La imagen ha sido agregada exitosamente");
+        mostrarMensaje("La imagen fue agregada correctamente.", "success");
         imagenBox_categorias.innerHTML = `<i class="fa-regular fa-image"></i>`;
         inputImagen_categorias.value = "";
         imagenSeleccionada_categorias = null;
-        console.log("✅ Imagen enviada correctamente a la caja central.");
     });
 });
 //-------------------------------------------//
 //--|funcionalidad_formulario_de_categoria|--//
 //-------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script de formulario de categoría cargado correctamente.");
+    mostrarMensaje("Script de formulario de categoría cargado.", "info");
     const campoCategoria = document.querySelectorAll(".campo")[0];
     const campoPrecio = document.querySelectorAll(".campo")[1];
     const selectTipo = document.querySelectorAll(".select")[0];
@@ -87,20 +98,22 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("🎨 Icono seleccionado:", selectIcono.value);
     });
     botonGuardar.addEventListener("click", () => {
-        console.log("📝 Intentando guardar la categoría...");
+        mostrarMensaje("Intentando guardar la categoría...", "info");
         const formularioIncompleto =
             campoCategoria.value.trim() === "" ||
             campoPrecio.value.trim() === "" ||
             selectTipo.value.includes("Seleccionar") ||
             selectIcono.value.includes("Seleccionar");
         if (formularioIncompleto) {
-            console.warn("❌ No has llenado el formulario");
-            alert("No has llenado el formulario");
+            mostrarMensaje("No has llenado el formulario.", "error");
             return;
         }
-        console.log("✅ Se ha guardado con éxito");
-        alert("Se ha guardado con éxito");
         let categorias = JSON.parse(localStorage.getItem("categorias_tablero")) || [];
+        if (categorias.length >= 19) {
+            mostrarMensaje("Has alcanzado el máximo permitido en el tablero.", "error");
+            return;
+        }
+        mostrarMensaje("Se ha guardado con éxito.", "success");
         const nuevaCategoria = {
             nombre: campoCategoria.value,
             imagen: "sin imagen",
@@ -110,14 +123,14 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         categorias.push(nuevaCategoria);
         localStorage.setItem("categorias_tablero", JSON.stringify(categorias));
-        console.log("📁 Categoría guardada en localStorage:", nuevaCategoria);
+        mostrarMensaje("Categoría guardada en memoria.", "success");
     });
 });
 //----------------------------------------//
 //--|funcionalidad_estilo_de_categorias|--//
 //----------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("📌 JS de categorías cargado.");
+    mostrarMensaje("JS de categorías cargado.", "info");
     const btnAnadir = document.querySelector(".btn-anadir");
     const vistaCategoria = document.querySelector(".vista-categoria");
     const celda1 = vistaCategoria.querySelector(".col-1");
@@ -126,34 +139,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const pieInfo = vistaCategoria.querySelector(".pie-info");
     function guardarEstado() {
         const estado = {
-            celda1: celda1.innerHTML,
-            celda2: celda2.textContent,
-            contenidoCentral: cajaCentral.innerHTML,
-            pie: pieInfo.innerHTML
+            celda1: celda1.innerHTML.trim(),
+            celda2: celda2.textContent.trim(),
+            contenidoCentral: cajaCentral.innerHTML.trim(),
+            pie: pieInfo.innerHTML.trim()
         };
         localStorage.setItem("estado_categoria_vista", JSON.stringify(estado));
-        console.log("💾 Estado guardado.");
+        mostrarMensaje("Estado guardado.", "success");
     }
     function cargarEstado() {
         const estadoGuardado = JSON.parse(localStorage.getItem("estado_categoria_vista"));
-        if (!estadoGuardado) return;
+        if (!estadoGuardado) {
+            mostrarMensaje("No hay nada en la visualización de categoría", "error");
+            return;
+        }
+        const sinContenido =
+            (!estadoGuardado.celda1 || estadoGuardado.celda1.trim() === "") &&
+            (!estadoGuardado.celda2 || estadoGuardado.celda2.trim() === "") &&
+            (!estadoGuardado.contenidoCentral || estadoGuardado.contenidoCentral.trim() === "") &&
+            (!estadoGuardado.pie || estadoGuardado.pie.trim() === "");
+        if (sinContenido) {
+            mostrarMensaje("No hay nada en la visualización de categoría", "error");
+            return;
+        }
         celda1.innerHTML = estadoGuardado.celda1;
         celda2.textContent = estadoGuardado.celda2;
         cajaCentral.innerHTML = estadoGuardado.contenidoCentral;
         pieInfo.innerHTML = estadoGuardado.pie;
-        console.log("📦 Estado restaurado.");
+        mostrarMensaje("Estado restaurado correctamente.", "success");
     }
     cargarEstado();
     btnAnadir.addEventListener("click", () => {
-        console.log("➕ Botón 'Añadir categoría' presionado.");
-        celda1.textContent = "A";
-        celda2.textContent = "B";
-        cajaCentral.textContent = "Contenido cambiado";
-        pieInfo.innerHTML = `
-            <p><strong>Tipo:</strong> Ejemplo</p>
-            <p><strong>Precio:</strong> 000</p>
-        `;
+        const estadoActual = JSON.parse(localStorage.getItem("estado_categoria_vista"));
+        if (!estadoActual) {
+            mostrarMensaje("No hay nada en la visualización de categoría", "error");
+            return;
+        }
         guardarEstado();
+        mostrarMensaje("Se ha añadido la categoría con éxito", "success");
     });
     function actualizarCeldas(iconoHTML, nombre) {
         celda1.innerHTML = iconoHTML;
@@ -181,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const imagenGuardada = localStorage.getItem("imagenSeleccionada_categorias");
     if (imagenGuardada) {
-        console.log("📦 Mostrando imagen guardada.");
+        mostrarMensaje("Mostrando imagen guardada.", "info");
         actualizarImagenCentral(imagenGuardada);
     }
     window.EstiloCategoria = {
@@ -196,8 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
 //-------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
     console.log("📌 Script de categorías cargado correctamente.");
+    const estadoEdicion = document.getElementById("estadoEdicion");
+    function mensajeHTML(texto) {
+        estadoEdicion.innerHTML = texto;
+        estadoEdicion.style.display = "block";
+    }
     const tablaBody = document.querySelector(".tabla-paginas tbody");
-    const btnAgregarTodo = document.querySelector(".btn-agregar");
     const nombresTipo = {
         "tipo1": "Paginas web",
         "tipo2": "Juegos",
@@ -217,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaBody.innerHTML = "";
         const categorias = JSON.parse(localStorage.getItem("categorias_tablero")) || [];
         if (categorias.length === 0) {
+            mensajeHTML("No hay categorías creadas");
             const fila = document.createElement("tr");
             fila.innerHTML = `<td colspan="6" style="text-align:center;">No hay categorías creadas</td>`;
             tablaBody.appendChild(fila);
@@ -239,7 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="btn-visualizar" data-index="${index}">
                         <i class="fa-solid fa-eye"></i>
                     </button>
-                    <!-- 🔥 BOTÓN AÑADIR A LA VISTA -->
                     <button class="btn-anadir2" data-index="${index}">
                         <i class="fa-solid fa-plus"></i>
                     </button>
@@ -248,48 +275,44 @@ document.addEventListener("DOMContentLoaded", () => {
             tablaBody.appendChild(tr);
         });
     }
-    btnAgregarTodo.addEventListener("click", () => {
-        let categorias = JSON.parse(localStorage.getItem("categorias_tablero")) || [];
-        categorias.push({
-            nombre: "no hay categoria",
-            tipo: "tipo1",
-            icono: "icono1",
-            precio: "no hay precio"
-        });
-        localStorage.setItem("categorias_tablero", JSON.stringify(categorias));
-        mostrarCategorias();
-    });
     tablaBody.addEventListener("click", (e) => {
         const btn = e.target.closest("button");
         if (!btn) return;
         const index = btn.dataset.index;
         let categorias = JSON.parse(localStorage.getItem("categorias_tablero")) || [];
         if (btn.classList.contains("btn-eliminar")) {
+            const nombreEliminado = categorias[index].nombre;
             categorias.splice(index, 1);
             localStorage.setItem("categorias_tablero", JSON.stringify(categorias));
+            mensajeHTML(`Has eliminado la categoría <b>${nombreEliminado}</b>.`);
             mostrarCategorias();
         }
         if (btn.classList.contains("btn-editar")) {
-            const nuevoNombre = prompt("Editar nombre:", categorias[index].nombre);
+            const nombreAnterior = categorias[index].nombre;
+            mensajeHTML(`Editando categoría <b>${nombreAnterior}</b>`);
+            const nuevoNombre = prompt("Editar nombre:", nombreAnterior);
             if (!nuevoNombre || nuevoNombre.trim() === "") return;
             categorias[index].nombre = nuevoNombre.trim();
             localStorage.setItem("categorias_tablero", JSON.stringify(categorias));
+            mensajeHTML(
+                `La categoría <b>${nombreAnterior}</b> fue cambiada por <b>${nuevoNombre.trim()}</b>.`
+            );
             mostrarCategorias();
         }
         if (btn.classList.contains("btn-visualizar")) {
-            alert(`Vista previa de categoría: ${categorias[index].nombre}`);
+            mensajeHTML(`Vista previa de categoría: <b>${categorias[index].nombre}</b>`);
         }
         if (btn.classList.contains("btn-anadir2")) {
             const categoria = categorias[index];
             EstiloCategoria.actualizarCeldas(
                 iconosCategoria[categoria.icono],
-                categoria.nombre                  
+                categoria.nombre
             );
             EstiloCategoria.actualizarPie(
-                nombresTipo[categoria.tipo],      
+                nombresTipo[categoria.tipo],
                 categoria.precio
             );
-            console.log("✔ Datos enviados a la vista de categorías.");
+            mensajeHTML(`Datos de <b>${categoria.nombre}</b> enviados a la vista.`);
         }
     });
     mostrarCategorias();
