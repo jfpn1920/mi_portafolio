@@ -62,81 +62,162 @@
     <!-------------------------------------->
     <!--|estructura_agregar_pie_de_pagina|-->
     <!-------------------------------------->
-    <div class="contenedor-pie">
-        <div class="cabecera-pie">
-            <div class="btn-pie">agregar pie de pagina</div>
-            <div class="btn-pie">Crear</div>
+    <div class="contenedor-agregar-paginas">
+        <div class="cabecera">
+            <div class="titulo">agregar paginas</div>
+            <button class="crear">Crear</button>
         </div>
-        <div class="contenido-pie">
-            <h3>Añadele un nombre</h3>
-            <input type="text" class="input-pie" placeholder="Escribe el nombre del pie de pagina">
+        <div class="contenido">
+            <div class="icono">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="campo">
+                <input type="text" placeholder="Escribe la pagina deseada">
+            </div>
         </div>
     </div>
     <!------------------------------->
     <!--|estructura_agregar_imagen|-->
     <!------------------------------->
-    <div class="contenedor-img">
-        <div class="cabecera-img">
-            <div class="titulo-img">Agregar imagen</div>
-            <button class="btn-img">Añadir img</button>
+    <div class="imagen-container">
+        <div class="imagen-header">
+            <h3 class="imagen-title">Agregar imagen</h3>
+            <button class="imagen-btn">Agregar img</button>
         </div>
-        <div class="contenido-img">
-            <div class="marco-img">
-                <i class="fa-regular fa-image icono-img"></i>
+        <div class="imagen-body">
+            <div class="imagen-box">
+                <i class="fa-regular fa-image"></i>
             </div>
         </div>
     </div>
     <!-------------------------------------------->
     <!--|estructura_formulario_de_pie_de_pagina|-->
     <!-------------------------------------------->
-    <div class="contenedor-form-pie">
-        <div class="cabecera-form-pie">
-            <div class="titulo-form-pie">Formulario del pie de pagina</div>
-            <button class="btn-guardar-form">Guardar</button>
+    <div class="contenedor-menu-navegacion1">
+        <div class="cabecera1">
+            <div class="titulo1">Crear menu de navegacion</div>
+            <button class="crear1">Crear menu</button>
         </div>
-        <div class="contenido-form-pie">
-            <label class="checkbox-form">
-                <input type="checkbox">
-                seleccionar pie de pagina
-            </label>
-            <h4>Seleccionar ubicacion</h4>
-            <div class="grupo-seleccion">
-                <select class="selector-v">
-                    <option value="">Seleccionar todo</option>
-                </select>
+        <div class="contenido1">
+            <div class="bloque-titulo">
+                <label class="label-titulo">añade un título</label>
+                <input type="text" class="input-titulo" placeholder="escribe lo que quieras">
             </div>
-            <div class="tabla-paginas">
-                <div class="tabla-header">Seleccionar paginas</div>
-                <div class="tabla-contenido"></div>
+            <div class="bloque-subtitulos">
+                <label class="label-sub">añadir subtítulos</label>
+                <div class="fila-subtitulo">
+                    <input type="text" class="input-sub" placeholder="escribe el subtítulo">
+                    <i class="fa-solid fa-bookmark icono-sub"></i>
+                </div>
+                <label class="label-opciones">agregar nuevas opciones</label>
+                <input type="text" class="input-opciones" placeholder="escribe el subtítulo">
+            </div>
+            <div class="bloques2">
+                <div class="bloque2">
+                    <div class="subtitulo2">Seleccionar iconos</div>
+                    <div class="cajas-iconos2">
+                        <div class="caja2"><span class="mas2">+</span></div>
+                        <div class="caja2"><span class="mas2">+</span></div>
+                        <div class="caja2"><span class="mas2">+</span></div>
+                        <div class="caja2"><span class="mas2">+</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bloque paginas1">
+                <div class="subtitulo-azul1">Seleccionar opciones</div>
+                <div class="lista-paginas1"></div>
             </div>
         </div>
     </div>
-    <!------------------------------------------>
-    <!--|estructura_tablero_del_pie_de_pagina|-->
-    <!------------------------------------------>
-    <div class="contenedor-principal">
-        <div class="fila-superior">
-            <div class="titulo">tablero del pie de pagina</div>
-            <div class="boton-contenedor">
-                <button class="boton">Agregar todo</button>
+    <div class="modal-iconos" id="modalIconos">
+        <div class="modal-contenido">
+            <h3>Selecciona un icono</h3>
+            <div class="iconos-grid">
+                <i class="fa-solid fa-house"></i>
+                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-gear"></i>
+                <i class="fa-solid fa-envelope"></i>
+                <i class="fa-solid fa-bell"></i>
+                <i class="fa-solid fa-camera"></i>
             </div>
+            <button id="cerrarModal">Cerrar</button>
         </div>
-        <div class="encabezado">
-            <div class="columna imagenes">Pie de pagina</div>
-            <div class="columna acciones">Acciones</div>
+    </div>
+    <!------------------------------------------->
+    <!--|estructura_tablero_de_paginas_creados|-->
+    <!------------------------------------------->
+    <div class="contenedor-tablero1">
+        <div class="encabezado-tablero1">
+            <div class="titulo-tablero1">Tablero pie de pagina</div>
         </div>
-        <div class="zona-tablero"></div>
+        <table class="tabla-paginas1">
+            <thead>
+                <tr>
+                    <th>Pie de pagina</th>
+                    <th>Titulo</th>
+                    <th>Iconos</th>
+                    <th>Subtitulo</th>
+                    <th>Opciones</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las páginas creadas aparecerán aquí -->
+            </tbody>
+        </table>
     </div>
     <!----------------------------------------------->
     <!--|estructura_vista_previa_del_pie_de_pagina|-->
     <!----------------------------------------------->
-    <div class="contenedor-vista">
-        <div class="cabecera-vista">
-            <label class="titulo-vista">Vista previa del pie de página</label>
-            <input type="text" class="input-vista">
-            <button class="btn-enviar">enviar pie de página</button>
+    <div class="header">
+        <div class="title-box">Vista previa del pie de pagina</div>
+        <div class="header-box"></div>
+        <button class="btn1">borrar pie de pagina</button>
+        <button class="btn2">enviar pie de pagina</button>
+    </div>
+    <div class="main-container">
+        <div class="big-left-box"></div>
+        <div class="top-right-box"></div>
+        <div class="divider1"></div>
+        <div class="mini-row-empleo">
+            <div class="mini"></div>
+            <div class="mini wide"></div>
+            <div class="mini"></div>
+            <div class="mini wide"></div>
+            <div class="mini"></div>
+            <div class="mini wide"></div>
+            <div class="mini"></div>
+            <div class="mini wide"></div>
         </div>
-        <div class="area-vista"></div>
+        <div class="columns">
+            <div class="col1">
+                <div class="item1"></div>
+                <div class="item1"></div>
+                <div class="item1"></div>
+                <div class="item1"></div>
+                <div class="item1"></div>
+            </div>
+            <div class="col2">
+                <div class="item2"></div>
+                <div class="item2"></div>
+                <div class="item2"></div>
+                <div class="item2"></div>
+                <div class="item2"></div>
+            </div>
+            <div class="col3">
+                <div class="item3"></div>
+                <div class="item3"></div>
+            </div>
+            <div class="col4">
+                <div class="item4"></div>
+                <div class="item4"></div>
+                <div class="item4"></div>
+                <div class="item4"></div>
+                <div class="item4"></div>
+            </div>
+        </div>
+        <div class="divider2"></div>
+        <div class="bottom-box"></div>
     </div>
 </body>
 </html>
