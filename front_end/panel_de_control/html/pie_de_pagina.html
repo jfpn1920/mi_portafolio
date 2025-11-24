@@ -96,12 +96,12 @@
     <div class="contenedor-menu-navegacion1">
         <div class="cabecera1">
             <div class="titulo1">Formulario de pie de pagina</div>
-            <button class="crear1">agregar</button>
+            <button class="crear1" id="btnAgregar">agregar</button>
         </div>
         <div class="contenido1">
             <div class="bloque-titulo">
                 <label class="label-titulo">añade un título</label>
-                <input type="text" class="input-titulo" placeholder="escribe lo que quieras">
+                <input class="input_titulo" type="text" id="inputTitulo" placeholder="Escribe el título">
             </div>
             <div class="bloque-subtitulos">
                 <label class="label-sub">añadir subtítulos</label>
@@ -110,7 +110,7 @@
                     <i class="fa-solid fa-bookmark icono-sub"></i>
                 </div>
                 <label class="label-opciones">agregar nuevas opciones</label>
-                <input type="text" class="input-opciones" placeholder="escribe el subtítulo">
+                <input type="text" class="input-opciones" placeholder="escribe nueva opcion">
             </div>
             <div class="bloques2">
                 <div class="bloque2">
@@ -129,8 +129,10 @@
             </div>
         </div>
     </div>
+    <!-- 🟦 NUEVO MODAL CENTRADO CON BOTÓN ✖ -->
     <div class="modal-iconos" id="modalIconos">
         <div class="modal-contenido">
+            <button class="btn-cerrar-modal" id="cerrarModal">✖</button>
             <h3>Selecciona un icono</h3>
             <div class="iconos-grid">
                 <i class="fa-solid fa-house"></i>
@@ -140,12 +142,11 @@
                 <i class="fa-solid fa-bell"></i>
                 <i class="fa-solid fa-camera"></i>
             </div>
-            <button id="cerrarModal">Cerrar</button>
         </div>
     </div>
-    <!------------------------------------------->
-    <!--|estructura_tablero_de_paginas_creados|-->
-    <!------------------------------------------->
+    <!-------------------------------------->
+    <!--|estructura_tablero_pie_de_pagina|-->
+    <!-------------------------------------->
     <div class="contenedor-tablero1">
         <div class="encabezado-tablero1">
             <div class="titulo-tablero1">Tablero pie de pagina</div>

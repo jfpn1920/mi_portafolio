@@ -289,8 +289,8 @@ document.addEventListener("DOMContentLoaded", () => {
             let paginasAgregadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
             paginasAgregadas = paginasAgregadas.filter(p => p.nombre !== nombreEliminado);
             localStorage.setItem("paginasAgregadasMenu", JSON.stringify(paginasAgregadas));
-            window.dispatchEvent(new StorageEvent("storage", { 
-                key: "paginasAgregadasMenu", 
+            window.dispatchEvent(new StorageEvent("storage", {
+                key: "paginasAgregadasMenu",
                 newValue: JSON.stringify(paginasAgregadas)
             }));
             mostrarMensaje(`La página "${nombreEliminado}" ha sido eliminada`, "warning");
@@ -307,8 +307,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             paginasAgregadas.push({ nombre: pagina.nombre });
             localStorage.setItem("paginasAgregadasMenu", JSON.stringify(paginasAgregadas));
-            window.dispatchEvent(new StorageEvent("storage", { 
-                key: "paginasAgregadasMenu", 
+            window.dispatchEvent(new StorageEvent("storage", {
+                key: "paginasAgregadasMenu",
                 newValue: JSON.stringify(paginasAgregadas)
             }));
             mostrarMensaje(`Página "${pagina.nombre}" añadida correctamente al menú`, "success");
@@ -354,30 +354,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         paginasAgregadas = [...paginasAgregadas, ...nuevasPaginas];
         localStorage.setItem("paginasAgregadasMenu", JSON.stringify(paginasAgregadas));
-        mostrarPaginas();
-        window.dispatchEvent(new StorageEvent("storage", { 
-            key: "paginasAgregadasMenu", 
-            newValue: JSON.stringify(paginasAgregadas)
-        }));
+        localStorage.setItem("paginasAgregadasMenu_updatedAt", Date.now().toString());
+        document.dispatchEvent(
+            new CustomEvent("actualizar_lista_paginas", {
+                detail: paginasAgregadas
+            })
+        );
         mostrarMensaje(`Se han agregado ${nuevasPaginas.length} páginas`, "success");
-        const panelCaja = document.querySelector(".panel-caja4");
-        if (panelCaja) {
-            panelCaja.innerHTML = "";
-            paginasAgregadas.forEach(pagina => {
-                const item = document.createElement("div");
-                item.classList.add("pagina-item");
-                item.innerHTML = `<strong>${pagina.nombre}</strong>`;
-                item.style.background = "#e0e0e0";
-                item.style.border = "1px solid #555";
-                item.style.padding = "8px";
-                item.style.margin = "6px 0";
-                item.style.borderRadius = "4px";
-                item.style.fontSize = "13px";
-                item.style.textAlign = "center";
-                panelCaja.appendChild(item);
-            });
-            console.log("✅ Páginas mostradas en el panel de selección.");
-        }
+        mostrarPaginas();
     });
     mostrarPaginas();
 });
