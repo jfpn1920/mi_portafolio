@@ -102,6 +102,12 @@ const inputOpciones = document.querySelector(".input-opciones");
 const listaPaginas = document.querySelector(".lista-paginas1");
 const cajasIconos = document.querySelectorAll(".caja2");
 btnAgregar.addEventListener("click", () => {
+    const listaActual = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
+    const LIMITE_TABLERO = 4;
+    if (listaActual.length >= LIMITE_TABLERO) {
+        alert("Has alcanzado el límite de datos en el tablero. Máximo permitido: " + LIMITE_TABLERO);
+        return;
+    }
     const pie = inputPie.value.trim();
     const titulo = inputTitulo.value.trim();
     const subtitulos = JSON.parse(localStorage.getItem("subtitulos")) || [];
@@ -145,21 +151,15 @@ btnAgregar.addEventListener("click", () => {
         return;
     }
     alert("✔ Todos los datos del formulario han sido añadidos correctamente.");
-    const pieFinal = pie;
-    const tituloFinal = titulo;
-    const iconosMarcados = Object.values(iconosGuardados).join(" ");
-    const subtitulosFinal = subtitulos.join("<br>");
-    const opcionesFinal = seleccionadas.join("<br>");
     const nuevoPie = {
-        pie: pieFinal,
-        titulo: tituloFinal,
-        iconos: iconosMarcados,
-        subtitulo: subtitulosFinal,
-        opciones: opcionesFinal
+        pie,
+        titulo,
+        iconos: Object.values(iconosGuardados).join(" "),
+        subtitulo: subtitulos.join("<br>"),
+        opciones: seleccionadas.join("<br>")
     };
-    const lista = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
-    lista.push(nuevoPie);
-    localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(lista));
+    listaActual.push(nuevoPie);
+    localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(listaActual));
     document.dispatchEvent(new Event("actualizar_tabla"));
     console.log("✅ Pie de página enviado al tablero correctamente.");
 });
@@ -382,20 +382,25 @@ document.addEventListener("DOMContentLoaded", () => {
             tr.innerHTML = `
                 <td>${item.pie}</td>
                 <td>${item.titulo}</td>
-                <td>${item.iconos}</td>
-                <td>${item.subtitulo}</td>
-                <!-- AHORA SI MUESTRA LAS OPCIONES DEL FORMULARIO -->
-                <td class="col-opciones">${item.opciones}</td>
-                <td class="col-acciones">
-                    <button class="btn-editar1" data-index="${index}">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-visualizar1" data-index="${index}">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                    <button class="btn-eliminar1" data-index="${index}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                <!-- ICONOS (uno debajo del otro) -->
+                <td class="celda-iconos">${item.iconos}</td>
+                <!-- SUBTÍTULOS -->
+                <td class="celda-subtitulos">${item.subtitulo}</td>
+                <!-- OPCIONES (una debajo de otra) -->
+                <td class="celda-opciones">${item.opciones}</td>
+                <!-- ACCIONES (botones verticales con wrapper) -->
+                <td class="celda-acciones">
+                    <div class="acciones-wrapper">
+                        <button class="btn-editar1" data-index="${index}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn-visualizar1" data-index="${index}">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button class="btn-eliminar1" data-index="${index}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
                 </td>
             `;
             tablaBody.appendChild(tr);
