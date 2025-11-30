@@ -6,32 +6,6 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
-//-----------------------------------------//
-//--|funcionalidad_agregar_pie_de_pagina|--//
-//-----------------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    const input = document.querySelector(".campo input");
-    const botonCrear = document.querySelector(".crear");
-    botonCrear.addEventListener("click", () => {
-        const valor = input.value.trim();
-        if (valor === "") {
-            alert("No hay ningún pie de página");
-            return;
-        }
-        let pies = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
-        const nuevoPie = {
-            pie: valor,   
-            titulo: "—",     
-            iconos: "—",
-            subtitulo: "—"
-        };
-        pies.push(nuevoPie);
-        localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(pies));
-        input.value = "";
-        alert(`El pie de página "${valor}" ha sido creado exitosamente`);
-        document.dispatchEvent(new Event("actualizar_tabla"));
-    });
-});
 //----------------------------------//
 //--|funcionalidad_agregar_imagen|--//
 //----------------------------------//
@@ -119,199 +93,265 @@ document.addEventListener("DOMContentLoaded", () => {
 //-----------------------------------------------//
 //--|funcionalidad_formulario_de_pie_de_pagina|--//
 //-----------------------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("📌 Script de pie_de_pagina cargado correctamente.");
-    function mensajeHTML(texto) {
-        alert(texto);
-        console.log("📨 Mensaje JS:", texto);
+const btnAgregar = document.getElementById("btnAgregar");
+const inputPie = document.getElementById("inputPie");
+const inputTitulo = document.getElementById("inputTitulo");
+const inputSub = document.querySelector(".input-sub");
+const iconoSub = document.querySelector(".icono-sub1");
+const inputOpciones = document.querySelector(".input-opciones");
+const listaPaginas = document.querySelector(".lista-paginas1");
+const cajasIconos = document.querySelectorAll(".caja2");
+btnAgregar.addEventListener("click", () => {
+    const pie = inputPie.value.trim();
+    const titulo = inputTitulo.value.trim();
+    const subtitulos = JSON.parse(localStorage.getItem("subtitulos")) || [];
+    const opcionesExtra = JSON.parse(localStorage.getItem("opciones_extra")) || [];
+    const iconosGuardados = JSON.parse(localStorage.getItem("iconos_cajas")) || {};
+    const seleccionadas = JSON.parse(localStorage.getItem("paginas_seleccionadas")) || [];
+    const noHayDatos =
+        pie === "" &&
+        titulo === "" &&
+        subtitulos.length === 0 &&
+        opcionesExtra.length === 0 &&
+        Object.keys(iconosGuardados).length === 0 &&
+        seleccionadas.length === 0;
+    if (noHayDatos) {
+        alert("No hay datos agregados en el formulario.");
+        return;
     }
-    const tablaBody = document.querySelector(".tabla-paginas1 tbody");
-    function pintarListaPaginas(paginas) {
-        const listaPaginas = document.querySelector(".lista-paginas1");
-        if (!listaPaginas) return;
-        listaPaginas.innerHTML = "";
-        paginas.forEach(pagina => {
-            const item = document.createElement("div");
-            item.classList.add("pagina-item-lista");
-            item.innerHTML = `
-                <div class="pagina-box">
-                    <i class="fa-solid fa-file"></i>
-                    <span>${pagina.nombre}</span>
-                </div>
-            `;
-            listaPaginas.appendChild(item);
-        });
-        console.log("📌 Lista actualizada en lista-paginas1");
+    let errores = [];
+    if (pie === "") {
+        errores.push("• Falta añadir el pie de página");
+    } else {
+        localStorage.setItem("pie_de_pagina", pie);
     }
-    document.addEventListener("actualizar_lista_paginas", (e) => {
-        pintarListaPaginas(e.detail || []);
-    });
-    window.addEventListener("storage", (evt) => {
-        if (evt.key === "paginasAgregadasMenu") {
-            const paginas = JSON.parse(evt.newValue) || [];
-            pintarListaPaginas(paginas);
-        }
-    });
-    const inicialLista = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
-    if (inicialLista.length) pintarListaPaginas(inicialLista);
-    function mostrarPieDePagina() {
-        tablaBody.innerHTML = "";
-        const pies = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
-        if (pies.length === 0) {
-            const filaVacia = document.createElement("tr");
-            filaVacia.innerHTML = `
-                <td colspan="6" style="text-align:center;">No hay pies de página creados</td>
-            `;
-            tablaBody.appendChild(filaVacia);
-            return;
-        }
-        pies.forEach((item, index) => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${item.pie}</td>
-                <td>${item.titulo}</td>
-                <td>${item.iconos}</td>
-                <td>${item.subtitulo}</td>
-                <td class="col-opciones"></td>
-                <td class="col-acciones">
-                    <button class="btn-editar1" data-index="${index}">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-visualizar1" data-index="${index}">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                    <button class="btn-eliminar1" data-index="${index}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
-            `;
-            tablaBody.appendChild(tr);
-        });
+    if (titulo === "") {
+        errores.push("• Falta añadir el título");
+    } else {
+        localStorage.setItem("titulo_pagina", titulo);
     }
-    mostrarPieDePagina();
-    document.addEventListener("actualizar_tabla", () => {
-        mostrarPieDePagina();
-    });
-    tablaBody.addEventListener("click", (e) => {
-        const btn = e.target.closest("button");
-        if (!btn) return;
-        let pies = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
-        const index = btn.dataset.index;
-        if (btn.classList.contains("btn-eliminar1")) {
-            const nombre = pies[index].pie;
-            pies.splice(index, 1);
-            localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(pies));
-            mensajeHTML(`El pie de página "${nombre}" fue eliminado.`);
-            mostrarPieDePagina();
-        }
-        if (btn.classList.contains("btn-editar1")) {
-            const item = pies[index];
-            const nuevoTitulo = prompt("Editar título:", item.titulo);
-            if (!nuevoTitulo) return;
-            pies[index].titulo = nuevoTitulo.trim();
-            localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(pies));
-            mensajeHTML(`El título fue cambiado a "${nuevoTitulo}".`);
-            mostrarPieDePagina();
-        }
-        if (btn.classList.contains("btn-visualizar1")) {
-            const item = pies[index];
-            mensajeHTML(`Vista previa del pie de página: "${item.titulo}"`);
-        }
-    });
-    const btnAgregar = document.getElementById("btnAgregar");
-    const inputTitulo = document.querySelector(".input_titulo");
-    const inputSub = document.querySelector(".input-sub");
-    const botonGuardarSub = document.querySelector(".icono-sub");
-    let subtitulosGuardados = [];
-    botonGuardarSub.addEventListener("click", () => {
-        const subtitulo = inputSub.value.trim();
-        if (!subtitulo) {
-            mensajeHTML("Debe escribir un subtítulo.");
-            return;
-        }
-        subtitulosGuardados.push(subtitulo);
-        mensajeHTML(`Subtítulo "${subtitulo}" añadido.`);
-        inputSub.value = "";
-        if (subtitulosGuardados.length === 4) {
-            mensajeHTML("Se añadieron 4 subtítulos con éxito.");
-        }
-    });
-    const inputNuevaOpcion = document.querySelector(".input-opciones");
-    if (inputNuevaOpcion) {
-        inputNuevaOpcion.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                const nuevaOpcion = inputNuevaOpcion.value.trim();
-                if (!nuevaOpcion) {
-                    mensajeHTML("Debe escribir una opción.");
-                    return;
-                }
-                let paginas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
-                paginas.push({ nombre: nuevaOpcion });
-                localStorage.setItem("paginasAgregadasMenu", JSON.stringify(paginas));
-                pintarListaPaginas(paginas);
-                document.dispatchEvent(new CustomEvent("actualizar_lista_paginas", {
-                    detail: paginas
-                }));
-                mensajeHTML(`La opción "${nuevaOpcion}" fue añadida.`);
-                inputNuevaOpcion.value = "";
-            }
-        });
+    if (subtitulos.length === 0)
+        errores.push("• Falta mínimo 1 subtítulo");
+    if (subtitulos.length > 4)
+        errores.push("• Solo se permiten 4 subtítulos");
+    if (opcionesExtra.length === 0)
+        errores.push("• Agrega al menos 1 nueva opción");
+    if (Object.keys(iconosGuardados).length < 4)
+        errores.push("• Selecciona los 4 iconos");
+    if (seleccionadas.length === 0)
+        errores.push("• Selecciona mínimo 1 opción de la lista");
+    if (errores.length > 0) {
+        alert("Faltan datos en el formulario:\n\n" + errores.join("\n"));
+        return;
     }
-    const botonesMas = document.querySelectorAll(".mas2");
+    alert("✔ Todos los datos del formulario han sido añadidos correctamente.");
+    const pieFinal = pie;
+    const tituloFinal = titulo;
+    const iconosMarcados = Object.values(iconosGuardados).join(" ");
+    const subtitulosFinal = subtitulos.join("<br>");
+    const opcionesFinal = seleccionadas.join("<br>");
+    const nuevoPie = {
+        pie: pieFinal,
+        titulo: tituloFinal,
+        iconos: iconosMarcados,
+        subtitulo: subtitulosFinal,
+        opciones: opcionesFinal
+    };
+    const lista = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
+    lista.push(nuevoPie);
+    localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(lista));
+    document.dispatchEvent(new Event("actualizar_tabla"));
+    console.log("✅ Pie de página enviado al tablero correctamente.");
+});
+inputTitulo.addEventListener("input", () => {
+    localStorage.setItem("titulo_pagina", inputTitulo.value);
+});
+iconoSub.addEventListener("click", () => {
+    const texto = inputSub.value.trim();
+    if (texto === "") return alert("Escribe un subtítulo antes de guardar.");
+    let subtitulos = JSON.parse(localStorage.getItem("subtitulos")) || [];
+    if (subtitulos.length === 4) {
+        alert("Ya has creado los 4 subtítulos permitidos.");
+        return;
+    }
+    subtitulos.push(texto);
+    localStorage.setItem("subtitulos", JSON.stringify(subtitulos));
+    inputSub.value = "";
+    const numero = subtitulos.length;
+    if (numero === 1) {
+        alert("El primer subtítulo ha sido creado.");
+    } 
+    else if (numero === 2) {
+        alert("El segundo subtítulo ha sido creado.");
+    }
+    else if (numero === 3) {
+        alert("El tercer subtítulo ha sido creado.");
+    }
+    else if (numero === 4) {
+        alert("Se han creado los 4 subtítulos con éxito.");
+    }
+});
+inputOpciones.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        const texto = inputOpciones.value.trim();
+        if (texto === "") return;
+        let opciones = JSON.parse(localStorage.getItem("opciones_extra")) || [];
+        opciones.push(texto);
+        localStorage.setItem("opciones_extra", JSON.stringify(opciones));
+        const id = "opc-" + texto.replace(/\s+/g, "_").replace(/[^\w\-]/g, "");
+        const div = document.createElement("div");
+        div.className = "item-pagina1";
+        div.innerHTML = `
+            <input type="checkbox" data-pagina="${texto}" id="${id}">
+            <label for="${id}">${texto}</label>
+        `;
+        listaPaginas.appendChild(div);
+        alert("Se ha creado una nueva opción correctamente");
+        inputOpciones.value = "";
+    }
+});
+(function () {
     const modal = document.getElementById("modalIconos");
-    const iconosEnModal = document.querySelectorAll(".modal-iconos .iconos-grid i");
+    const gridIconos = document.querySelector(".grid-iconos1");
+    const btnCerrarModal = document.getElementById("cerrarModalIconos");
+    const cajas = Array.from(document.querySelectorAll(".caja2"));
     let cajaSeleccionada = null;
-    botonesMas.forEach((boton) => {
-        boton.addEventListener("click", () => {
-            cajaSeleccionada = boton;
-            modal.style.display = "block";
+    let cajaIndex = null;
+    if (!modal || !gridIconos || cajas.length === 0) {
+        console.warn("Modal iconos: faltan elementos. Revisa IDs.");
+        return;
+    }
+    cajas.forEach((caja, idx) => {
+        caja.dataset.index = idx;
+        caja.addEventListener("click", () => {
+            cajaSeleccionada = caja;
+            cajaIndex = idx;
+            modal.style.display = "flex";
+            modal.setAttribute("tabindex", "-1");
+            modal.focus();
         });
     });
-    iconosEnModal.forEach((icono) => {
-        icono.addEventListener("click", () => {
-            if (cajaSeleccionada) {
-                cajaSeleccionada.innerHTML = `<i class="${icono.className}"></i>`;
-            }
-            modal.style.display = "none";
-        });
+    gridIconos.addEventListener("click", (e) => {
+        const icono = e.target.closest("i");
+        if (!icono || !cajaSeleccionada) return;
+        const nuevo = icono.cloneNode(true);
+        cajaSeleccionada.innerHTML = "";
+        cajaSeleccionada.appendChild(nuevo);
+        const guardadas = JSON.parse(localStorage.getItem("iconos_cajas")) || {};
+        guardadas[cajaIndex] = nuevo.outerHTML;
+        localStorage.setItem("iconos_cajas", JSON.stringify(guardadas));
+        modal.style.display = "none";
+        cajaSeleccionada = null;
+        cajaIndex = null;
     });
-    document.getElementById("cerrarModal").addEventListener("click", () => {
+    btnCerrarModal?.addEventListener("click", () => {
         modal.style.display = "none";
     });
-    btnAgregar.addEventListener("click", () => {
-        const titulo = inputTitulo.value.trim();
-        if (!titulo) {
-            mensajeHTML("Debe escribir un título.");
-            return;
-        }
-        const subtitulosFinal = subtitulosGuardados.length
-            ? subtitulosGuardados.join(", ")
-            : "Sin subtítulos";
-        const paginas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
-        const opcionesFinal = paginas.length
-            ? paginas.map(p => p.nombre).join(", ")
-            : "Sin opciones";
-        const iconBoxes = document.querySelectorAll(".mas2");
-        const iconosFinal = [...iconBoxes].map(div => {
-            const icn = div.querySelector("i");
-            return icn ? icn.outerHTML : "";
-        }).join(" ");
-        const nuevoPie = {
-            pie: `Pie ${Date.now()}`,
-            titulo: titulo,
-            iconos: iconosFinal,
-            subtitulo: subtitulosFinal,
-            opciones: opcionesFinal
-        };
-        const pies = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
-        pies.push(nuevoPie);
-        localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(pies));
-        mensajeHTML(`El pie de página "${titulo}" fue creado.`);
-        document.dispatchEvent(new CustomEvent("actualizar_tabla"));
-        inputTitulo.value = "";
-        subtitulosGuardados = [];
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
     });
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") modal.style.display = "none";
+    });
+    window.addEventListener("load", () => {
+        const guardadas = JSON.parse(localStorage.getItem("iconos_cajas")) || {};
+        Object.keys(guardadas).forEach(key => {
+            const idx = Number(key);
+            const htmlIcono = guardadas[key];
+            if (!isNaN(idx) && cajas[idx]) {
+                cajas[idx].innerHTML = htmlIcono;
+            }
+        });
+    });
+})();
+function cargarOpcionesExtras() {
+    const opciones = JSON.parse(localStorage.getItem("opciones_extra")) || [];
+    opciones.forEach(texto => {
+        const id = "opc-" + texto.replace(/\s+/g, "_").replace(/[^\w\-]/g, "");
+        const div = document.createElement("div");
+        div.className = "item-pagina1";
+        div.innerHTML = `
+            <input type="checkbox" data-pagina="${texto}" id="${id}">
+            <label for="${id}">${texto}</label>
+        `;
+        listaPaginas.appendChild(div);
+    });
+}
+window.addEventListener("load", () => {
+    cargarOpcionesExtras();
+});
+function renderizarListaPaginas(paginasArray = []) {
+    listaPaginas.innerHTML = "";
+    paginasArray.forEach((pagina) => {
+        const nombre = typeof pagina === "string" ? pagina : pagina.nombre;
+        const id = "chk-" + cssSafe(nombre);
+        const div = document.createElement("div");
+        div.className = "item-pagina1";
+        div.innerHTML = `
+            <input type="checkbox" data-pagina="${nombre}" id="${id}">
+            <label for="${id}">${nombre}</label>
+        `;
+        listaPaginas.appendChild(div);
+    });
+}
+function cssSafe(text) {
+    return String(text)
+        .replace(/\s+/g, "_")
+        .replace(/[^\w\-]/g, "");
+}
+function cargarPaginas() {
+    let paginas = JSON.parse(localStorage.getItem("paginas_desde_tablero")) || [];
+    if (!paginas || paginas.length === 0) {
+        const creadas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
+        if (creadas.length > 0) {
+            paginas = creadas.map(p => typeof p === "string" ? p : p.nombre || "");
+        }
+    }
+    if (!paginas || paginas.length === 0) {
+        paginas = [
+            "Inicio", "Servicios", "Contacto", "Nosotros",
+            "Blog", "Productos", "Preguntas frecuentes"
+        ];
+    }
+    renderizarListaPaginas(paginas);
+    const guardadas = JSON.parse(localStorage.getItem("paginas_seleccionadas")) || [];
+    guardadas.forEach(nombre => {
+        const el = listaPaginas.querySelector(`input[data-pagina="${nombre}"]`);
+        if (el) el.checked = true;
+    });
+}
+cargarPaginas();
+listaPaginas.addEventListener("change", () => {
+    const seleccionadas = [];
+    listaPaginas.querySelectorAll("input[type='checkbox']").forEach(chk => {
+        if (chk.checked) seleccionadas.push(chk.dataset.pagina);
+    });
+    localStorage.setItem("paginas_seleccionadas", JSON.stringify(seleccionadas));
+});
+document.addEventListener("enviar_paginas_a_formulario", (e) => {
+    const paginasObj = e.detail || [];
+    const paginas = paginasObj.map(p => typeof p === "string" ? p : p.nombre || "");
+    localStorage.setItem("paginas_desde_tablero", JSON.stringify(paginasObj));
+    localStorage.setItem("paginas_desde_tablero_updatedAt", Date.now().toString());
+    renderizarListaPaginas(paginas);
+    localStorage.setItem("paginas_seleccionadas", JSON.stringify(paginas));
+    paginas.forEach(nombre => {
+        const el = listaPaginas.querySelector(`input[data-pagina="${nombre}"]`);
+        if (el) el.checked = true;
+    });
+});
+window.addEventListener("storage", (event) => {
+    if (event.key === "paginas_desde_tablero_updatedAt" || event.key === "paginas_desde_tablero") {
+        const paginasObj = JSON.parse(localStorage.getItem("paginas_desde_tablero")) || [];
+        const paginas = paginasObj.map(p => typeof p === "string" ? p : p.nombre || "");
+        renderizarListaPaginas(paginas);
+        localStorage.setItem("paginas_seleccionadas", JSON.stringify(paginas));
+        paginas.forEach(nombre => {
+            const el = listaPaginas.querySelector(`input[data-pagina="${nombre}"]`);
+            if (el) el.checked = true;
+        });
+        console.log("✔ Páginas recibidas desde el tablero (por storage event)");
+    }
 });
 //-----------------------------------------//
 //--|funcionalidad_tablero_pie_de_pagina|--//

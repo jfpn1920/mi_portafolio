@@ -360,6 +360,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 detail: paginasAgregadas
             })
         );
+        document.dispatchEvent(
+            new CustomEvent("enviar_paginas_a_formulario", {
+                detail: paginasAgregadas
+            })
+        );
         mostrarMensaje(`Se han agregado ${nuevasPaginas.length} páginas`, "success");
         mostrarPaginas();
     });

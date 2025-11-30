@@ -59,23 +59,6 @@
             <i class="fa-solid fa-trash"></i> Contenedor
         </button>
     </div>
-    <!-------------------------------------->
-    <!--|estructura_agregar_pie_de_pagina|-->
-    <!-------------------------------------->
-    <div class="contenedor-agregar-paginas">
-        <div class="cabecera">
-            <div class="titulo">agregar pie de pagina</div>
-            <button class="crear">Crear</button>
-        </div>
-        <div class="contenido">
-            <div class="icono">
-                <i class="fas fa-file-alt"></i>
-            </div>
-            <div class="campo">
-                <input type="text" placeholder="Escribe el pie de pagina">
-            </div>
-        </div>
-    </div>
     <!------------------------------->
     <!--|estructura_agregar_imagen|-->
     <!------------------------------->
@@ -98,6 +81,12 @@
             <div class="titulo1">Formulario de pie de pagina</div>
             <button class="crear1" id="btnAgregar">agregar</button>
         </div>
+        <div class="bloque-pie">
+            <label class="label-pie">añadir pie de página</label>
+            <div class="fila-pie">
+                <input type="text" class="input-pie" id="inputPie" placeholder="Escribe el pie de página">
+            </div>
+        </div>
         <div class="contenido1">
             <div class="bloque-titulo">
                 <label class="label-titulo">añade un título</label>
@@ -107,7 +96,7 @@
                 <label class="label-sub">añadir subtítulos</label>
                 <div class="fila-subtitulo">
                     <input type="text" class="input-sub" placeholder="escribe el subtítulo">
-                    <i class="fa-solid fa-bookmark icono-sub"></i>
+                    <i class="fa-solid fa-bookmark icono-sub1"></i>
                 </div>
                 <label class="label-opciones">agregar nuevas opciones</label>
                 <input type="text" class="input-opciones" placeholder="escribe nueva opcion">
@@ -129,19 +118,23 @@
             </div>
         </div>
     </div>
-    <!-- 🟦 NUEVO MODAL CENTRADO CON BOTÓN ✖ -->
-    <div class="modal-iconos" id="modalIconos">
-        <div class="modal-contenido">
-            <button class="btn-cerrar-modal" id="cerrarModal">✖</button>
-            <h3>Selecciona un icono</h3>
-            <div class="iconos-grid">
-                <i class="fa-solid fa-house"></i>
-                <i class="fa-solid fa-user"></i>
-                <i class="fa-solid fa-gear"></i>
-                <i class="fa-solid fa-envelope"></i>
-                <i class="fa-solid fa-bell"></i>
-                <i class="fa-solid fa-camera"></i>
+    <div id="modalIconos" class="modal-iconos1">
+        <div class="modal-contenido-iconos1">
+            <h3 class="titulo-modal-iconos1">Selecciona un ícono</h3>
+            <div class="grid-iconos1">
+                <i class="fa-solid fa-user icono-opcion1"></i>
+                <i class="fa-solid fa-heart icono-opcion1"></i>
+                <i class="fa-solid fa-star icono-opcion1"></i>
+                <i class="fa-solid fa-bookmark icono-opcion1"></i>
+                <i class="fa-solid fa-gear icono-opcion1"></i>
+                <i class="fa-solid fa-shop icono-opcion1"></i>
+                <i class="fa-solid fa-bolt icono-opcion1"></i>
+                <i class="fa-solid fa-camera icono-opcion1"></i>
+                <i class="fa-solid fa-gamepad icono-opcion1"></i>
+                <i class="fa-solid fa-music icono-opcion1"></i>
+                <i class="fa-solid fa-comment icono-opcion1"></i>
             </div>
+            <button id="cerrarModalIconos" class="btn-cerrar-modal1">Cerrar</button>
         </div>
     </div>
     <!-------------------------------------->
