@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ Script de agregar imagen pie_de_pagina cargado correctamente.");
     const imagenBox_pie_de_pagina = document.querySelector(".imagen-box");
     const botonAgregar_pie_de_pagina = document.querySelector(".imagen-btn");
+    const bigLeftBox = document.querySelector(".big-left-box");
     if (!imagenBox_pie_de_pagina) console.error("No se encontró .imagen-box en el DOM");
     if (!botonAgregar_pie_de_pagina) console.error("No se encontró .imagen-btn en el DOM");
     const inputImagen_pie_de_pagina = document.createElement("input");
@@ -58,16 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const lector_pie_de_pagina = new FileReader();
             lector_pie_de_pagina.onload = (evento) => {
                 imagenesSeleccionadas_pie_de_pagina.push(evento.target.result);
-                if (imagenBox_pie_de_pagina) {
-                    const img_pie_de_pagina = document.createElement("img");
-                    img_pie_de_pagina.src = evento.target.result;
-                    img_pie_de_pagina.style.width = "100px";
-                    img_pie_de_pagina.style.height = "100px";
-                    img_pie_de_pagina.style.objectFit = "cover";
-                    img_pie_de_pagina.style.margin = "5px";
-                    img_pie_de_pagina.style.borderRadius = "5px";
-                    imagenBox_pie_de_pagina.appendChild(img_pie_de_pagina);
-                }
+                const img_pie_de_pagina = document.createElement("img");
+                img_pie_de_pagina.src = evento.target.result;
+                img_pie_de_pagina.style.width = "100px";
+                img_pie_de_pagina.style.height = "100px";
+                img_pie_de_pagina.style.objectFit = "cover";
+                img_pie_de_pagina.style.margin = "5px";
+                img_pie_de_pagina.style.borderRadius = "5px";
+                imagenBox_pie_de_pagina.appendChild(img_pie_de_pagina);
             };
             lector_pie_de_pagina.readAsDataURL(archivo);
         });
@@ -79,15 +78,49 @@ document.addEventListener("DOMContentLoaded", () => {
                 mostrarMensaje_pie_de_pagina("no has agregado ninguna imagen", "error");
                 return;
             }
+            if (bigLeftBox) {
+                bigLeftBox.innerHTML = ""; // limpiar contenido previo
+                imagenesSeleccionadas_pie_de_pagina.forEach(src => {
+                    const img = document.createElement("img");
+                    img.src = src;
+                    img.style.width = "100px";
+                    img.style.height = "100px";
+                    img.style.objectFit = "cover";
+                    img.style.margin = "5px";
+                    img.style.borderRadius = "5px";
+                    bigLeftBox.appendChild(img);
+                });
+            } else {
+                console.warn("⚠️ No existe .big-left-box en el DOM.");
+            }
             localStorage.setItem(
                 "imagenesCarrusel_pie_de_pagina",
                 JSON.stringify(imagenesSeleccionadas_pie_de_pagina)
             );
             mostrarMensaje_pie_de_pagina("has agregado las imagenes correctamente", "exito");
-            if (imagenBox_pie_de_pagina) imagenBox_pie_de_pagina.innerHTML = `<i class="fa-regular fa-image"></i>`;
+            if (imagenBox_pie_de_pagina)
+                imagenBox_pie_de_pagina.innerHTML = `<i class="fa-regular fa-image"></i>`;
             inputImagen_pie_de_pagina.value = "";
             imagenesSeleccionadas_pie_de_pagina = [];
         });
+    }
+    if (bigLeftBox) {
+        const imagenesGuardadas = localStorage.getItem("imagenesCarrusel_pie_de_pagina");
+        if (imagenesGuardadas) {
+            const lista = JSON.parse(imagenesGuardadas);
+            bigLeftBox.innerHTML = "";
+            lista.forEach(src => {
+                const img = document.createElement("img");
+                img.src = src;
+                img.style.width = "267px";
+                img.style.height = "288px";
+                img.style.objectFit = "cover";
+                img.style.margin = "5px";
+                img.style.borderRadius = "5px";
+                bigLeftBox.appendChild(img);
+            });
+            console.log("🖼️ Imágenes cargadas desde localStorage");
+        }
     }
 });
 //-----------------------------------------------//
@@ -382,13 +415,9 @@ document.addEventListener("DOMContentLoaded", () => {
             tr.innerHTML = `
                 <td>${item.pie}</td>
                 <td>${item.titulo}</td>
-                <!-- ICONOS (uno debajo del otro) -->
                 <td class="celda-iconos">${item.iconos}</td>
-                <!-- SUBTÍTULOS -->
                 <td class="celda-subtitulos">${item.subtitulo}</td>
-                <!-- OPCIONES (una debajo de otra) -->
                 <td class="celda-opciones">${item.opciones}</td>
-                <!-- ACCIONES (botones verticales con wrapper) -->
                 <td class="celda-acciones">
                     <div class="acciones-wrapper">
                         <button class="btn-editar1" data-index="${index}">
@@ -396,6 +425,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         </button>
                         <button class="btn-visualizar1" data-index="${index}">
                             <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button class="btn-anadir1" data-index="${index}">
+                            <i class="fa-solid fa-circle-plus"></i>
                         </button>
                         <button class="btn-eliminar1" data-index="${index}">
                             <i class="fa-solid fa-trash"></i>
@@ -437,13 +469,50 @@ document.addEventListener("DOMContentLoaded", () => {
             const item = pies[index];
             mensajeHTML(`Vista previa del pie de página: <b>${item.titulo}</b>`);
         }
+        if (btn.classList.contains("btn-anadir1")) {
+            const item = pies[index];
+            alert("Se ha añadido los datos a la vista previa, correctamente");
+            function limpiarTexto(html) {
+                return html
+                    .replace(/<br\s*\/?>/gi, "|")
+                    .replace(/\s*\|\s*/g, " | ")
+                    .replace(/\s+/g, " ")
+                    .trim();
+            }
+            let iconosLimpios = limpiarTexto(item.iconos);
+            let subtitulosLimpios = limpiarTexto(item.subtitulo);
+            let opcionesLimpias = limpiarTexto(item.opciones);
+            let datosTexto =
+                "Datos seleccionados:\n" +
+                "1) Pie de página: " + item.pie + "\n" +
+                "2) Título: " + item.titulo + "\n" +
+                "3) Iconos: " + iconosLimpios + "\n" +
+                "4) Subtítulo: " + subtitulosLimpios + "\n" +
+                "5) Opciones: " + opcionesLimpias;
+            alert(datosTexto);
+            let numero = prompt("Escribe el número que quieres añadir a la vista previa (1-5):");
+            if (!numero || isNaN(numero) || numero < 1 || numero > 5) {
+                alert("Número inválido. Operación cancelada.");
+                return;
+            }
+            let textoSeleccionado = "";
+            if (numero == 1) textoSeleccionado = item.pie;
+            if (numero == 2) textoSeleccionado = item.titulo;
+            if (numero == 3) textoSeleccionado = iconosLimpios;
+            if (numero == 4) textoSeleccionado = subtitulosLimpios;
+            if (numero == 5) textoSeleccionado = opcionesLimpias;
+            alert(`La opción ${numero} ha sido añadida a la vista previa:\n${textoSeleccionado}`);
+            colocarEnVistaPrevia(parseInt(numero), textoSeleccionado);
+            mensajeHTML("Los datos fueron enviados a la vista previa.");
+        }
     });
 });
 //--------------------------------------------------//
 //--|funcionalidad_vista_previa_del_pie_de_pagina|--//
 //--------------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("📌 JS de vista previa de pie de página cargado.");
+    console.log("📌 JS de vista previa de pie de página cargado (ROBUSTO+ANTI-DUPLICADOS).");
+    // ELEMENTOS EXISTENTES
     const descripcionPreview = document.querySelector(".descripcion_pie_pagina_preview");
     const telefonoElem = document.querySelector(".valor-telefono");
     const correoElem = document.querySelector(".valor-correo");
@@ -452,30 +521,214 @@ document.addEventListener("DOMContentLoaded", () => {
     const direccionElem = document.querySelector(".valor-direccion");
     const avisoElem = document.querySelector(".valor-avisos");
     const socialElem = document.querySelector(".valor-social");
+    // SELECTORES DE VISTA PREVIA
+    const boxPie = document.querySelector(".header-box");
+    const boxTitulo = document.querySelector(".top-right-box");
+    // NodeLists originales
+    let boxIconos = document.querySelectorAll(".mini:not(.wide)");
+    let boxSubtitulos = document.querySelectorAll(".mini.wide");
+    let boxOpciones = document.querySelectorAll(".item1, .item2, .item3, .item4");
+    const fallbackMini = document.querySelector(".mini");
+    const fallbackMiniWide = document.querySelector(".mini.wide");
+    // Normalización
+    function ensureNodeLists() {
+        if ((!boxIconos || boxIconos.length === 0) && fallbackMini) {
+            boxIconos = [fallbackMini];
+            console.warn("⚠️ No se encontraron múltiples .mini — usando fallback único");
+        }
+        if ((!boxSubtitulos || boxSubtitulos.length === 0) && fallbackMiniWide) {
+            boxSubtitulos = [fallbackMiniWide];
+            console.warn("⚠️ No se encontraron múltiples .mini.wide — usando fallback único");
+        }
+        if (!boxOpciones || boxOpciones.length === 0) {
+            boxOpciones = [];
+            console.warn("⚠️ No se encontraron .item* (opciones)");
+        }
+    }
+    ensureNodeLists();
+    // ==========================================================
+    // 👉👉 CODIGO .bottom-box (editable)
+    // ==========================================================
+    const bottomBox = document.querySelector(".bottom-box");
+    if (bottomBox) {
+        bottomBox.addEventListener("click", () => {
+            bottomBox.setAttribute("contenteditable", "true");
+            bottomBox.focus();
+        });
+        bottomBox.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                bottomBox.removeAttribute("contenteditable");
+                // guardar en localStorage
+                let datos = JSON.parse(localStorage.getItem("vista_previa_footer")) || {};
+                datos.bottom = bottomBox.innerHTML.trim();
+                localStorage.setItem("vista_previa_footer", JSON.stringify(datos));
+                bottomBox.blur();
+            }
+        });
+    }
+    // ==========================================================
+    // LocalStorage → Cargar
+    // ==========================================================
+    function cargarVistaPrevGuardada() {
+        const raw = localStorage.getItem("vista_previa_footer");
+        if (!raw) return;
+        let datos;
+        try { datos = JSON.parse(raw); }
+        catch { return; }
+        if (datos.pie && boxPie) boxPie.innerHTML = datos.pie;
+        if (datos.titulo && boxTitulo) boxTitulo.innerHTML = datos.titulo;
+        if (datos.iconos && Array.isArray(datos.iconos)) {
+            datos.iconos.forEach((v, i) => { 
+                if (boxIconos[i]) boxIconos[i].innerHTML = v; 
+            });
+        }
+        if (datos.subtitulos && Array.isArray(datos.subtitulos)) {
+            datos.subtitulos.forEach((v, i) => { 
+                if (boxSubtitulos[i]) boxSubtitulos[i].innerHTML = v; 
+            });
+        }
+        if (datos.opciones && Array.isArray(datos.opciones)) {
+            datos.opciones.forEach((v, i) => { 
+                if (boxOpciones[i]) boxOpciones[i].innerHTML = v; 
+            });
+        }
+        // cargar bottom-box
+        const bottomBox = document.querySelector(".bottom-box");
+        if (datos.bottom && bottomBox) {
+            bottomBox.innerHTML = datos.bottom;
+        }
+    }
+    cargarVistaPrevGuardada();
+    // ==========================================================
+    // Guardar vista previa
+    // ==========================================================
+    function guardarVistaPrevia() {
+        ensureNodeLists();
+        const datos = {
+            pie: boxPie?.innerHTML.trim() || "",
+            titulo: boxTitulo?.innerHTML.trim() || "",
+            iconos: Array.from(boxIconos).map(d => d.innerHTML),
+            subtitulos: Array.from(boxSubtitulos).map(d => d.innerHTML),
+            opciones: Array.from(boxOpciones).map(d => d.innerHTML.trim()),
+        };
+        localStorage.setItem("vista_previa_footer", JSON.stringify(datos));
+    }
+    // FIX para iconos
+    function limpiarMinis() {
+        const minis = document.querySelectorAll(".mini-row-empleo .mini");
+        minis.forEach(mini => mini.innerHTML = "");
+    }
+    window.colocarEnVistaPrevia = function (numero, contenido) {
+        ensureNodeLists();
+        if (numero == 3) {
+            limpiarMinis();
+            const icons = contenido.split("|").map(i => i.trim());
+            const minis = document.querySelectorAll(".mini-row-empleo .mini");
+            minis.forEach((mini, i) => {
+                if (icons[i] && icons[i] !== "") {
+                    mini.innerHTML = icons[i];
+                }
+            });
+            guardarVistaPrevia();
+            return;
+        }
+        function assignToList(list, value) {
+            if (!list || list.length === 0) return;
+            if (Array.isArray(value)) {
+                value.forEach((v, i) => {
+                    if (list[i]) list[i].innerHTML = v;
+                });
+                return;
+            }
+            if (typeof value === "string" && value.includes("|")) {
+                const parts = value.split("|").map(s => s.trim());
+                parts.forEach((p, i) => {
+                    if (list[i]) list[i].innerHTML = p;
+                });
+                return;
+            }
+            if (typeof value === "string") {
+                if (list[0]) list[0].innerHTML = value;
+                return;
+            }
+        }
+        if (numero == 1 && boxPie) boxPie.innerHTML = contenido;
+        if (numero == 2 && boxTitulo) boxTitulo.innerHTML = contenido;
+        if (numero == 4) assignToList(boxSubtitulos, contenido);
+        if (numero == 5) {
+            const lista = Array.isArray(contenido)
+                ? contenido
+                : (typeof contenido === "string"
+                    ? contenido.split("|").map(t => t.trim())
+                    : []);
+            boxOpciones.forEach((div, i) => {
+                div.innerHTML = lista[i] ?? "";
+            });
+        }
+        guardarVistaPrevia();
+    };
+    // ==========================================================
+    // Datos iniciales
+    // ==========================================================
     function cargarDatosIniciales() {
-        descripcionPreview.textContent = "Este es un ejemplo de vista previa.";
-        telefonoElem.textContent = "300 000 0000";
-        correoElem.textContent = "ejemplo@correo.com";
-        quienElem.textContent = "Empresa de ejemplo";
-        dondeElem.textContent = "Colombia";
-        direccionElem.textContent = "Calle falsa 123";
-        avisoElem.textContent = "Todos los derechos reservados.";
-        socialElem.textContent = "@mis_redes";
-        console.log("📌 Datos iniciales cargados en la vista previa.");
+        if (localStorage.getItem("vista_previa_footer")) return;
+        ensureNodeLists();
+        boxIconos.forEach(m => { if (!m.innerHTML.trim()) m.innerHTML = ""; });
+        boxSubtitulos.forEach(m => { if (!m.innerHTML.trim()) m.innerHTML = ""; });
     }
     cargarDatosIniciales();
+    // ==========================================================
+    // actualizarPieDePagina
+    // ==========================================================
     function mostrarMensaje(texto) {
-        console.log("📢 MENSAJE: " + texto);
+        console.log("📢 MENSAJE:", texto);
     }
     window.actualizarPieDePagina = function (data) {
-        descripcionPreview.textContent = data.descripcion || descripcionPreview.textContent;
-        telefonoElem.textContent = data.telefono || telefonoElem.textContent;
-        correoElem.textContent = data.correo || correoElem.textContent;
-        quienElem.textContent = data.quien || quienElem.textContent;
-        dondeElem.textContent = data.donde || dondeElem.textContent;
-        direccionElem.textContent = data.direccion || direccionElem.textContent;
-        avisoElem.textContent = data.aviso || avisoElem.textContent;
-        socialElem.textContent = data.social || socialElem.textContent;
+        if (descripcionPreview && data.descripcion) descripcionPreview.textContent = data.descripcion;
+        if (telefonoElem && data.telefono) telefonoElem.textContent = data.telefono;
+        if (correoElem && data.correo) correoElem.textContent = data.correo;
+        if (quienElem && data.quien) quienElem.textContent = data.quien;
+        if (dondeElem && data.donde) dondeElem.textContent = data.donde;
+        if (direccionElem && data.direccion) direccionElem.textContent = data.direccion;
+        if (avisoElem && data.aviso) avisoElem.textContent = data.aviso;
+        if (socialElem && data.social) socialElem.textContent = data.social;
         mostrarMensaje("Vista previa actualizada correctamente.");
     };
+    // ==========================================================
+    // 🚀 BOTONES: ELIMINAR PIE DE PÁGINA / ENVIAR PIE DE PÁGINA
+    // ==========================================================
+    // buscar por las clases nuevas o por las originales (compatibilidad)
+    const btnEliminarPie = document.querySelector(".btn-eliminar-pie") || document.querySelector(".btn1");
+    const btnEnviarPie   = document.querySelector(".btn-enviar-pie")   || document.querySelector(".btn2");
+    if (btnEliminarPie) {
+        btnEliminarPie.addEventListener("click", () => {
+            // limpiar elementos
+            if (boxPie) boxPie.innerHTML = "";
+            if (boxTitulo) boxTitulo.innerHTML = "";
+            if (bottomBox) bottomBox.innerHTML = "";
+            boxIconos.forEach(m => m.innerHTML = "");
+            boxSubtitulos.forEach(m => m.innerHTML = "");
+            boxOpciones.forEach(m => m.innerHTML = "");
+            // borrar localStorage
+            localStorage.removeItem("vista_previa_footer");
+            alert("Se ha borrado completamente de la vista previa");
+        });
+    }
+    if (btnEnviarPie) {
+        btnEnviarPie.addEventListener("click", () => {
+            const contenidoPie = boxPie?.innerHTML.trim();
+            const contenidoTitulo = boxTitulo?.innerHTML.trim();
+            const contenidoBottom = bottomBox?.innerHTML.trim();
+            const hayContenido =
+                (contenidoPie && contenidoPie !== "") ||
+                (contenidoTitulo && contenidoTitulo !== "") ||
+                (contenidoBottom && contenidoBottom !== "");
+            if (!hayContenido) {
+                alert("No ha añadido un pie de página");
+                return;
+            }
+            alert("Se ha enviado correctamente el pie de página");
+        });
+    }
 });
