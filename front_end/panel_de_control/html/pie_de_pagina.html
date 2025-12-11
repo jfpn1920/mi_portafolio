@@ -53,7 +53,7 @@
             <p class="titulo-edicion">
                 Edición predeterminada - Pie de pagina
             </p>
-            <div class="estado-edicion">Datos no encontrados</div>
+            <div class="estado-edicion" id="estadoEdicion">Datos no encontrados</div>
         </div>
         <button class="btn-contenedor">
             <i class="fa-solid fa-trash"></i> Contenedor
@@ -159,6 +159,46 @@
                 <!-- Las páginas creadas aparecerán aquí -->
             </tbody>
         </table>
+    </div>
+    <!-- ============================= -->
+    <!-- MODAL PARA AÑADIR A VISTA PREVIA -->
+    <!-- ============================= -->
+    <div id="modalAnadir" class="modal-ventana3">
+        <div class="modal-contenido3">
+            <div class="modal-encabezado3">
+                <h2>Añadir celda a vista previa</h2>
+                <button class="modal-cerrar3" id="cerrarModal">X</button>
+            </div>
+            <div class="modal-indicacion-wrapper3">
+                <p class="modal-indicacion3">Dinos qué opción deseas añadir</p>
+                <button class="modal-btn-confirmar-mini3" id="btnConfirmarEnvio">
+                    Confirmar
+                </button>
+            </div>
+            <input type="number" id="inputNumeroOpcion" class="modal-input3" placeholder="Coloca el número que irá a la vista previa">
+            <hr class="modal-separador3">
+            <h3 class="modal-subtitulo3">Menu de pie de página</h3>
+            <div class="modal-opcion3">
+                <span>Opción 1</span>
+                <div id="modalOpcion1" class="modal-campo3"></div>
+            </div>
+            <div class="modal-opcion3">
+                <span>Opción 2</span>
+                <div id="modalOpcion2" class="modal-campo3"></div>
+            </div>
+            <div class="modal-opcion3">
+                <span>Opción 3</span>
+                <div id="modalOpcion3" class="modal-campo3 modal-campo-grande3"></div>
+            </div>
+            <div class="modal-opcion3">
+                <span>Opción 4</span>
+                <div id="modalOpcion4" class="modal-campo3"></div>
+            </div>
+            <div class="modal-opcion3">
+                <span>Opción 5</span>
+                <div id="modalOpcion5" class="modal-campo-opcion5"></div>
+            </div>
+        </div>
     </div>
     <!----------------------------------------------->
     <!--|estructura_vista_previa_del_pie_de_pagina|-->

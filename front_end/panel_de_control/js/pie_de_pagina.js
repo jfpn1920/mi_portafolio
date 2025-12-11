@@ -6,6 +6,18 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//--------------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_pie de pagina|--//
+//--------------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //----------------------------------//
 //--|funcionalidad_agregar_imagen|--//
 //----------------------------------//
@@ -138,7 +150,7 @@ btnAgregar.addEventListener("click", () => {
     const listaActual = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
     const LIMITE_TABLERO = 4;
     if (listaActual.length >= LIMITE_TABLERO) {
-        alert("Has alcanzado el límite de datos en el tablero. Máximo permitido: " + LIMITE_TABLERO);
+        mostrarMensaje("Has alcanzado el límite de datos en el tablero. Máximo permitido: " + LIMITE_TABLERO, "error");
         return;
     }
     const pie = inputPie.value.trim();
@@ -155,7 +167,7 @@ btnAgregar.addEventListener("click", () => {
         Object.keys(iconosGuardados).length === 0 &&
         seleccionadas.length === 0;
     if (noHayDatos) {
-        alert("No hay datos agregados en el formulario.");
+        mostrarMensaje("No hay datos agregados en el formulario.", "error");
         return;
     }
     let errores = [];
@@ -180,10 +192,10 @@ btnAgregar.addEventListener("click", () => {
     if (seleccionadas.length === 0)
         errores.push("• Selecciona mínimo 1 opción de la lista");
     if (errores.length > 0) {
-        alert("Faltan datos en el formulario:\n\n" + errores.join("\n"));
+        mostrarMensaje("Faltan datos en el formulario.", "error");
         return;
     }
-    alert("✔ Todos los datos del formulario han sido añadidos correctamente.");
+    mostrarMensaje("Todos los datos han sido añadidos correctamente.", "exito");
     const nuevoPie = {
         pie,
         titulo,
@@ -201,28 +213,24 @@ inputTitulo.addEventListener("input", () => {
 });
 iconoSub.addEventListener("click", () => {
     const texto = inputSub.value.trim();
-    if (texto === "") return alert("Escribe un subtítulo antes de guardar.");
+    if (texto === "") return mostrarMensaje("Escribe un subtítulo antes de guardar.", "error");
     let subtitulos = JSON.parse(localStorage.getItem("subtitulos")) || [];
     if (subtitulos.length === 4) {
-        alert("Ya has creado los 4 subtítulos permitidos.");
+        mostrarMensaje("Ya has creado los 4 subtítulos permitidos.", "error");
         return;
     }
     subtitulos.push(texto);
     localStorage.setItem("subtitulos", JSON.stringify(subtitulos));
     inputSub.value = "";
     const numero = subtitulos.length;
-    if (numero === 1) {
-        alert("El primer subtítulo ha sido creado.");
-    } 
-    else if (numero === 2) {
-        alert("El segundo subtítulo ha sido creado.");
-    }
-    else if (numero === 3) {
-        alert("El tercer subtítulo ha sido creado.");
-    }
-    else if (numero === 4) {
-        alert("Se han creado los 4 subtítulos con éxito.");
-    }
+    if (numero === 1)
+        mostrarMensaje("El primer subtítulo ha sido creado.", "exito");
+    else if (numero === 2)
+        mostrarMensaje("El segundo subtítulo ha sido creado.", "exito");
+    else if (numero === 3)
+        mostrarMensaje("El tercer subtítulo ha sido creado.", "exito");
+    else if (numero === 4)
+        mostrarMensaje("Se han creado los 4 subtítulos con éxito.", "exito");
 });
 inputOpciones.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -239,7 +247,7 @@ inputOpciones.addEventListener("keydown", (e) => {
             <label for="${id}">${texto}</label>
         `;
         listaPaginas.appendChild(div);
-        alert("Se ha creado una nueva opción correctamente");
+        mostrarMensaje("Se ha creado una nueva opción correctamente", "exito");
         inputOpciones.value = "";
     }
 });
@@ -402,7 +410,10 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaBody.innerHTML = "";
         const pies = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
         if (pies.length === 0) {
-            mensajeHTML("No hay pies de página creados.");
+            mensajeHTML(`
+                <i class="fa-solid fa-eye"></i>
+                No hay pies de página creados.
+            `);
             const filaVacia = document.createElement("tr");
             filaVacia.innerHTML = `
                 <td colspan="6" style="text-align:center;">No hay pies de página creados</td>
@@ -452,67 +463,81 @@ document.addEventListener("DOMContentLoaded", () => {
             const nombre = pies[index].pie;
             pies.splice(index, 1);
             localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(pies));
-            mensajeHTML(`El pie de página <b>${nombre}</b> fue eliminado.`);
+            mensajeHTML(`
+                <i class="fa-solid fa-trash"></i>
+                El pie de página <b>${nombre}</b> fue eliminado.
+            `);
             mostrarPieDePagina();
         }
         if (btn.classList.contains("btn-editar1")) {
             const item = pies[index];
-            mensajeHTML(`Editando pie de página: <b>${item.titulo}</b>`);
+            mensajeHTML(`
+                <i class="fa-solid fa-pen-to-square"></i>
+                Editando pie de página: <b>${item.titulo}</b>
+            `);
             const nuevoTitulo = prompt("Editar título:", item.titulo);
             if (!nuevoTitulo) return;
             pies[index].titulo = nuevoTitulo.trim();
             localStorage.setItem("pie_de_pagina_tablero", JSON.stringify(pies));
-            mensajeHTML(`El título fue cambiado a <b>${nuevoTitulo}</b>.`);
+            mensajeHTML(`
+                <i class="fa-solid fa-pen-to-square"></i>
+                El título fue cambiado a <b>${nuevoTitulo}</b>.
+            `);
             mostrarPieDePagina();
         }
         if (btn.classList.contains("btn-visualizar1")) {
             const item = pies[index];
-            mensajeHTML(`Vista previa del pie de página: <b>${item.titulo}</b>`);
+            mensajeHTML(`
+                <i class="fa-solid fa-eye"></i>
+                Vista previa del pie de página: <b>${item.titulo}</b>
+            `);
         }
         if (btn.classList.contains("btn-anadir1")) {
             const item = pies[index];
-            alert("Se ha añadido los datos a la vista previa, correctamente");
-            function limpiarTexto(html) {
-                return html
-                    .replace(/<br\s*\/?>/gi, "|")
-                    .replace(/\s*\|\s*/g, " | ")
-                    .replace(/\s+/g, " ")
-                    .trim();
-            }
-            let iconosLimpios = limpiarTexto(item.iconos);
-            let subtitulosLimpios = limpiarTexto(item.subtitulo);
-            let opcionesLimpias = limpiarTexto(item.opciones);
-            let datosTexto =
-                "Datos seleccionados:\n" +
-                "1) Pie de página: " + item.pie + "\n" +
-                "2) Título: " + item.titulo + "\n" +
-                "3) Iconos: " + iconosLimpios + "\n" +
-                "4) Subtítulo: " + subtitulosLimpios + "\n" +
-                "5) Opciones: " + opcionesLimpias;
-            alert(datosTexto);
-            let numero = prompt("Escribe el número que quieres añadir a la vista previa (1-5):");
-            if (!numero || isNaN(numero) || numero < 1 || numero > 5) {
-                alert("Número inválido. Operación cancelada.");
-                return;
-            }
-            let textoSeleccionado = "";
-            if (numero == 1) textoSeleccionado = item.pie;
-            if (numero == 2) textoSeleccionado = item.titulo;
-            if (numero == 3) textoSeleccionado = iconosLimpios;
-            if (numero == 4) textoSeleccionado = subtitulosLimpios;
-            if (numero == 5) textoSeleccionado = opcionesLimpias;
-            alert(`La opción ${numero} ha sido añadida a la vista previa:\n${textoSeleccionado}`);
-            colocarEnVistaPrevia(parseInt(numero), textoSeleccionado);
-            mensajeHTML("Los datos fueron enviados a la vista previa.");
+            document.getElementById("modalOpcion1").textContent = item.pie;
+            document.getElementById("modalOpcion2").textContent = item.titulo;
+            document.getElementById("modalOpcion3").innerHTML =
+                item.iconos.replace(/<br\s*\/?>/gi, " ");
+            document.getElementById("modalOpcion4").textContent =
+                item.subtitulo.replace(/<br\s*\/?>/gi, " | ");
+            document.getElementById("modalOpcion5").textContent =
+                item.opciones.replace(/<br\s*\/?>/gi, " | ");
+            document.getElementById("modalAnadir").style.display = "flex";
         }
     });
+    document.getElementById("cerrarModal").addEventListener("click", () => {
+        document.getElementById("modalAnadir").style.display = "none";
+    });
+    const btnConfirmar = document.getElementById("btnConfirmarEnvio");
+    if (btnConfirmar) {
+        btnConfirmar.addEventListener("click", () => {
+            const numero = parseInt(document.getElementById("inputNumeroOpcion").value);
+            if (!numero || numero < 1 || numero > 5) {
+                mensajeHTML("<i class='fa-solid fa-eye'></i> Número inválido.");
+                return;
+            }
+            let textoSeleccionado =
+                numero === 1 ? document.getElementById("modalOpcion1").textContent :
+                numero === 2 ? document.getElementById("modalOpcion2").textContent :
+                numero === 3 ? document.getElementById("modalOpcion3").innerHTML :
+                numero === 4 ? document.getElementById("modalOpcion4").textContent :
+                numero === 5 ? document.getElementById("modalOpcion5").textContent : "";
+            colocarEnVistaPrevia(numero, textoSeleccionado);
+            mensajeHTML(`
+                <i class="fa-solid fa-eye"></i>
+                Opción ${numero} enviada a la vista previa.
+            `);
+            document.getElementById("modalAnadir").style.display = "none";
+        });
+    } else {
+        console.warn("⚠️ No se encontró el botón #btnConfirmarEnvio");
+    }
 });
 //--------------------------------------------------//
 //--|funcionalidad_vista_previa_del_pie_de_pagina|--//
 //--------------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
     console.log("📌 JS de vista previa de pie de página cargado (ROBUSTO+ANTI-DUPLICADOS).");
-    // ELEMENTOS EXISTENTES
     const descripcionPreview = document.querySelector(".descripcion_pie_pagina_preview");
     const telefonoElem = document.querySelector(".valor-telefono");
     const correoElem = document.querySelector(".valor-correo");
@@ -521,16 +546,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const direccionElem = document.querySelector(".valor-direccion");
     const avisoElem = document.querySelector(".valor-avisos");
     const socialElem = document.querySelector(".valor-social");
-    // SELECTORES DE VISTA PREVIA
     const boxPie = document.querySelector(".header-box");
     const boxTitulo = document.querySelector(".top-right-box");
-    // NodeLists originales
     let boxIconos = document.querySelectorAll(".mini:not(.wide)");
     let boxSubtitulos = document.querySelectorAll(".mini.wide");
     let boxOpciones = document.querySelectorAll(".item1, .item2, .item3, .item4");
     const fallbackMini = document.querySelector(".mini");
     const fallbackMiniWide = document.querySelector(".mini.wide");
-    // Normalización
     function ensureNodeLists() {
         if ((!boxIconos || boxIconos.length === 0) && fallbackMini) {
             boxIconos = [fallbackMini];
@@ -546,9 +568,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     ensureNodeLists();
-    // ==========================================================
-    // 👉👉 CODIGO .bottom-box (editable)
-    // ==========================================================
     const bottomBox = document.querySelector(".bottom-box");
     if (bottomBox) {
         bottomBox.addEventListener("click", () => {
@@ -559,7 +578,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.key === "Enter") {
                 e.preventDefault();
                 bottomBox.removeAttribute("contenteditable");
-                // guardar en localStorage
                 let datos = JSON.parse(localStorage.getItem("vista_previa_footer")) || {};
                 datos.bottom = bottomBox.innerHTML.trim();
                 localStorage.setItem("vista_previa_footer", JSON.stringify(datos));
@@ -567,9 +585,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    // ==========================================================
-    // LocalStorage → Cargar
-    // ==========================================================
     function cargarVistaPrevGuardada() {
         const raw = localStorage.getItem("vista_previa_footer");
         if (!raw) return;
@@ -593,16 +608,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (boxOpciones[i]) boxOpciones[i].innerHTML = v; 
             });
         }
-        // cargar bottom-box
         const bottomBox = document.querySelector(".bottom-box");
         if (datos.bottom && bottomBox) {
             bottomBox.innerHTML = datos.bottom;
         }
     }
     cargarVistaPrevGuardada();
-    // ==========================================================
-    // Guardar vista previa
-    // ==========================================================
     function guardarVistaPrevia() {
         ensureNodeLists();
         const datos = {
@@ -614,7 +625,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         localStorage.setItem("vista_previa_footer", JSON.stringify(datos));
     }
-    // FIX para iconos
     function limpiarMinis() {
         const minis = document.querySelectorAll(".mini-row-empleo .mini");
         minis.forEach(mini => mini.innerHTML = "");
@@ -668,9 +678,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         guardarVistaPrevia();
     };
-    // ==========================================================
-    // Datos iniciales
-    // ==========================================================
     function cargarDatosIniciales() {
         if (localStorage.getItem("vista_previa_footer")) return;
         ensureNodeLists();
@@ -678,9 +685,6 @@ document.addEventListener("DOMContentLoaded", () => {
         boxSubtitulos.forEach(m => { if (!m.innerHTML.trim()) m.innerHTML = ""; });
     }
     cargarDatosIniciales();
-    // ==========================================================
-    // actualizarPieDePagina
-    // ==========================================================
     function mostrarMensaje(texto) {
         console.log("📢 MENSAJE:", texto);
     }
@@ -695,22 +699,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (socialElem && data.social) socialElem.textContent = data.social;
         mostrarMensaje("Vista previa actualizada correctamente.");
     };
-    // ==========================================================
-    // 🚀 BOTONES: ELIMINAR PIE DE PÁGINA / ENVIAR PIE DE PÁGINA
-    // ==========================================================
-    // buscar por las clases nuevas o por las originales (compatibilidad)
     const btnEliminarPie = document.querySelector(".btn-eliminar-pie") || document.querySelector(".btn1");
     const btnEnviarPie   = document.querySelector(".btn-enviar-pie")   || document.querySelector(".btn2");
     if (btnEliminarPie) {
         btnEliminarPie.addEventListener("click", () => {
-            // limpiar elementos
             if (boxPie) boxPie.innerHTML = "";
             if (boxTitulo) boxTitulo.innerHTML = "";
             if (bottomBox) bottomBox.innerHTML = "";
             boxIconos.forEach(m => m.innerHTML = "");
             boxSubtitulos.forEach(m => m.innerHTML = "");
             boxOpciones.forEach(m => m.innerHTML = "");
-            // borrar localStorage
             localStorage.removeItem("vista_previa_footer");
             alert("Se ha borrado completamente de la vista previa");
         });
