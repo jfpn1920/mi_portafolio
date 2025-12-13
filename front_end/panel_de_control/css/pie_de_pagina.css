@@ -826,9 +826,6 @@ body {
     background-color: #ffe0b3;
     transform: scale(1.1);
 }
-/* ============================= */
-/* ESTILOS DEL MODAL PERSONALIZADO */
-/* ============================= */
 .modal-ventana3 {
     display: none;
     position: fixed;
@@ -841,7 +838,6 @@ body {
     align-items: center;
     z-index: 9999;
 }
-/* CONTENEDOR */
 .modal-contenido3 {
     width: 430px;
     background: white;
@@ -851,7 +847,6 @@ body {
     overflow: hidden;
     font-family: Arial, sans-serif;
 }
-/* ENCABEZADO */
 .modal-encabezado3 {
     background: #00C2FF;
     padding: 12px 16px;
@@ -868,7 +863,7 @@ body {
     height: 72px;
     background: black;
     position: absolute;
-    right: 55px;   /* ajustar según tu diseño */
+    right: 55px; 
     top: 30%;
     transform: translateY(-50%);
 }
@@ -884,7 +879,6 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
-/* INDICACIÓN */
 .modal-indicacion-wrapper3 {
     width: 92%;
     margin: 15px auto 5px;
@@ -892,13 +886,11 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-/* TEXTO */
 .modal-indicacion3 {
     margin: 0;
     font-size: 15px;
     font-weight: bold;
 }
-/* BOTÓN PEQUEÑO JUNTO AL TEXTO */
 .modal-btn-confirmar-mini3 {
     padding: 6px 12px;
     background: #00C2FF;
@@ -909,7 +901,6 @@ body {
     cursor: pointer;
     white-space: nowrap;
 }
-/* INPUT */
 .modal-input3 {
     width: 87%;
     margin: 0 auto;
@@ -920,21 +911,18 @@ body {
     border: none;
     border-radius: 5px;
 }
-/* LÍNEA SEPARADORA */
 .modal-separador3 {
     width: 92%;
     margin: 15px auto;
     border: 0;
     border-top: 3px solid black;
 }
-/* SUBTÍTULO MENÚ */
 .modal-subtitulo3 {
     text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
     font-size: 16px;
 }
-/* OPCIONES */
 .modal-opcion3 {
     width: 92%;
     margin: 10px auto;
@@ -949,11 +937,9 @@ body {
     margin-top: 5px;
     font-size: 14px;
 }
-/* CAMPOS GRANDES */
 .modal-campo-grande3 {
     height: 80px;
 }
-/* OPCIÓN 5 EN GRID */
 .modal-campo-opcion5 {
     background: #00C2FF;
     padding: 10px;

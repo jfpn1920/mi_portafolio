@@ -685,8 +685,14 @@ document.addEventListener("DOMContentLoaded", () => {
         boxSubtitulos.forEach(m => { if (!m.innerHTML.trim()) m.innerHTML = ""; });
     }
     cargarDatosIniciales();
-    function mostrarMensaje(texto) {
-        console.log("📢 MENSAJE:", texto);
+    function mostrarMensaje(texto, tipo = "info") {
+        const estado = document.getElementById("estadoEdicion");
+        if (!estado) return;
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.className = `mensaje ${tipo}`;
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
     }
     window.actualizarPieDePagina = function (data) {
         if (descripcionPreview && data.descripcion) descripcionPreview.textContent = data.descripcion;
@@ -710,7 +716,10 @@ document.addEventListener("DOMContentLoaded", () => {
             boxSubtitulos.forEach(m => m.innerHTML = "");
             boxOpciones.forEach(m => m.innerHTML = "");
             localStorage.removeItem("vista_previa_footer");
-            alert("Se ha borrado completamente de la vista previa");
+            mostrarMensaje(
+                "Se ha borrado completamente la vista previa del pie de página.",
+                "success"
+            );
         });
     }
     if (btnEnviarPie) {
@@ -719,14 +728,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const contenidoTitulo = boxTitulo?.innerHTML.trim();
             const contenidoBottom = bottomBox?.innerHTML.trim();
             const hayContenido =
-                (contenidoPie && contenidoPie !== "") ||
-                (contenidoTitulo && contenidoTitulo !== "") ||
-                (contenidoBottom && contenidoBottom !== "");
+                contenidoPie || contenidoTitulo || contenidoBottom;
             if (!hayContenido) {
-                alert("No ha añadido un pie de página");
+                mostrarMensaje(
+                    "No ha añadido ningún contenido al pie de página.",
+                    "error"
+                );
                 return;
             }
-            alert("Se ha enviado correctamente el pie de página");
+            mostrarMensaje(
+                "El pie de página se ha enviado correctamente.",
+                "success"
+            );
         });
     }
 });
