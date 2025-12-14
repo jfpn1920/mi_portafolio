@@ -334,6 +334,8 @@ body {
 .contenedor-almacen {
     height: 120px;
     background-color: white;
+    overflow-y: auto;  
+    overflow-x: hidden;   
 }
 /*------------------------------------------*/
 /*--|estilo_base_vista_previa_del_chatbot|--*/
@@ -436,7 +438,7 @@ body {
 /*------------------------------------*/
 .contenedor-principal {
     width: 728px;
-    height: 564px;
+    height: 1025px;
     border: 1px solid #000000;
     background-color: #c7c7c7;
     display: flex;
@@ -496,72 +498,27 @@ body {
     border-radius: 0px 0px 5px 5px;
     border-top: none;
 }
-.zona-tablero p {
-    text-align: center;
-    padding-top: 20px;
-    font-size: 13px;
-    color: #333;
-}
-/*-----------------------------------*/
-/*--|estilo_base_chatbot_guardados|--*/
-/*-----------------------------------*/
-.contenedor-chatbot2 {
-    width: 728.4px;
-    height: 454px;
-    margin-left: 690px;
-    margin-top: 5px;
-    background-color: #bfbfbf;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    display: flex;
-    z-index: 2px;
-    flex-direction: column;
-}
-.encabezado-chatbot2 {
-    display: flex;
-    justify-content: space-between;
-    background-color: #ffffff;
+.fila-chatbot {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     border-bottom: 1px solid #000;
-    border-radius: 5px 5px 0px 0px;
-    font-weight: bold;
-    font-size: 15px;
+    background-color: #c7c7c7;
+}
+.fila-chatbot .columna {
+    font-weight: 600;
+    font-size: 12px;
+    padding: 8px 6px;
+    border-right: 1px solid #000;
+}
+.fila-chatbot .columna:last-child {
+    border-right: none;
+}
+.columna-vacia {
+    grid-column: 1 / -1;
     text-align: center;
-}
-.titulo-chatbot2 {
-    flex: 1;
-    padding: 8px 0;
-}
-.boton-chatbot2 {
-    flex: 0.6;
-    padding: 8px 0;
-    border-left: 1px solid #000;
-    cursor: pointer;
-}
-.boton-chatbot2:hover {
-    background-color: #f0f0f0;
-}
-.tabla-contenedor2 {
-    flex: 1;
-    background-color: #e0e0e0;
-    margin: 10px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.tabla-chatbot2 {
-    width: 100%;
-    border-collapse: collapse;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 12px 0;
     background-color: #ffffff;
-    font-size: 14px;
-}
-.tabla-chatbot2 th {
-    background-color: #d4d4d4;
-    border: 1px solid #000;
-    text-align: left;
-    padding: 6px;
-    font-weight: bold;
-}
-.tabla-chatbot2 td {
-    border: 1px solid #000;
-    padding: 6px;
+    color: #333;
 }
