@@ -6,64 +6,65 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
-//-----------------------------------//
-//--|funcionalidad_agregar_chatbot|--//
-//-----------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    const btnCrear = document.querySelector(".btn-crear");
-    const inputNombre = document.querySelector(".nombre-chatbot input");
-    if (!btnCrear || !inputNombre) return;
-    btnCrear.addEventListener("click", () => {
-        const nombreChatbot = inputNombre.value.trim();
-        if (nombreChatbot !== "") {
-            localStorage.setItem("_chatbot_actual", nombreChatbot);
-            alert(`Se creó el chatbot llamado "${nombreChatbot}" correctamente.`);
-        } else {
-            alert("No hay ningún chatbot creado.");
-        }
-    });
-});
 //-------------------------------------------//
 //--|funcionalidad_formulario_de_categoria|--//
 //-------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
     const btnGuardar = document.querySelector(".btn-guardar");
+    const inputNombre = document.querySelector(".nombre-chatbot input");
     const inputPregunta = document.querySelector(".input-pregunta");
     const contenedorAlmacen = document.querySelector(".contenedor-almacen");
     const selects = document.querySelectorAll(".select-categoria");
     const zonaTablero = document.querySelector(".zona-tablero");
-    if (!btnGuardar || !inputPregunta || !contenedorAlmacen || !zonaTablero) return;
+    if (!btnGuardar || !inputNombre || !inputPregunta || !contenedorAlmacen || !zonaTablero) return;
+    const STORAGE_PREGUNTAS = "_preguntas_formulario_temp";
+    const MAX_CHATBOTS = 21;
+    const preguntasGuardadas = JSON.parse(localStorage.getItem(STORAGE_PREGUNTAS)) || [];
+    preguntasGuardadas.forEach(texto => {
+        const item = document.createElement("div");
+        item.className = "item-pregunta";
+        item.textContent = texto;
+        contenedorAlmacen.appendChild(item);
+    });
     inputPregunta.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
             const pregunta = inputPregunta.value.trim();
             if (pregunta === "") return;
             const itemPregunta = document.createElement("div");
+            itemPregunta.className = "item-pregunta";
             itemPregunta.textContent = pregunta;
-            itemPregunta.classList.add("item-pregunta");
             contenedorAlmacen.appendChild(itemPregunta);
+            const preguntasActuales = JSON.parse(localStorage.getItem(STORAGE_PREGUNTAS)) || [];
+            preguntasActuales.push(pregunta);
+            localStorage.setItem(STORAGE_PREGUNTAS, JSON.stringify(preguntasActuales));
             inputPregunta.value = "";
         }
     });
     btnGuardar.addEventListener("click", () => {
-        const nombreChatbot = localStorage.getItem("_chatbot_actual");
-        if (!nombreChatbot) {
-            alert("Primero crea un chatbot en la sección correspondiente.");
+        const tableroActual = JSON.parse(localStorage.getItem("_tablero_chatbot")) || [];
+        if (tableroActual.length >= MAX_CHATBOTS) {
+            alert("Has alcanzado el máximo de datos permitidos en el tablero (21 chatbots).");
+            return;
+        }
+        const nombreChatbot = inputNombre.value.trim();
+        if (nombreChatbot === "") {
+            alert("Debes ingresar el nombre del chatbot.");
             return;
         }
         let selectsValidos = true;
         const valoresSelects = [];
         selects.forEach(select => {
-            if (select.selectedIndex === 0 || select.value.trim() === "") {
+            if (select.selectedIndex === 0) {
                 selectsValidos = false;
             } else {
                 valoresSelects.push(select.value.trim());
             }
         });
-        const hayPreguntas = contenedorAlmacen.children.length > 0;
-        const preguntasArray = Array.from(contenedorAlmacen.children).map(div => div.textContent);
-        if (!hayPreguntas || !selectsValidos) {
-            alert("Por favor completa todos los campos del formulario de categoría.");
+        const preguntasArray = Array.from(contenedorAlmacen.children)
+            .map(div => div.textContent);
+        if (!selectsValidos || preguntasArray.length === 0) {
+            alert("Por favor completa todos los campos del formulario.");
             return;
         }
         const datos = {
@@ -72,16 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
             tiempo: valoresSelects[1],
             preguntas: preguntasArray
         };
-        let tablero = JSON.parse(localStorage.getItem("_tablero_chatbot")) || [];
-        tablero.push(datos);
-        localStorage.setItem("_tablero_chatbot", JSON.stringify(tablero));
+        tableroActual.push(datos);
+        localStorage.setItem("_tablero_chatbot", JSON.stringify(tableroActual));
         alert("Los datos han sido guardados correctamente y enviados al tablero.");
         mostrarTablero();
         document.dispatchEvent(new CustomEvent("actualizar_tablero_chatbot"));
+        inputNombre.value = "";
         inputPregunta.value = "";
         contenedorAlmacen.innerHTML = "";
         selects.forEach(select => select.selectedIndex = 0);
-        localStorage.removeItem("_chatbot_actual");
+        localStorage.removeItem(STORAGE_PREGUNTAS);
     });
     function mostrarTablero() {
         zonaTablero.innerHTML = "";
@@ -150,6 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="btn-visualizar1" data-index="${index}">
                         <i class="fa-solid fa-eye"></i>
                     </button>
+                    <button class="btn-anadir1" data-index="${index}">
+                        <i class="fa-solid fa-circle-plus"></i>
+                    </button>
                     <button class="btn-eliminar1" data-index="${index}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
@@ -174,14 +178,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const nombre = chatbots[index].chatbot;
             chatbots.splice(index, 1);
             localStorage.setItem("_tablero_chatbot", JSON.stringify(chatbots));
-            mensajeHTML(`
-                <i class="fa-solid fa-trash"></i>
-                El chatbot <b>${nombre}</b> fue eliminado.
-            `);
+            alert("Se ha eliminado el chatbot correctamente");
             mostrarTableroChatbot();
         }
         if (btn.classList.contains("btn-editar1")) {
             const item = chatbots[index];
+            const nombreAnterior = item.chatbot;
             const nuevoNombre = prompt(
                 "Editar nombre del chatbot:",
                 item.chatbot
@@ -189,18 +191,18 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!nuevoNombre) return;
             chatbots[index].chatbot = nuevoNombre.trim();
             localStorage.setItem("_tablero_chatbot", JSON.stringify(chatbots));
-            mensajeHTML(`
-                <i class="fa-solid fa-pen-to-square"></i>
-                Chatbot actualizado.
-            `);
+            alert(
+                `El chatbot "${nombreAnterior}" ha sido cambiado por "${nuevoNombre.trim()}"`
+            );
             mostrarTableroChatbot();
         }
         if (btn.classList.contains("btn-visualizar1")) {
             const item = chatbots[index];
-            mensajeHTML(`
-                <i class="fa-solid fa-eye"></i>
-                Vista previa del chatbot <b>${item.chatbot}</b>.
-            `);
+            alert("Vista previa del chatbot");
+        }
+        if (btn.classList.contains("btn-anadir1")) {
+            const item = chatbots[index];
+            alert(`El chatbot "${item.chatbot}" ha sido añadido`);
         }
     });
 });

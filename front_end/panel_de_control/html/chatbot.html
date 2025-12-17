@@ -59,23 +59,6 @@
             <i class="fa-solid fa-trash"></i> Contenedor
         </button>
     </div>
-    <!-------------------------------->
-    <!--|estructura_agregar_chatbot|-->
-    <!-------------------------------->
-    <div class="contenedor-chatbot">
-        <div class="cabecera-chatbot">
-            <div class="titulo-chatbot">agregar chatbot</div>
-            <button class="btn-crear">Crear</button>
-        </div>
-        <div class="contenido-chatbot">
-            <div class="icono-chatbot">
-                <i class="fa-solid fa-robot"></i>
-            </div>
-            <div class="nombre-chatbot">
-                <input type="text" placeholder="Ponle un nombre a tu chatbot">
-            </div>
-        </div>
-    </div>
     <!---------------------------------------->
     <!--|estructura_formulario_de_categoria|-->
     <!---------------------------------------->
@@ -85,20 +68,32 @@
             <button class="btn-guardar">Guardar</button>
         </div>
         <div class="contenido-categoria">
+            <div class="bloque-agregar-chatbot">
+                <div class="titulo-chatbot">Agregar chatbot</div>
+                <div class="contenido-chatbot">
+                    <div class="icono-chatbot">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="nombre-chatbot">
+                        <input type="text" placeholder="Ponle un nombre a tu chatbot">
+                    </div>
+                </div>
+            </div>
             <label class="etiqueta">Seleccionar su ubicación</label>
             <select class="select-categoria">
                 <option>Sin ubicación</option>
                 <option>Fuera del pie de pagina</option>
                 <option>Dentro del fue de pagina</option>
             </select>
-            <label class="etiqueta">Añade el tiempo</label>
+            <label class="etiqueta2">Añade el tiempo</label>
             <select class="select-categoria">
                 <option>Sin tiempo</option>
+                <option>5 segundos</option>
                 <option>5 minutos</option>
                 <option>10 minutos</option>
                 <option>30 minutos</option>
             </select>
-            <label class="etiqueta">Agregar las preguntas</label>
+            <label class="etiqueta3">Agregar las preguntas</label>
             <input type="text" class="input-pregunta" placeholder="Añadir las preguntas">
             <div class="almacen-preguntas">
                 <div class="titulo-almacen">Almacenamiento de preguntas</div>
@@ -131,9 +126,6 @@
     <div class="contenedor-principal">
         <div class="fila-superior">
             <div class="titulo">Tablero de chatbot</div>
-            <div class="boton-contenedor">
-                <button class="boton">Agregar todo</button>
-            </div>
         </div>
         <div class="encabezado">
             <div class="columna imagenes">Chatbot</div>
