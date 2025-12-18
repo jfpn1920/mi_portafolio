@@ -65,11 +65,19 @@
     <div class="contenedor-plataforma">
         <div class="cabecera-plataforma">
             <h3 class="titulo-formulario">Formulario de plataforma</h3>
-            <button class="btn-crear">Crear plataforma</button>
+            <button class="btn-crear">Plataforma</button>
         </div>
         <div class="contenido-plataforma">
             <label class="etiqueta">Nombre de la plataforma</label>
             <input type="text" class="input-texto" placeholder="Escribe la plataforma">
+            <label class="etiqueta2">Seleccionar el principal</label>
+            <div class="select-grupo">
+                <select class="select-principal">
+                    <option value="">Ningun principal</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </div>
             <label class="etiqueta">Añade icono representativo</label>
             <div class="select-grupo">
                 <select class="select-icono">
@@ -80,24 +88,12 @@
             <div class="contenedor-paginas"></div>
         </div>
     </div>
-    <!-------------------------------------->
-    <!--|estructura_plataformas_guardadas|-->
-    <!-------------------------------------->
-    <div class="contenedor-plataforma-guardadas">
-        <div class="cabecera-guardadas">
-            <h3 class="titulo-guardadas">Plataformas guardadas</h3>
-            <button class="btn-ver-plataforma">Ver plataforma</button>
-        </div>
-        <div class="contenido-vista">
-            <!-- Aquí irá la vista o contenido de la plataforma -->
-        </div>
-    </div>
-    <!---------------------------------------------->
-    <!--|estructura_vista_previa_de_la_plataforma|-->
-    <!---------------------------------------------->
+    <!-------------------------------------------->
+    <!--|estructura_plataforma_en_actualizacion|-->
+    <!-------------------------------------------->
     <div class="contenedor-vista-plataforma">
         <div class="cabecera-vista">
-            <h3 class="titulo-vista">Vista previa de la plataforma</h3>
+            <h3 class="titulo-vista">Plataforma en actualizacion</h3>
             <button class="btn-desplegar">Desplegar</button>
         </div>
         <div class="contenido-vista">
@@ -110,14 +106,14 @@
     <div class="contenedor-tablero">
         <div class="encabezado-tablero">
             <div class="titulo-tablero">Tablero de plataforma</div>
-            <button class="btn-agregar">Agregar todo</button>
         </div>
         <table class="tabla-paginas">
-            <thead>
+            <thead>  
                 <tr>
-                    <th>Icono</th>
                     <th>Plataforma</th>
-                    <th>Vinculados</th>
+                    <th>Principal</th>
+                    <th>Icono</th>
+                    <th>Vinculos</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
