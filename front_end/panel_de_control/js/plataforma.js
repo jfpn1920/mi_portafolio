@@ -126,3 +126,100 @@ document.addEventListener("DOMContentLoaded", () => {
         contenedorPaginas.innerHTML = "";
     });
 });
+//--------------------------------------//
+//--|funcionalidad_tablero_plataforma|--//
+//--------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("📌 Script de tablero_plataforma cargado correctamente.");
+    const tbody = document.querySelector(".tabla-paginas tbody");
+    function mensaje(texto) {
+        alert(texto);
+    }
+    function mostrarTableroPlataforma() {
+        tbody.innerHTML = "";
+        const plataformas = JSON.parse(
+            localStorage.getItem("_plataforma_tablero")
+        ) || [];
+        if (plataformas.length === 0) {
+            const filaVacia = document.createElement("tr");
+            filaVacia.classList.add("fila-vacia");
+            filaVacia.innerHTML = `
+                <td colspan="5">No hay plataformas creadas</td>
+            `;
+            tbody.appendChild(filaVacia);
+            return;
+        }
+        plataformas.forEach((item, index) => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${item.nombre}</td>
+                <td>${item.principal || "—"}</td>
+                <td style="text-align:center;">
+                    ${item.icono ? `<i class="fa-solid ${item.icono}"></i>` : "—"}
+                </td>
+                <td>${item.paginas.join(", ")}</td>
+                <td style="text-align:center;">
+                    <button class="btn-editar1" data-index="${index}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn-visualizar1" data-index="${index}">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <button class="btn-eliminar1" data-index="${index}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(fila);
+        });
+    }
+    mostrarTableroPlataforma();
+    document.addEventListener("actualizar_tablero_plataforma", () => {
+        console.log("🔄 Evento recibido: actualizando tablero plataforma...");
+        mostrarTableroPlataforma();
+    });
+    tbody.addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+        const index = btn.dataset.index;
+        let plataformas = JSON.parse(
+            localStorage.getItem("_plataforma_tablero")
+        ) || [];
+        if (!plataformas[index]) return; 
+        if (btn.classList.contains("btn-eliminar1")) {
+            const nombre = plataformas[index].nombre;
+            plataformas.splice(index, 1);
+            localStorage.setItem(
+                "_plataforma_tablero",
+                JSON.stringify(plataformas)
+            );
+            mensaje(`🗑️ La plataforma "${nombre}" fue eliminada.`);
+            mostrarTableroPlataforma();
+        }
+        if (btn.classList.contains("btn-editar1")) {
+            const nombreAnterior = plataformas[index].nombre;
+            const nuevoNombre = prompt(
+                "Editar nombre de la plataforma:",
+                nombreAnterior
+            );
+            if (!nuevoNombre || !nuevoNombre.trim()) {
+                mensaje("⚠️ La edición fue cancelada.");
+                return;
+            }
+            plataformas[index].nombre = nuevoNombre.trim();
+            localStorage.setItem(
+                "_plataforma_tablero",
+                JSON.stringify(plataformas)
+            );
+            mensaje(
+                `✏️ La plataforma "${nombreAnterior}" fue renombrada a "${nuevoNombre}".`
+            );
+            mostrarTableroPlataforma();
+        }
+        if (btn.classList.contains("btn-visualizar1")) {
+            mensaje(
+                `👁️ Vista previa de la plataforma "${plataformas[index].nombre}".`
+            );
+        }
+    });
+});

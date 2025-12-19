@@ -342,11 +342,11 @@ body {
 .contenedor-tablero {
     width: 783px;
     height: 981px;
-    border: 1px solid #000000;
+    border: 1px solid #000;
     background-color: #c7c7c7;
     display: flex;
-    border-radius: 5px;
     flex-direction: column;
+    border-radius: 5px;
     margin-left: 636px;
     margin-top: -49px;
     font-family: 'Arial', sans-serif;
@@ -355,9 +355,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 5px 5px 0px 0px;
-    background-color: #f3f3f3;
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
+    border-radius: 5px 5px 0 0;
 }
 .titulo-tablero {
     flex: 1;
@@ -371,21 +371,57 @@ body {
     border-collapse: collapse;
     flex: 1;
 }
-.tabla-paginas thead {
-    background-color: #f3f3f3;
+.tabla-paginas thead tr {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
 }
 .tabla-paginas th {
     text-align: center;
+    font-weight: bold;
     font-size: 12px;
     padding: 6px;
-    font-weight: bold;
     border-right: 1px solid #000;
 }
 .tabla-paginas th:last-child {
     border-right: none;
 }
 .tabla-paginas tbody {
+    flex: 1;
+    display: block;      
     background-color: #c7c7c7;
+}
+.tabla-paginas tbody tr {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-bottom: 1px solid #000;
+}
+.tabla-paginas td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 6px;
+    border-right: 1px solid #000;
+    box-sizing: border-box;
+}
+.tabla-paginas td:last-child {
+    border-right: none;
+}
+.tabla-paginas tbody .fila-vacia {
     height: 100%;
+}
+.tabla-paginas tbody .fila-vacia td {
+    grid-column: 1 / -1;    
+    height: 110%;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: #ffffff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #000000;
 }
