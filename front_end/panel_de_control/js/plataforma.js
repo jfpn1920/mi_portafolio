@@ -95,11 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const nombre = inputNombre.value.trim();
         const principal = selectPrincipal.value;
         const icono = selectIcono.value;
-        if (
-            nombre === "" &&
-            paginasSeleccionadas.length === 0 &&
-            icono === ""
-        ) {
+        if (nombre === "" && paginasSeleccionadas.length === 0 && icono === "") {
             alert("No hay ninguna plataforma");
             return;
         }
@@ -117,8 +113,23 @@ document.addEventListener("DOMContentLoaded", () => {
             icono,
             paginas: paginasSeleccionadas
         };
-        console.log("Plataforma creada:", plataforma);
-        alert("Se ha creado la plataforma con éxito");
+        const MAX_PLATAFORMAS = 12;
+        const plataformas = JSON.parse(
+            localStorage.getItem("_plataforma_tablero")
+        ) || [];
+        if (plataformas.length >= MAX_PLATAFORMAS) {
+            alert("⚠️ Has alcanzado el máximo de datos en el tablero");
+            return;
+        }
+        plataformas.push(plataforma);
+        localStorage.setItem(
+            "_plataforma_tablero",
+            JSON.stringify(plataformas)
+        );
+        document.dispatchEvent(
+            new Event("actualizar_tablero_plataforma")
+        );
+        alert("✅ Plataforma creada y enviada al tablero");
         paginasSeleccionadas = [];
         inputNombre.value = "";
         selectPrincipal.value = "";
@@ -150,6 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         plataformas.forEach((item, index) => {
+            if (item.bloqueada === undefined) {
+                item.bloqueada = false;
+            }
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${item.nombre}</td>
@@ -158,24 +172,44 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${item.icono ? `<i class="fa-solid ${item.icono}"></i>` : "—"}
                 </td>
                 <td>${item.paginas.join(", ")}</td>
-                <td style="text-align:center;">
-                    <button class="btn-editar1" data-index="${index}">
+                <!-- 🔧 ACCIONES (VERTICAL) -->
+                <td class="celda-acciones" style="text-align:center;">
+                    <button class="btn-pagina" data-index="${index}" title="Abrir plataforma">
+                        <i class="fa-solid fa-file"></i>
+                    </button>
+                    <button class="btn-editar1" data-index="${index}" title="Editar">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </button>
-                    <button class="btn-visualizar1" data-index="${index}">
+                    <button class="btn-visualizar1" data-index="${index}" title="Vista previa">
                         <i class="fa-solid fa-eye"></i>
                     </button>
-                    <button class="btn-eliminar1" data-index="${index}">
+                    ${
+                        item.bloqueada
+                        ? `
+                            <button class="btn-desbloquear" data-index="${index}" title="Desbloquear">
+                                <i class="fa-solid fa-lock-open"></i>
+                            </button>
+                        `
+                        : `
+                            <button class="btn-bloquear" data-index="${index}" title="Bloquear">
+                                <i class="fa-solid fa-lock"></i>
+                            </button>
+                        `
+                    }
+                    <button class="btn-actualizar" data-index="${index}" title="Actualizar">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                    <button class="btn-eliminar1" data-index="${index}" title="Eliminar">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             `;
             tbody.appendChild(fila);
         });
+        localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
     }
     mostrarTableroPlataforma();
     document.addEventListener("actualizar_tablero_plataforma", () => {
-        console.log("🔄 Evento recibido: actualizando tablero plataforma...");
         mostrarTableroPlataforma();
     });
     tbody.addEventListener("click", (e) => {
@@ -185,16 +219,17 @@ document.addEventListener("DOMContentLoaded", () => {
         let plataformas = JSON.parse(
             localStorage.getItem("_plataforma_tablero")
         ) || [];
-        if (!plataformas[index]) return; 
-        if (btn.classList.contains("btn-eliminar1")) {
-            const nombre = plataformas[index].nombre;
-            plataformas.splice(index, 1);
+        if (!plataformas[index]) return;
+        if (btn.classList.contains("btn-pagina")) {
+            if (plataformas[index].bloqueada) {
+                mensaje("🔒 Esta plataforma está bloqueada.");
+                return;
+            }
             localStorage.setItem(
-                "_plataforma_tablero",
-                JSON.stringify(plataformas)
+                "plataforma_activa",
+                JSON.stringify(plataformas[index])
             );
-            mensaje(`🗑️ La plataforma "${nombre}" fue eliminada.`);
-            mostrarTableroPlataforma();
+            window.location.href = "../html/plataforma_dinamica.html";
         }
         if (btn.classList.contains("btn-editar1")) {
             const nombreAnterior = plataformas[index].nombre;
@@ -207,19 +242,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             plataformas[index].nombre = nuevoNombre.trim();
-            localStorage.setItem(
-                "_plataforma_tablero",
-                JSON.stringify(plataformas)
-            );
-            mensaje(
-                `✏️ La plataforma "${nombreAnterior}" fue renombrada a "${nuevoNombre}".`
-            );
+            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+            mensaje(`✏️ Plataforma actualizada.`);
             mostrarTableroPlataforma();
         }
         if (btn.classList.contains("btn-visualizar1")) {
-            mensaje(
-                `👁️ Vista previa de la plataforma "${plataformas[index].nombre}".`
-            );
+            mensaje(`👁️ Vista previa de "${plataformas[index].nombre}".`);
+        }
+        if (btn.classList.contains("btn-bloquear")) {
+            plataformas[index].bloqueada = true;
+            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+            mensaje(`🔒 Plataforma bloqueada.`);
+            mostrarTableroPlataforma();
+        }
+        if (btn.classList.contains("btn-desbloquear")) {
+            plataformas[index].bloqueada = false;
+            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+            mensaje(`🔓 Plataforma desbloqueada.`);
+            mostrarTableroPlataforma();
+        }
+        if (btn.classList.contains("btn-actualizar")) {
+            mensaje(`🔄 Plataforma actualizada.`);
+            mostrarTableroPlataforma();
+        }
+        if (btn.classList.contains("btn-eliminar1")) {
+            const nombre = plataformas[index].nombre;
+            plataformas.splice(index, 1);
+            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+            mensaje(`🗑️ Plataforma "${nombre}" eliminada.`);
+            mostrarTableroPlataforma();
         }
     });
 });

@@ -254,6 +254,13 @@ body {
     width: 100%;
     margin-bottom: 8px;
 }
+.select-grupo2 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 4px;
+    margin-bottom: 8px;
+}
 .select-principal {
     flex: 1;
     padding: 4px;
@@ -282,7 +289,7 @@ body {
 .contenedor-paginas {
     background-color: #fff;
     border: 1px solid #000;
-    height: 250px;
+    height: 246px;
     border-radius: 0px 0px 5px 5px;
     margin-top: -7px;
 }
@@ -331,7 +338,7 @@ body {
 }
 .contenido-vista {
     background-color: #cfcfcf;
-    height: 463px;
+    height: 417px;
     border: 1px solid #000;
     border-top: none;
     border-radius: 0 0 5px 5px;
@@ -341,7 +348,7 @@ body {
 /*------------------------------------*/
 .contenedor-tablero {
     width: 783px;
-    height: 981px;
+    height: 934.5px;
     border: 1px solid #000;
     background-color: #c7c7c7;
     display: flex;
@@ -424,4 +431,11 @@ body {
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #000000;
+}
+.celda-acciones {
+    display: flex;
+    flex-direction: column; 
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
 }
