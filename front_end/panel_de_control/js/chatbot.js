@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.getItem("_chatbot_vista_previa")
     );
     if (!chatbotData) {
-        nombreChatbotVista.textContent = "Sin chatbot seleccionado";
+        nombreChatbotVista.textContent = "Sin chatbot";
         mostrarMensaje("No hay un chatbot seleccionado para vista previa.");
     } else {
         nombreChatbotVista.textContent = chatbotData.chatbot;
@@ -301,7 +301,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="columna">${item.chatbot}</div>
                 <div class="columna">${item.ubicacion}</div>
                 <div class="columna">${item.tiempo}</div>
-                <div class="columna">${item.preguntas.join(", ")}</div>
+                <div class="columna celda-vinculos">
+                    ${item.preguntas
+                        .map(p => `<span>${p}</span>`)
+                        .join("")}
+                </div>
                 <div class="columna">
                     <button class="btn-editar1" data-index="${index}">
                         <i class="fa-solid fa-pen-to-square"></i>

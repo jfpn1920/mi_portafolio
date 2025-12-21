@@ -557,7 +557,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     border-bottom: 1px solid #000;
-    background-color: #c7c7c7;
+    background-color: #ffffff;
 }
 .encabezado,
 .fila-chatbot {
@@ -573,6 +573,37 @@ body {
 }
 .fila-chatbot .columna:last-child {
     border-right: none;
+    display: flex;
+    flex-direction: column;  
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.fila-chatbot .columna:last-child button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #000;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease,
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+}
+.fila-chatbot .columna:last-child button i {
+    font-size: 13px;
+    color: #000;
+}
+.fila-chatbot .columna:last-child button:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+.fila-chatbot .columna:last-child button:active {
+    transform: scale(0.95);
 }
 .columna-vacia {
     grid-column: 1 / -1;
@@ -583,4 +614,23 @@ body {
     background-color: #ffffff;
     color: #000000;
     border-bottom: 1px solid #000;
+}
+.celda-vinculos {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 8px;
+    font-size: 12px;
+    text-align: justify;
+    font-weight: 600;
+}
+.celda-vinculos span {
+    padding: 4px 6px;
+    background-color: #f0f0f0;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    text-align: left;
+    line-height: 1.2;
 }

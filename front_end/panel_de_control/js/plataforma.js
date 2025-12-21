@@ -246,7 +246,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     function mostrarTableroPlataforma() {
         tbody.innerHTML = "";
-        const plataformas = JSON.parse(localStorage.getItem("_plataforma_tablero")) || [];
+        tbody.classList.remove("con-datos");
+        const plataformas = JSON.parse(
+            localStorage.getItem("_plataforma_tablero")
+        ) || [];
         if (plataformas.length === 0) {
             const filaVacia = document.createElement("tr");
             filaVacia.classList.add("fila-vacia");
@@ -254,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tbody.appendChild(filaVacia);
             return;
         }
+        tbody.classList.add("con-datos");
         plataformas.forEach((item, index) => {
             if (item.bloqueada === undefined) item.bloqueada = false;
             const fila = document.createElement("tr");
@@ -263,7 +267,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td style="text-align:center;">
                     ${item.icono ? `<i class="fa-solid ${item.icono}"></i>` : "—"}
                 </td>
-                <td>${item.paginas.join(", ")}</td>
+                <td class="celda-vinculos">
+                    ${item.paginas.map(p => `<span>${p}</span>`).join("")}
+                </td>
                 <td class="celda-acciones">
                     <button class="btn-pagina" data-index="${index}">
                         <i class="fa-solid fa-file"></i>
@@ -293,29 +299,46 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             tbody.appendChild(fila);
         });
-        localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+        localStorage.setItem(
+            "_plataforma_tablero",
+            JSON.stringify(plataformas)
+        );
     }
     mostrarTableroPlataforma();
     tbody.addEventListener("click", (e) => {
         const btn = e.target.closest("button");
         if (!btn) return;
         const index = btn.dataset.index;
-        let plataformas = JSON.parse(localStorage.getItem("_plataforma_tablero")) || [];
+        let plataformas = JSON.parse(
+            localStorage.getItem("_plataforma_tablero")
+        ) || [];
         if (!plataformas[index]) return;
         if (btn.classList.contains("btn-pagina")) {
             if (plataformas[index].bloqueada) {
                 mostrarMensaje("🔒 Esta plataforma está bloqueada", "warning");
                 return;
             }
-            localStorage.setItem("plataforma_activa", JSON.stringify(plataformas[index]));
-            window.open("../../plataforma_dinamica/html/plataforma_dinamica.html", "_blank");
+            localStorage.setItem(
+                "plataforma_activa",
+                JSON.stringify(plataformas[index])
+            );
+            window.open(
+                "../../plataforma_dinamica/html/plataforma_dinamica.html",
+                "_blank"
+            );
         }
         if (btn.classList.contains("btn-editar1")) {
             const nombreAnterior = plataformas[index].nombre;
-            const nuevoNombre = prompt("Editar nombre de la plataforma:", nombreAnterior);
+            const nuevoNombre = prompt(
+                "Editar nombre de la plataforma:",
+                nombreAnterior
+            );
             if (!nuevoNombre || !nuevoNombre.trim()) return;
             plataformas[index].nombre = nuevoNombre.trim();
-            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+            localStorage.setItem(
+                "_plataforma_tablero",
+                JSON.stringify(plataformas)
+            );
             mostrarTableroPlataforma();
             mostrarMensaje(
                 `La plataforma "${nombreAnterior}" a "${nuevoNombre.trim()}" correctamente`,
@@ -349,7 +372,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error"
             );
         }
-        localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+        localStorage.setItem(
+            "_plataforma_tablero",
+            JSON.stringify(plataformas)
+        );
         mostrarTableroPlataforma();
     });
 });
