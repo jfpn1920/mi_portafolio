@@ -6,6 +6,18 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//-----------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_plataforma|--//
+//-----------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //--------------------------------------------//
 //--|funcionalidad_formulario_de_plataforma|--//
 //--------------------------------------------//
@@ -16,8 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectIcono = document.querySelector(".select-icono");
     const contenedorPaginas = document.querySelector(".contenedor-paginas");
     let paginasSeleccionadas = [];
+    function mostrarMensaje(texto, tipo = "info") {
+        const estado = document.getElementById("estadoEdicion");
+        if (!estado) return; 
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", tipo);
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
+    }
     const iconos = [
-        { nombre: "Ningún icono", valor: "" },
         { nombre: "Inicio", valor: "fa-house" },
         { nombre: "Usuarios", valor: "fa-users" },
         { nombre: "Configuración", valor: "fa-gear" },
@@ -84,9 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
             contenedorPaginas.appendChild(item);
         });
     }
-    const paginasGuardadas = JSON.parse(
-        localStorage.getItem("paginasAgregadasMenu")
-    ) || [];
+    const paginasGuardadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
     if (paginasGuardadas.length > 0) {
         cargarPaginasEnSelect(paginasGuardadas);
         mostrarPaginasEnContenedor(paginasGuardadas);
@@ -96,45 +114,119 @@ document.addEventListener("DOMContentLoaded", () => {
         const principal = selectPrincipal.value;
         const icono = selectIcono.value;
         if (nombre === "" && paginasSeleccionadas.length === 0 && icono === "") {
-            alert("No hay ninguna plataforma");
+            mostrarMensaje("No hay ninguna plataforma", "error");
             return;
         }
         if (nombre === "") {
-            alert("Debes escribir el nombre de la plataforma");
+            mostrarMensaje("Debes escribir el nombre de la plataforma", "error");
             return;
         }
         if (paginasSeleccionadas.length === 0) {
-            alert("Debes seleccionar al menos una página");
+            mostrarMensaje("Debes seleccionar al menos una página", "error");
             return;
         }
-        const plataforma = {
-            nombre,
-            principal,
-            icono,
-            paginas: paginasSeleccionadas
-        };
+        const plataforma = { nombre, principal, icono, paginas: paginasSeleccionadas };
         const MAX_PLATAFORMAS = 12;
-        const plataformas = JSON.parse(
-            localStorage.getItem("_plataforma_tablero")
-        ) || [];
+        const plataformas = JSON.parse(localStorage.getItem("_plataforma_tablero")) || [];
         if (plataformas.length >= MAX_PLATAFORMAS) {
-            alert("⚠️ Has alcanzado el máximo de datos en el tablero");
+            mostrarMensaje("Has alcanzado el máximo de datos en el tablero", "warning");
             return;
         }
         plataformas.push(plataforma);
-        localStorage.setItem(
-            "_plataforma_tablero",
-            JSON.stringify(plataformas)
-        );
-        document.dispatchEvent(
-            new Event("actualizar_tablero_plataforma")
-        );
-        alert("✅ Plataforma creada y enviada al tablero");
+        localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+        document.dispatchEvent(new Event("actualizar_tablero_plataforma"));
+        mostrarMensaje("Plataforma creada y enviada al tablero", "exito");
         paginasSeleccionadas = [];
         inputNombre.value = "";
         selectPrincipal.value = "";
         selectIcono.value = "";
         contenedorPaginas.innerHTML = "";
+    });
+});
+//-----------------------------------------------//
+//--|funcionalidad_plataforma_en_actualizacion|--//
+//-----------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("📌 Script plataforma_en_actualizacion cargado.");
+    const btnDesplegar = document.querySelector(".btn-desplegar");
+    const contenidoVista = document.querySelector(".contenido-vista");
+    const contenedorBlanco = document.querySelector(".contenedor-blanco");
+    let desplegado = true;
+    function mostrarMensaje(texto, tipo = "info") {
+        const estado = document.getElementById("estadoEdicion");
+        if (!estado) return;
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", tipo);
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
+    }
+    btnDesplegar.addEventListener("click", () => {
+        if (desplegado) {
+            mostrarMensaje(
+                "Plataforma contraída.",
+                "info"
+            );
+        } else {
+            contenidoVista.style.display = "block";
+            mostrarMensaje(
+                "Desplegando plataforma actualizada.",
+                "info"
+            );
+        }
+        desplegado = !desplegado;
+    });
+    function renderPlataforma(nombrePlataforma) {
+        contenedorBlanco.innerHTML = `
+            <div class="fila-plataforma-activa">
+                <span class="nombre-plataforma">${nombrePlataforma}</span>
+                <button class="btn-refrescar-plataforma" title="Actualizar">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+                <button class="btn-quitar-plataforma" title="Quitar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        `;
+    }
+    window.mostrarPlataformaSeleccionada = function (nombrePlataforma) {
+        localStorage.setItem(
+            "plataforma_en_actualizacion",
+            JSON.stringify(nombrePlataforma)
+        );
+        renderPlataforma(nombrePlataforma);
+        mostrarMensaje(
+            `Plataforma "${nombrePlataforma}" enviada para actualización`,
+            "info"
+        );
+    };
+    const plataformaGuardada = JSON.parse(
+        localStorage.getItem("plataforma_en_actualizacion")
+    );
+    if (plataformaGuardada) {
+        renderPlataforma(plataformaGuardada);
+    } else {
+        contenedorBlanco.innerHTML = `
+            <p class="mensaje-vacio">No hay plataformas en actualización.</p>
+        `;
+    }
+    contenedorBlanco.addEventListener("click", (e) => {
+        if (e.target.closest(".btn-refrescar-plataforma")) {
+            mostrarMensaje(
+                "Plataforma reenviada para actualización.",
+                "info"
+            );
+        }
+        if (e.target.closest(".btn-quitar-plataforma")) {
+            localStorage.removeItem("plataforma_en_actualizacion");
+            contenedorBlanco.innerHTML = `
+                <p class="mensaje-vacio">No hay plataformas en actualización.</p>
+            `;
+            mostrarMensaje(
+                "Plataforma retirada de la actualización.",
+                "error"
+            );
+        }
     });
 });
 //--------------------------------------//
@@ -143,27 +235,27 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     console.log("📌 Script de tablero_plataforma cargado correctamente.");
     const tbody = document.querySelector(".tabla-paginas tbody");
-    function mensaje(texto) {
-        alert(texto);
+    function mostrarMensaje(texto, tipo = "info") {
+        const estado = document.getElementById("estadoEdicion");
+        if (!estado) return;
+        estado.innerHTML = "";
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje", tipo);
+        mensaje.textContent = texto;
+        estado.appendChild(mensaje);
     }
     function mostrarTableroPlataforma() {
         tbody.innerHTML = "";
-        const plataformas = JSON.parse(
-            localStorage.getItem("_plataforma_tablero")
-        ) || [];
+        const plataformas = JSON.parse(localStorage.getItem("_plataforma_tablero")) || [];
         if (plataformas.length === 0) {
             const filaVacia = document.createElement("tr");
             filaVacia.classList.add("fila-vacia");
-            filaVacia.innerHTML = `
-                <td colspan="5">No hay plataformas creadas</td>
-            `;
+            filaVacia.innerHTML = `<td colspan="5">No hay plataformas creadas</td>`;
             tbody.appendChild(filaVacia);
             return;
         }
         plataformas.forEach((item, index) => {
-            if (item.bloqueada === undefined) {
-                item.bloqueada = false;
-            }
+            if (item.bloqueada === undefined) item.bloqueada = false;
             const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>${item.nombre}</td>
@@ -172,34 +264,29 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${item.icono ? `<i class="fa-solid ${item.icono}"></i>` : "—"}
                 </td>
                 <td>${item.paginas.join(", ")}</td>
-                <!-- 🔧 ACCIONES (VERTICAL) -->
-                <td class="celda-acciones" style="text-align:center;">
-                    <button class="btn-pagina" data-index="${index}" title="Abrir plataforma">
+                <td class="celda-acciones">
+                    <button class="btn-pagina" data-index="${index}">
                         <i class="fa-solid fa-file"></i>
                     </button>
-                    <button class="btn-editar1" data-index="${index}" title="Editar">
+                    <button class="btn-editar1" data-index="${index}">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </button>
-                    <button class="btn-visualizar1" data-index="${index}" title="Vista previa">
-                        <i class="fa-solid fa-eye"></i>
+                    <button class="btn-agregar" data-index="${index}">
+                        <i class="fa-solid fa-plus"></i>
                     </button>
                     ${
                         item.bloqueada
-                        ? `
-                            <button class="btn-desbloquear" data-index="${index}" title="Desbloquear">
+                        ? `<button class="btn-desbloquear" data-index="${index}">
                                 <i class="fa-solid fa-lock-open"></i>
-                            </button>
-                        `
-                        : `
-                            <button class="btn-bloquear" data-index="${index}" title="Bloquear">
+                            </button>`
+                        : `<button class="btn-bloquear" data-index="${index}">
                                 <i class="fa-solid fa-lock"></i>
-                            </button>
-                        `
+                            </button>`
                     }
-                    <button class="btn-actualizar" data-index="${index}" title="Actualizar">
+                    <button class="btn-actualizar" data-index="${index}">
                         <i class="fa-solid fa-arrows-rotate"></i>
                     </button>
-                    <button class="btn-eliminar1" data-index="${index}" title="Eliminar">
+                    <button class="btn-eliminar1" data-index="${index}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
@@ -209,68 +296,60 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
     }
     mostrarTableroPlataforma();
-    document.addEventListener("actualizar_tablero_plataforma", () => {
-        mostrarTableroPlataforma();
-    });
     tbody.addEventListener("click", (e) => {
         const btn = e.target.closest("button");
         if (!btn) return;
         const index = btn.dataset.index;
-        let plataformas = JSON.parse(
-            localStorage.getItem("_plataforma_tablero")
-        ) || [];
+        let plataformas = JSON.parse(localStorage.getItem("_plataforma_tablero")) || [];
         if (!plataformas[index]) return;
         if (btn.classList.contains("btn-pagina")) {
             if (plataformas[index].bloqueada) {
-                mensaje("🔒 Esta plataforma está bloqueada.");
+                mostrarMensaje("🔒 Esta plataforma está bloqueada", "warning");
                 return;
             }
-            localStorage.setItem(
-                "plataforma_activa",
-                JSON.stringify(plataformas[index])
-            );
-            window.location.href = "../html/plataforma_dinamica.html";
+            localStorage.setItem("plataforma_activa", JSON.stringify(plataformas[index]));
+            window.open("../../plataforma_dinamica/html/plataforma_dinamica.html", "_blank");
         }
         if (btn.classList.contains("btn-editar1")) {
             const nombreAnterior = plataformas[index].nombre;
-            const nuevoNombre = prompt(
-                "Editar nombre de la plataforma:",
-                nombreAnterior
-            );
-            if (!nuevoNombre || !nuevoNombre.trim()) {
-                mensaje("⚠️ La edición fue cancelada.");
-                return;
-            }
+            const nuevoNombre = prompt("Editar nombre de la plataforma:", nombreAnterior);
+            if (!nuevoNombre || !nuevoNombre.trim()) return;
             plataformas[index].nombre = nuevoNombre.trim();
             localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
-            mensaje(`✏️ Plataforma actualizada.`);
             mostrarTableroPlataforma();
+            mostrarMensaje(
+                `La plataforma "${nombreAnterior}" a "${nuevoNombre.trim()}" correctamente`,
+                "exito"
+            );
         }
-        if (btn.classList.contains("btn-visualizar1")) {
-            mensaje(`👁️ Vista previa de "${plataformas[index].nombre}".`);
+        if (btn.classList.contains("btn-agregar")) {
+            mostrarMensaje("Plataforma ha sido añadida exitosamente", "exito");
+        }
+        if (btn.classList.contains("btn-actualizar")) {
+            const nombrePlataforma = plataformas[index].nombre;
+            window.mostrarPlataformaSeleccionada(nombrePlataforma);
+            mostrarMensaje(
+                `Plataforma "${nombrePlataforma}" enviada a la vista`,
+                "info"
+            );
         }
         if (btn.classList.contains("btn-bloquear")) {
             plataformas[index].bloqueada = true;
-            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
-            mensaje(`🔒 Plataforma bloqueada.`);
-            mostrarTableroPlataforma();
+            mostrarMensaje("Se ha bloqueado la plataforma", "warning");
         }
         if (btn.classList.contains("btn-desbloquear")) {
             plataformas[index].bloqueada = false;
-            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
-            mensaje(`🔓 Plataforma desbloqueada.`);
-            mostrarTableroPlataforma();
-        }
-        if (btn.classList.contains("btn-actualizar")) {
-            mensaje(`🔄 Plataforma actualizada.`);
-            mostrarTableroPlataforma();
+            mostrarMensaje("Se ha desbloqueado la plataforma", "info");
         }
         if (btn.classList.contains("btn-eliminar1")) {
-            const nombre = plataformas[index].nombre;
+            const nombrePlataforma = plataformas[index].nombre;
             plataformas.splice(index, 1);
-            localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
-            mensaje(`🗑️ Plataforma "${nombre}" eliminada.`);
-            mostrarTableroPlataforma();
+            mostrarMensaje(
+                `La plataforma "${nombrePlataforma}" ha sido eliminada`,
+                "error"
+            );
         }
+        localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
+        mostrarTableroPlataforma();
     });
 });
