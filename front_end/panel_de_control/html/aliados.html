@@ -59,19 +59,6 @@
             <i class="fa-solid fa-trash"></i> Contenedor
         </button>
     </div>
-    <!-------------------------------->
-    <!--|estructura_agregar_aliados|-->
-    <!-------------------------------->
-    <div class="contenedor-aliados">
-        <div class="cabecera-aliados">
-            <h3 class="titulo-aliado">Nombrar aliados</h3>
-            <button class="btn-crear">Crear</button>
-        </div>
-        <div class="cuerpo-aliados">
-            <i class="fas fa-handshake icono-aliado"></i>
-            <input type="text" placeholder="Escribe el aliado" class="input-aliado">
-        </div>
-    </div>
     <!------------------------------->
     <!--|estructura_agregar_imagen|-->
     <!------------------------------->
@@ -86,21 +73,48 @@
             </div>
         </div>
     </div>
-    <!------------------------------------->
-    <!--|estructura_añadir_la_plataforma|-->
-    <!------------------------------------->
-    <div class="contenedor-plataformas">
-        <div class="cabecera-plataformas">
-            <h3 class="titulo-plataforma">Añadir la plataforma</h3>
-            <button class="btn-desplegar">Desplegar</button>
-        </div>
-        <div class="contenido-plataformas">
-            <div class="barra-titulo">
-                <h4 class="subtitulo">Plataformas disponibles</h4>
+    <!-------------------------------------->
+    <!--|estructura_formulario_de_aliados|-->
+    <!-------------------------------------->
+    <div class="fondo1">
+        <div class="contenedor1">
+            <div class="header1">
+                <div class="titulo-header1">Formulario de aliados</div>
+                <button class="btn-crear1">Crear aliado</button>
             </div>
-            <div class="lista-plataformas">
-                <!-- Aquí se mostrarán las plataformas disponibles -->
-            </div>
+            <section class="seccion1">
+                <h3>Añade un aliado</h3>
+                <div class="input-icono1">
+                    <div class="icono1">👤</div>
+                    <input type="text" placeholder="Escribe el aliado">
+                </div>
+            </section>
+            <hr>
+            <section class="seccion1">
+                <h3 class="centrado1">Ubicacion de aliado</h3>
+                <div class="ubicacion1">
+                    <div class="campos1">
+                        <label>Ciudad</label>
+                        <input type="text" placeholder="Escribe la ciudad" class="input_descripcion">
+                        <label>Departamento</label>
+                        <input type="text" placeholder="Escribe el departamento" class="input_descripcion">
+                        <label>Urbanizacion</label>
+                        <input type="text" placeholder="Escribe la urbanizacion" class="input_descripcion">
+                        <label>Añade un Icono</label>
+                        <select class="input_descripcion">
+                            <option value="">Ningún icono seleccionado</option>
+                            <option value="user">👤 Usuario</option>
+                            <option value="store">🏪 Tienda</option>
+                            <option value="location">📍 Ubicación</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <hr>
+            <section class="seccion2">
+                <h3 class="centrado1">Has una descripcion al aliado</h3>
+                <textarea class="describirtexto" placeholder="añade una descripcion ..."></textarea>
+            </section>
         </div>
     </div>
     <!----------------------------------->
@@ -109,14 +123,16 @@
     <div class="contenedor-tablero">
         <div class="encabezado-tablero">
             <div class="titulo-tablero">Tablero de aliados</div>
-            <button class="btn-agregar">Agregar todo</button>
         </div>
         <table class="tabla-paginas">
             <thead>
                 <tr>
-                    <th>Img</th>
                     <th>Aliados</th>
-                    <th>Plataforma</th>
+                    <th>Ciudad</th>
+                    <th>Departamento</th>
+                    <th>Urbanizacion</th>
+                    <th>Icono</th>
+                    <th>Descripcion</th>
                     <th>Acciones</th>
                 </tr>
             </thead>

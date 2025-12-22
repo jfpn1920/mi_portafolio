@@ -180,70 +180,6 @@ body {
 .btn-contenedor:hover {
     background-color: #f0f0f0;
 }
-/*---------------------------------*/
-/*--|estilo_base_agregar_aliados|--*/
-/*---------------------------------*/
-.contenedor-aliados {
-    position: absolute;  
-    top: 124px;      
-    left: 282px; 
-    width: 350px;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    background-color: #c4c4c4;
-    font-family: "Arial", sans-serif;
-}
-.cabecera-aliados {
-    display: flex;
-    border-radius: 5px 5px 0px 0px;
-    align-items: center;
-    background-color: #fff;
-    border-bottom: 1px solid #000;
-}
-.titulo-aliado {
-    flex: 1;
-    text-align: center;
-    font-weight: bold;
-    font-size: 15px;
-    margin: 0;
-    padding: 8px 0;
-    border-right: 1px solid #000;
-}
-.btn-crear {
-    flex: 1;
-    padding: 8px 0;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: #fff;
-    border: none;
-    border-radius: 0px 5px 0px 0px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.2s ease;
-}
-.btn-crear:hover {
-    background-color: #e8e8e8;
-}
-.cuerpo-aliados {
-    display: flex;
-    align-items: center;
-    margin: 8px;
-    padding: 8px 10px;
-    border-radius: 5px;
-}
-.icono-aliado {
-    font-size: 30px;
-    margin-right: 8px;
-}
-.input-aliado {
-    width: 100%;
-    border: none;
-    outline: none;
-    padding: 6px 8px;
-    font-weight: bold;
-    font-size: 17px;
-    border-radius: 4px;
-}
 /*--------------------------------*/
 /*--|estilo_base_agregar_imagen|--*/
 /*--------------------------------*/
@@ -255,14 +191,14 @@ body {
     font-family: Arial, sans-serif;
     overflow: hidden;
     position: relative;
-    top: 56px; 
+    top: -49px; 
     left: 282px;  
 }
 .imagen-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
     height: 30px;
 }
@@ -276,7 +212,7 @@ body {
 .imagen-btn {
     flex: 0 0 160px;
     height: 100%;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border: none;
     border-left: 1px solid #000;
     font-weight: bold;
@@ -304,90 +240,126 @@ body {
     font-size: 60px;
     color: black;
 }
-/*--------------------------------------*/
-/*--|estilo_base_añadir_la_plataforma|--*/
-/*--------------------------------------*/
-.contenedor-plataformas {
-    position: absolute;
-    top: 469px;
-    left: 282px;
-    width: 350px;
+/*---------------------------------------*/
+/*--|estilo_base_formulario_de_aliados|--*/
+/*---------------------------------------*/
+.fondo1 {
+    width: 352.5px;
+    margin-left: 282px;
+    margin-top: -44px;
+}
+.contenedor1 {
+    background: #c7c7c7;
+    border: 1px solid #000000;
+    height: 651px;
+    border-radius: 5px 5px 5px 5px;
+}
+.header1 {
+    border-radius: 5px 5px 0px 0px;
+    display: flex;
+    background: #ffffff;
+    padding-top: 10px;
+    height: 25px;
+    border-bottom: 1px solid #000000;
+}
+.titulo-header1 {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+}
+.btn-crear1 {
+    background: #ffffff;
+    border-left: 1px solid #000;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    font-size: 15px;
+    border-radius: 0px 5px 0px 0px;
+    margin-top: -10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.seccion1 {
+    margin-top: -10px;
+    margin-left: 7px;
+    width: 338px;
+}
+.seccion2 {
+    margin-top: -10px;
+    margin-left: 7px;
+    width: 338px;
+}
+.seccion1 h3 {
+    margin-bottom: 8px;
+}
+.centrado1 {
+    text-align: center;
+}
+
+/* 🔹 AQUÍ ESTÁ EL CAMBIO */
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    background: #fff;
     border: 1px solid #000;
     border-radius: 5px;
-    background-color: #fff;
-    font-family: "Arial", sans-serif;
+    outline: none;
 }
-.cabecera-plataformas {
+
+textarea {
+    width: 320px;
+    height: 180px;
+}
+.input-icono1 {
     display: flex;
     align-items: center;
-    background-color: #fff;
-    border-bottom: 1px solid #000;
-    border-radius: 5px 5px 0 0;
+    gap: 8px;
 }
-.titulo-plataforma {
-    flex: 1;
-    text-align: center;
-    margin: 0;
-    padding: 8px 0;
+.icono1 {
+    font-size: 22px;
+}
+.ubicacion1 {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: -15px;
+}
+.campos1 {
+    width: 65%;
+}
+.campos1 label {
+    display: block;
+    margin-top: 8px;
     font-weight: bold;
-    font-size: 14px;
-    border-right: 1px solid #000;
-    text-transform: lowercase;
 }
-.btn-desplegar {
-    flex: 1;
-    padding: 8px 0;
+.input_descripcion {
+    margin-top: 5px;
+}
+hr {
     border: none;
-    border-radius: 0 5px 0 0;
-    background-color: #fff;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    text-transform: capitalize;
+    width: 338px;
+    margin-left: 7px;
+    border-radius: 5px;
+    border-top: 4px solid #000;
 }
-.btn-desplegar:hover {
-    background-color: #e8e8e8;
-}
-.contenido-plataformas {
-    background-color: #cfcfcf;
-    border-radius: 0px 0px 5px 5px;
-    padding: 8px;
-    border-top: none;
-}
-.barra-titulo {
-    background-color: #45dce2;
-    border: 1px solid #000;
-    text-align: center;
-    margin-bottom: 5px;
-    border-radius: 5px 5px 0px 0px;
-}
-.subtitulo {
-    margin: 0;
-    padding: 5px 0;
-    font-size: 13px;
-    font-weight: bold;
-    text-transform: lowercase;
-}
-.lista-plataformas {
-    background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 0px 0px 5px 5px;
-    height: 250px;
-    margin-top: -6px;
+.describirtexto {
+    margin-top: -15px;
 }
 /*------------------------------------*/
 /*--|estilo_base_tablero_de_aliados|--*/
 /*------------------------------------*/
 .contenedor-tablero {
-    width: 780px;
-    height: 672px;
+    width: 779.4px;
+    height: 891px;
     border: 1px solid #000000;
     background-color: #c7c7c7;
     display: flex;
     border-radius: 5px;
     flex-direction: column;
     margin-left: 639px;
-    margin-top: -284px;
+    margin-top: -893px;
     font-family: 'Arial', sans-serif;
 }
 .encabezado-tablero {
@@ -395,7 +367,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-radius: 5px 5px 0px 0px;
-    background-color: #f3f3f3;
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
 }
 .titulo-tablero {
@@ -403,20 +375,7 @@ body {
     text-align: center;
     font-weight: bold;
     padding: 8px 0;
-    border-right: 1px solid #000;
     font-size: 13px;
-}
-.btn-agregar {
-    background-color: #f3f3f3;
-    border: none;
-    border-radius: 0px 5px 0px 0px;
-    padding: 8px 15px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 12px;
-}
-.btn-agregar:hover {
-    background-color: #e0e0e0;
 }
 .tabla-paginas {
     width: 100%;
@@ -424,7 +383,7 @@ body {
     flex: 1;
 }
 .tabla-paginas thead {
-    background-color: #f3f3f3;
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
 }
 .tabla-paginas th {
