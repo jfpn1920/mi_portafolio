@@ -61,3 +61,150 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+//-----------------------------------------//
+//--|funcionalidad_formulario_de_aliados|--//
+//-----------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ Script formulario aliados cargado.");
+    const btnCrear = document.querySelector(".btn-crear1");
+    const inputNombre = document.querySelector(".input-icono1 input");
+    const inputsUbicacion = document.querySelectorAll(".campos1 input");
+    const selectIcono = document.querySelector(".campos1 select");
+    const textareaDescripcion = document.querySelector(".describirtexto");
+    const STORAGE_KEY = "aliados";
+    if (!btnCrear) {
+        console.warn("⚠️ Botón crear aliado no encontrado.");
+        return;
+    }
+    btnCrear.addEventListener("click", () => {
+        const nombre = inputNombre.value.trim();
+        const ciudad = inputsUbicacion[0].value.trim();
+        const departamento = inputsUbicacion[1].value.trim();
+        const urbanizacion = inputsUbicacion[2].value.trim();
+        const icono = selectIcono.value;
+        const descripcion = textareaDescripcion.value.trim();
+        if (!nombre || !ciudad || !descripcion) {
+            alert("Debes completar los campos obligatorios");
+            return;
+        }
+        const nuevoAliado = {
+            nombre,          
+            ciudad,         
+            departamento,    
+            urbanizacion,    
+            icono,           
+            descripcion,     
+            fecha: new Date().toLocaleString()
+        };
+        const aliadosGuardados =
+            JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        aliadosGuardados.push(nuevoAliado);
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(aliadosGuardados)
+        );
+        alert("Aliado creado exitosamente");
+        inputNombre.value = "";
+        inputsUbicacion.forEach(input => input.value = "");
+        selectIcono.value = "";
+        textareaDescripcion.value = "";
+        document.dispatchEvent(new Event("aliadoCreado"));
+    });
+});
+//--------------------------------------//
+//--|funcionalidad_tablero_de_aliados|--//
+//--------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("📌 Script tablero_de_aliado cargado correctamente.");
+    const tbody = document.querySelector(".tabla-paginas tbody");
+    const STORAGE_KEY = "aliados";
+    if (!tbody) return;
+    window.mostrarTableroAliados = function () {
+        tbody.innerHTML = "";
+        const aliados = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        if (aliados.length === 0) {
+            const filaVacia = document.createElement("tr");
+            filaVacia.classList.add("fila-vacia");
+            filaVacia.innerHTML = `<td>No hay aliados creados</td>`;
+            tbody.appendChild(filaVacia);
+            return;
+        }
+        aliados.forEach((aliado, index) => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${aliado.nombre || "—"}</td>
+                <td>${aliado.ciudad || "—"}</td>
+                <td>${aliado.departamento || "—"}</td>
+                <td>${aliado.urbanizacion || "—"}</td>
+                <!-- ✅ ICONO CORREGIDO -->
+                <td style="text-align:center;">
+                    ${
+                        aliado.icono
+                            ? `<i class="fa-solid fa-${aliado.icono}"></i>`
+                            : "—"
+                    }
+                </td>
+                <td class="celda-descripcion">
+                    ${aliado.descripcion || "—"}
+                </td>
+                <td style="text-align:center;">
+                    <button class="btn-editar" data-index="${index}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn-ver" data-index="${index}">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <button class="btn-agregar" data-index="${index}">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="btn-eliminar" data-index="${index}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(fila);
+        });
+    };
+    mostrarTableroAliados();
+    document.addEventListener("aliadoCreado", () => {
+        mostrarTableroAliados();
+    });
+    tbody.addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+        const index = btn.dataset.index;
+        let aliados = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        if (!aliados[index]) return;
+        if (btn.classList.contains("btn-editar")) {
+            const nuevoNombre = prompt(
+                "Editar nombre del aliado:",
+                aliados[index].nombre
+            );
+            if (!nuevoNombre || !nuevoNombre.trim()) return;
+            aliados[index].nombre = nuevoNombre.trim();
+            alert("Aliado editado correctamente");
+        }
+        if (btn.classList.contains("btn-ver")) {
+            alert(
+                `Aliado: ${aliados[index].nombre}\n` +
+                `Ciudad: ${aliados[index].ciudad}\n` +
+                `Departamento: ${aliados[index].departamento}\n` +
+                `Urbanización: ${aliados[index].urbanizacion}\n` +
+                `Descripción: ${aliados[index].descripcion}`
+            );
+        }
+        if (btn.classList.contains("btn-agregar")) {
+            alert("Aliado añadido exitosamente");
+        }
+        if (btn.classList.contains("btn-eliminar")) {
+            const confirmar = confirm(
+                `¿Eliminar el aliado "${aliados[index].nombre}"?`
+            );
+            if (!confirmar) return;
+            aliados.splice(index, 1);
+            alert("Aliado eliminado correctamente");
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(aliados));
+        mostrarTableroAliados();
+    });
+});

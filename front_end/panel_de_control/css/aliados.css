@@ -425,20 +425,99 @@ hr {
     flex: 1;
 }
 .tabla-paginas thead {
+    display: block;
+    width: 100%;
     background-color: #ffffff;
     border-bottom: 1px solid #000;
 }
+.tabla-paginas thead tr,
+.tabla-paginas tbody tr {
+    display: grid;
+    grid-template-columns:
+        1fr  
+        1fr  
+        1fr    
+        1fr    
+        0.6fr  
+        2fr    
+        1fr;   
+}
+.tabla-paginas th,
+.tabla-paginas td {
+    box-sizing: border-box;
+    padding: 8px;
+    font-size: 12px;
+    border-right: 1px solid #000;
+}
 .tabla-paginas th {
     text-align: center;
-    font-size: 12px;
-    padding: 6px;
     font-weight: bold;
-    border-right: 1px solid #000;
 }
 .tabla-paginas th:last-child {
     border-right: none;
 }
 .tabla-paginas tbody {
-    background-color: #c7c7c7;
+    display: block;
+    flex: 1;
+    width: 779.4px;
     height: 100%;
+    background-color: #c7c7c7;
+}
+.tabla-paginas tbody tr {
+    min-height: 44px;       
+    border-bottom: 1px solid #000;
+    align-items: stretch;
+}
+.tabla-paginas td {
+    display: flex;
+    align-items: flex-start;  
+    justify-content: center;
+    font-weight: 600;
+    height: 100%;            
+}
+.tabla-paginas td:last-child {
+    flex-direction: column;     
+    justify-content: flex-start; 
+    align-items: center;         
+    gap: 6px;                   
+}
+.tabla-paginas td:last-child button {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+.tabla-paginas td.celda-descripcion {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.4;
+    max-height: 100%;
+    overflow-y: auto;
+}
+.tabla-paginas tbody .fila-vacia {
+    height: 100%;
+}
+.tabla-paginas tbody .fila-vacia td {
+    grid-column: 1 / -1;
+    height: 110%;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: #ffffff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #000;
+}
+.tabla-paginas tbody.con-datos {
+    background-color: #ffffff;
+}
+.tabla-paginas th:last-child,
+.tabla-paginas td:last-child {
+    border-right: none; 
 }
