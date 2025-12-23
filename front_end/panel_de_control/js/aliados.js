@@ -6,6 +6,18 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//--------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_aliados|--//
+//--------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //----------------------------------//
 //--|funcionalidad_agregar_imagen|--//
 //----------------------------------//
@@ -55,9 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
     botonAgregar.addEventListener("click", () => {
         const imagenesActuales = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
         if (imagenesActuales.length > 0) {
-            alert("La imagen se ha agregado exitosamente");
+            mostrarMensaje(
+                "La imagen se ha agregado exitosamente",
+                "exito"
+            );
         } else {
-            alert("Debes agregar una imagen");
+            mostrarMensaje(
+                "Debes agregar una imagen",
+                "warning"
+            );
         }
     });
 });
@@ -84,16 +102,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const icono = selectIcono.value;
         const descripcion = textareaDescripcion.value.trim();
         if (!nombre || !ciudad || !descripcion) {
-            alert("Debes completar los campos obligatorios");
+            mostrarMensaje(
+                "Debes completar los campos obligatorios",
+                "warning"
+            );
             return;
         }
         const nuevoAliado = {
-            nombre,          
-            ciudad,         
-            departamento,    
-            urbanizacion,    
-            icono,           
-            descripcion,     
+            nombre,
+            ciudad,
+            departamento,
+            urbanizacion,
+            icono,
+            descripcion,
             fecha: new Date().toLocaleString()
         };
         const aliadosGuardados =
@@ -103,7 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
             STORAGE_KEY,
             JSON.stringify(aliadosGuardados)
         );
-        alert("Aliado creado exitosamente");
+        mostrarMensaje(
+            "Aliado creado exitosamente",
+            "exito"
+        );
         inputNombre.value = "";
         inputsUbicacion.forEach(input => input.value = "");
         selectIcono.value = "";
@@ -136,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${aliado.ciudad || "—"}</td>
                 <td>${aliado.departamento || "—"}</td>
                 <td>${aliado.urbanizacion || "—"}</td>
-                <!-- ✅ ICONO CORREGIDO -->
                 <td style="text-align:center;">
                     ${
                         aliado.icono
@@ -182,27 +205,19 @@ document.addEventListener("DOMContentLoaded", () => {
             );
             if (!nuevoNombre || !nuevoNombre.trim()) return;
             aliados[index].nombre = nuevoNombre.trim();
-            alert("Aliado editado correctamente");
+            mostrarMensaje("Aliado editado correctamente", "exito");
         }
         if (btn.classList.contains("btn-ver")) {
-            alert(
-                `Aliado: ${aliados[index].nombre}\n` +
-                `Ciudad: ${aliados[index].ciudad}\n` +
-                `Departamento: ${aliados[index].departamento}\n` +
-                `Urbanización: ${aliados[index].urbanizacion}\n` +
-                `Descripción: ${aliados[index].descripcion}`
-            );
+            const nombreAliado = aliados[index].nombre || "Aliado sin nombre";
+            mostrarMensaje(`Vista previa del aliado "${nombreAliado}"`, "info");
         }
         if (btn.classList.contains("btn-agregar")) {
-            alert("Aliado añadido exitosamente");
+            mostrarMensaje("Aliado añadido exitosamente", "exito");
         }
         if (btn.classList.contains("btn-eliminar")) {
-            const confirmar = confirm(
-                `¿Eliminar el aliado "${aliados[index].nombre}"?`
-            );
-            if (!confirmar) return;
+            const nombreAliado = aliados[index].nombre || "Aliado sin nombre";
             aliados.splice(index, 1);
-            alert("Aliado eliminado correctamente");
+            mostrarMensaje(`El aliado "${nombreAliado}" ha sido eliminado`, "warning");
         }
         localStorage.setItem(STORAGE_KEY, JSON.stringify(aliados));
         mostrarTableroAliados();
