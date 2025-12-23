@@ -6,3 +6,44 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
+//-----------------------------------------------//
+//--|funcionalidad_comunicacion_con_el_cliente|--//
+//-----------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    const btnIrChat = document.getElementById("btnIrChat");
+    if (btnIrChat) {
+        btnIrChat.addEventListener("click", () => {
+            window.location.href = "comunicaciones.html";
+        });
+    }
+});
+//--------------------------------//
+//--|funcionalidad_instaladores|--//
+//--------------------------------//
+document.getElementById("btnVerInstalador").addEventListener("click", () => {
+    window.location.href = "instaladores.html";
+});
+//-------------------------------------//
+//--|funcionalidad_sesion_de_aliados|--//
+//-------------------------------------//
+const btnVerAliados = document.getElementById("btnVerAliados");
+if (btnVerAliados) {
+    btnVerAliados.addEventListener("click", () => {
+        window.location.href = "sesion_de_aliados.html";
+    });
+}
+//-------------------------------------//
+//--|funcionalidad_sesion_de_aliados|--//
+//-------------------------------------//
+const btnVerContenedor = document.getElementById("btnVerContenedor");
+if (btnVerContenedor) {
+    btnVerContenedor.addEventListener("click", () => {
+        window.location.href = "contenedor.html";
+    });
+}
+//-------------------------------------------//
+//--|funcionalidad_paginas_web_calificados|--//
+//-------------------------------------------//
+document.getElementById("btnClasificados").addEventListener("click", () => {
+    window.location.href = "clasificados.html";
+});

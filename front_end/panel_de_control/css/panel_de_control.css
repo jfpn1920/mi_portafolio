@@ -196,23 +196,45 @@ body {
     background-color: #c4c4c4;
     border: 1px solid #000000;
     border-radius: 5px;
-    width: 300px;
-    padding: 15px;
+    width: 287px;
+    padding: 21.4px;
     margin-top: 181px;
     margin-left: 282px;
+    position: relative;
 }
-.aliados-header {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
+.aliados-header-barra {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 5px 5px 0px 0px;
+    padding: 6px 10px;
+    margin-top: -22px;
+    margin-left: -22px;
+    width: 310px;
+    height: 17px;
+    margin-bottom: 21px;
 }
-.aliados-header h3 {
-    background-color: #fff;
-    padding: 5px 15px;
-    border-radius: 5px;
-    margin: 0;
+.aliados-titulo {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
+    margin-left: 55px;
+    text-align: center;
+}
+.btn-ver-aliados {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    padding: 7px 12px;
+    font-size: 13px;
+    width: 95px;
+    font-weight: bold;
+    border-radius: 0px 5px 0px 0px;
+    cursor: pointer;
+    transition: 0.2s;
+    position: absolute; 
+    top: -1px;        
+    left: 236px;       
+}
+.btn-ver-aliados:hover {
+    background-color: #e6e6e6;
 }
 .aliados-grid {
     display: grid;
