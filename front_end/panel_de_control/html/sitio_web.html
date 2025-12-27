@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>panel de control</title>
+    <link rel="stylesheet" href="../css/sitio_web.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="../js/sitio_web.js" defer></script>
+</head>
+<body>
+    <!----------------------------------->
+    <!--|estructura_menu_de_navegacion|-->
+    <!----------------------------------->
+    <header class="panel-header">
+        <h1>Panel de control</h1>
+        <div class="panel-icons">
+            <i class="fa-duotone fa-solid fa-download"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2>Herramientas</h2>
+        </div>
+    </aside>
+    <div class="contenedor_gris"></div>
+    <div class="contenedor_de_opciones">
+        <ul class="menu" id="menu">
+            <li><a href="../html/panel_de_control.html" class="enlace_opciones"><i class="fas fa-tachometer-alt"></i> Panel de control</a></li>
+            <li><a href="../html/sitio_web.html" class="enlace_opciones"><i class="fas fa-globe"></i> Sitio web</a></li>
+            <li><a href="../html/plataforma.html" class="enlace_opciones"><i class="fas fa-desktop"></i> Plataforma</a></li>
+            <li><a href="../html/paginas.html" class="enlace_opciones"><i class="fas fa-file-code"></i> Páginas</a></li>
+            <li><a href="../html/carrusel.html" class="enlace_opciones"><i class="fas fa-images"></i> Carrusel</a></li>
+            <li><a href="../html/contenido.html" class="enlace_opciones"><i class="fas fa-pencil-alt"></i> Contenido</a></li>
+            <li><a href="../html/categorias.html" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="../html/pie_de_pagina.html" class="enlace_opciones"><i class="fas fa-shoe-prints"></i> Pie de página</a></li>
+            <li><a href="../html/chatbot.html" class="enlace_opciones"><i class="fas fa-robot"></i> Chatbot</a></li>
+            <li><a href="../html/aliados.html" class="enlace_opciones"><i class="fas fa-handshake"></i> Aliados</a></li>
+            <li><a href="../html/comunicaciones.html" class="enlace_opciones"><i class="fas fa-envelope"></i> Comunicaciones</a></li>
+            <li><a href="../html/pedidos.html" class="enlace_opciones"><i class="fas fa-box-open"></i> Pedidos</a></li>
+            <li><a href="../html/calificados.html" class="enlace_opciones"><i class="fas fa-star"></i> Calificados</a></li>
+            <li><a href="../html/estado.html" class="enlace_opciones"><i class="fas fa-chart-line"></i> Estado</a></li>
+            <li><a href="../html/sesion_de_aliados.html" class="enlace_opciones"><i class="fas fa-users"></i> Sesión de aliados</a></li>
+            <li><a href="../html/instaladores.html" class="enlace_opciones"><i class="fas fa-plug"></i> Instaladores</a></li>
+            <li><a href="../html/contenedor.html" class="enlace_opciones"><i class="fas fa-trash"></i> Contenedor</a></li>
+            <li><a href="../html/configuracion.html" class="enlace_opciones"><i class="fas fa-cog"></i> Configuración</a></li>
+        </ul>
+    </div>
+    <!------------------------------------->
+    <!--|estructura_edicion_de_sitio_web|-->
+    <!------------------------------------->
+    <div class="contenedor-edicion">
+        <div class="bloque-edicion">
+            <h2 class="titulo-edicion">Edición de sitio web</h2>
+            <div class="estado-edicion" id="estadoEdicion">
+                Datos no encontrados
+            </div>
+        </div>
+        <div class="acciones-edicion">
+            <select class="select-estado">
+                <option value="publico">Publicar</option>
+                <option value="privado">Privado</option>
+            </select>
+            <button class="btn-guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+            <button class="btn-desplegar"><i class="fas fa-globe"></i> Desplegar</button>
+            <button class="btn-contenedor"><i class="fa-solid fa-trash"></i> Contenedor</button>
+        </div>
+    </div>
+    <!--------------------------------->
+    <!--|estructura_crear_la_pestaña|-->
+    <!--------------------------------->
+    <div class="contenedor-principal">
+        <div class="header-superior">
+            <div class="titulo-crear">crear la pestaña</div>
+            <button class="btn-crear">Crear</button>
+        </div>
+        <div class="contenido-panel">
+            <p class="texto-label">selecciona la pestaña</p>
+            <select class="caja-seleccion">
+                <option>Ninguna pestaña</option>
+            </select>
+            <p class="titulo-almacenados">Pestañas almacenados</p>
+            <div class="caja-listado"></div>
+        </div>
+    </div>
+    <!-------------------------------------------------->
+    <!--|estructura_descripcion_para_el_administrador|-->
+    <!-------------------------------------------------->
+    <div class="contenedor-admin">
+        <div class="titulo-admin">
+            Descripcion para el administrador
+        </div>
+        <div class="caja-descripcion">
+            <p>
+                Hola administrador <b>"aquí ira el nombre del creador"</b> eres responsable de la creación, edición y gestión integral del sitio web desde el panel de control.
+                A través de esta interfaz, puede configurar el contenido, definir el estado de publicación, guardar cambios, desplegar actualizaciones y supervisar el estado general del proyecto.
+            </p>
+            <p>
+                Hola administrador, "aquí irá el nombre del creador". Eres responsable de la creación, edición y gestión integral del sitio web desde el panel de control, asegurando que cada sección del sistema funcione correctamente y mantenga una estructura organizada. 
+                Desde esta interfaz centralizada podrás configurar módulos, administrar pestañas, crear nuevas áreas de contenido y definir el enfoque visual y funcional del sitio según las necesidades del proyecto.
+                Además, cuentas con el control para supervisar el estado del sitio en tiempo real, asignar estados de publicación, guardar cambios importantes, aplicar correcciones y desplegar nuevas actualizaciones. Todo esto permite que el desarrollo y mantenimiento de la página se realice de forma ordenada, previniendo errores y asegurando que las funciones esenciales sigan operativas. Asimismo, puedes monitorear el desempeño general, revisar elementos almacenados, evaluar secciones pendientes y ajustar configuraciones según los objetivos establecidos.
+                Tu función es clave para garantizar que el sistema se mantenga actualizado, estable y alineado con la finalidad del proyecto.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
