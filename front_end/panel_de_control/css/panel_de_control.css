@@ -349,6 +349,14 @@ body {
 .preview-desarrollo {
     background-color: #fff;
     height: 193px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.preview-desarrollo i {
+    font-size: 90px;
+    color: #000;
+    opacity: 0.85;
 }
 .preview-btn-desarrollo {
     background-color: #48d1cc;
@@ -357,11 +365,10 @@ body {
     font-weight: bold;
     padding: 8px 0;
     cursor: pointer;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-radius: 0px 0px 5px 5px;
     transition: 0.3s;
-}
-.preview-btn-desarrollo:hover {
-    background-color: #20b2aa;
-    color: #fff;
 }
 /*-----------------------------------------*/
 /*--|estilo_base_grafico_de_mi_sitio_web|--*/
