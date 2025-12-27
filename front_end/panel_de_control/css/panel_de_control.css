@@ -119,52 +119,226 @@ body {
     border: 1px solid #000000;
     border-radius: 5px;    
 }
-/*-----------------------------------------*/
-/*--|estilo_base_historial_de_desarrollo|--*/
-/*-----------------------------------------*/
-.historial {
+/*-------------------------------------------------*/
+/*--|estilo_base_visualizaciones_de_mi_sitio_web|--*/
+/*-------------------------------------------------*/
+.contenedor_de_visualizacion {
+    width: 300px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    position: relative;
+    top: -54px;
+    left: 282px;
+}
+.card-visualizador {
+    background-color: #c4c4c4;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.card-header-visualizacion {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    background-color: #63e3e3;
+    border-bottom: 1px solid #000;
+}
+.icono-visualizacion {
+    width: 60px;
+    height: 105%;
+    margin-top: -1px;
+    border-right: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icono-visualizacion i {
+    font-size: 20px;
+    color: #000;
+}
+.card-header-visualizacion h2 {
+    flex: 1;
+    margin-top: 13px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+.card-body-visual {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contador-visual {
+    font-size: 120px;
+    font-weight: 900;
+    color: #000;
+}
+/*--------------------------------------*/
+/*--|estilo_base_proyectos_realizados|--*/
+/*--------------------------------------*/
+.contenedor_de_proyectos {
+    width: 250px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    position: relative;
+    top: -337px;
+    left: 588px;
+}
+.card-proyectos {
+    background-color: #c4c4c4;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.card-header-proyectos {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    background-color: #63e3e3;
+    border-bottom: 1px solid #000;
+}
+.icono-proyectos {
+    width: 60px;
+    height: 105%;
+    margin-top: -1px;
+    border-right: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icono-proyectos i {
+    font-size: 20px;
+    color: #000;
+}
+.card-header-proyectos h2 {
+    flex: 1;
+    margin-top: 8px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+.card-body-proyectos {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contador-proyectos {
+    font-size: 120px;
+    font-weight: 900;
+    color: #000;
+}
+/*-----------------------------*/
+/*--|estilo_base_mis_aliados|--*/
+/*-----------------------------*/
+.contenedor_de_aliados {
+    width: 300px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    position: relative;
+    top: -620px;
+    left: 844px;
+}
+.card-aliados {
+    background-color: #c4c4c4;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.card-header-aliados {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    background-color: #63e3e3;
+    border-bottom: 1px solid #000;
+}
+.icono-aliados {
+    width: 60px;
+    height: 105%;
+    margin-top: -1px;
+    border-right: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icono-aliados i {
+    font-size: 20px;
+    color: #000;
+}
+.card-header-aliados h2 {
+    flex: 1;
+    margin-top: 13px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+.card-body-aliados {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contador-aliados {
+    font-size: 120px;
+    font-weight: 900;
+    color: #000;
+}
+/*--------------------------------------*/
+/*--|estilo_base_gitbuh_respositorios|--*/
+/*--------------------------------------*/
+.historial-desarrollo {
     position: absolute;
     top: 66px;      
-    left: 282px;    
+    left: 1150px;    
     background-color: #c4c4c4;
     border: 1px solid #000000;
     border-radius: 4px;
     padding: 15px;
-    width: 77.6%;
+    width: 239px;
+    height: 251px;
 }
-.historial-header {
-    display: flex;
+.historial-header-desarrollo {
+    display: block;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
-.historial-header h3 {
-    margin: 0;
+.historial-header-desarrollo h3 {
+    margin-top: -16px;
+    margin-left: -16px;
+    border-radius: 5px 0px 0px 0px;
+    border: 1px solid #000000;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
+    width: 81.5%;
+    text-align: center;
     background-color: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 5px;
+    height: 19px;
 }
-.mostrar-btn {
+.mostrar-btn-desarrollo {
     background-color: #fff;
-    border: none;
+    border: 1px solid #000000;
+    border-radius: 0px 5px 0px 0px;
+    left: 190px;
+    top: -46px;
+    position: relative;
     font-weight: bold;
-    padding: 4px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: 0.3s;
+    padding: 7px;
 }
-.mostrar-btn:hover {
+.mostrar-btn-desarrollo:hover {
     background-color: #e74c3c;
     color: #fff;
 }
-.historial-grid {
-    display: grid;
+.historial-grid-desarrollo {
     grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
+    gap: 1px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-top: -50px;
+    margin-left: -4px;
+    width: 247px;
+    height: 227px;
 }
-.card {
+.card-desarrollo {
     background-color: #fff;
     border-radius: 4px;
     overflow: hidden;
@@ -172,11 +346,11 @@ body {
     flex-direction: column;
     justify-content: space-between;
 }
-.preview {
+.preview-desarrollo {
     background-color: #fff;
-    height: 120px;
+    height: 193px;
 }
-.preview-btn {
+.preview-btn-desarrollo {
     background-color: #48d1cc;
     color: #000;
     text-align: center;
@@ -185,9 +359,88 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-.preview-btn:hover {
+.preview-btn-desarrollo:hover {
     background-color: #20b2aa;
     color: #fff;
+}
+/*-----------------------------------------*/
+/*--|estilo_base_grafico_de_mi_sitio_web|--*/
+/*-----------------------------------------*/
+.grafico-contenedor-graficos {
+    width: 350px;
+    height: 350px;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    background-color: #c7c7c7;
+    padding-bottom: 10px;
+    margin-top: -615px;
+    margin-left: 282px;
+}
+.grafico-header-graficos {
+    background-color: #63e6e2;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 5px 5px 0px 0px;
+    border-bottom: 1px solid #000;
+}
+.grafico-cuerpo-graficos {
+    position: relative;
+    background-color: #c7c7c7;
+    margin: 10px;
+    height: 303px;
+    border: 1px solid #000;
+    border-radius: 6px;
+}
+.eje-vertical-graficos {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    bottom: 50px;
+    width: 5px;
+    height: 255px;
+    background-color: #000;
+}
+.eje-horizontal-graficos {
+    position: absolute;
+    left: 20px;
+    top: 270px;
+    right: 15px;
+    bottom: 50px;
+    height: 5px;
+    background-color: #000;
+}
+.barras-graficos {
+    position: relative;
+    left: 4px;
+    top: 222px;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: flex-end;
+    gap: 5px;               
+}
+.barra-item-graficos {
+    text-align: center;
+    font-weight: bold;
+    width: 65px;                
+}
+.porcentaje-graficos {
+    display: block;
+    margin-bottom: 6px;         
+    font-size: 13px;
+}
+.barra-graficos {
+    height: 26px;               
+    background-color: #63e6e2;
+    border: 1px solid #000;
+    border-radius: 5px 5px 0px 0px;
+}
+.label-graficos {
+    display: block;
+    margin-top: 9px;            
+    font-size: 12px;
 }
 /*-----------------------------------*/
 /*--|estilo_base_sesion_de_aliados|--*/
@@ -197,9 +450,10 @@ body {
     border: 1px solid #000000;
     border-radius: 5px;
     width: 287px;
+    height: 317px;
     padding: 21.4px;
-    margin-top: 181px;
-    margin-left: 282px;
+    margin-top: -362px;
+    margin-left: 638px;
     position: relative;
 }
 .aliados-header-barra {
@@ -244,20 +498,21 @@ body {
 .aliado {
     background-color: #fff;
     border-radius: 5px;
-    height: 60px;
+    border: 1px solid #000000;
+    height: 63px;
 }
 /*--------------------------------------*/
 /*--|estilo_base_estado_del_sitio_web|--*/
 /*--------------------------------------*/
 .card2 {
-    width: 300px;
-    height: 343px;
+    width: 291px;
+    height: 360px;
     border: 1px solid #000000;
     background-color: #bfbfbf;
     border-radius: 5px;
     display: flex;
-    margin-left: 618px;
-    margin-top: -345px;
+    margin-left: 974px;
+    margin-top: -362px;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -270,7 +525,7 @@ body {
     font-weight: bold;
     border-radius: 5px 5px 0px 0px;
     text-transform: lowercase;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #000000;
     margin: 0;
 }
 .contenido2 {
@@ -289,8 +544,8 @@ body {
 .boton2 {
     background-color: white;
     color: black;
-    border: none;
-    margin-top: 20px;
+    border: 1px solid #000000;
+    margin-top: 40px;
     padding: 10px 25px;
     font-weight: bold;
     cursor: pointer;
@@ -309,8 +564,8 @@ body {
     border: 1px solid #000000;
     background-color: #bfbfbf;
     display: flex;
-    margin-left: 925px;
-    margin-top: -345px;
+    margin-left: 282px;
+    margin-top: 5px;
     flex-direction: column;
     border-radius: 5px;
     align-items: center;
@@ -379,14 +634,14 @@ body {
 /*---------------------------------------------*/
 .card4 {
     width: 340px;
-    height: 158px; 
+    height: 162px; 
     border: 1px solid #000000;
     background-color: #bfbfbf;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
-    margin-left: 925px;
-    margin-top: 5px;
+    margin-left: 628px;
+    margin-top: -172px;
     align-items: center;
     text-align: center;
     padding-bottom: 8px;
@@ -453,7 +708,7 @@ body {
 /*--------------------------------------*/
 .contenedor-basura {
     width: 146px;        
-    height: 170px;             
+    height: 176px;             
     background-color: #c7c7c7;
     border: 1px solid #000000;
     border-radius: 6px;
@@ -464,7 +719,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     margin-left: 1272px;
-    margin-top: -345px;           
+    margin-top: -539px;           
 }
 .titulo {
     background-color: white;
@@ -482,7 +737,7 @@ body {
 .btn-ver {
     background-color: white;
     color: black;
-    border: none;
+    border: 1px solid #000000;
     padding: 6px 16px;
     font-weight: 700;
     width: 127px;
@@ -501,7 +756,7 @@ body {
 /*------------------------------*/
 .contenedor-instaladores1 {
     width: 146px;        
-    height: 166px;             
+    height: 177px;             
     background-color: #c7c7c7;
     border: 1px solid #000000;
     border-radius: 6px;
@@ -530,7 +785,6 @@ body {
 .btn-ver1 {
     background-color: white;
     color: black;
-    border: none;
     padding: 6px 16px;
     font-weight: 700;
     width: 127px;
@@ -538,6 +792,7 @@ body {
     margin-top: -4px;
     border-radius: 5px;
     margin-bottom: 10px;
+    border: 1px solid #000000;
     cursor: pointer;
     transition: background 0.3s;
     font-size: 12px;
