@@ -346,7 +346,22 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
         if (btn.classList.contains("btn-agregar")) {
-            mostrarMensaje("Plataforma ha sido añadida exitosamente", "exito");
+            const plataforma = plataformas[index];
+            const datosParaPestanas = plataforma.paginas.map((pagina, i) => ({
+                icono: plataforma.icono || "",
+                plataforma: plataforma.nombre,
+                principal: plataforma.principal || "—",
+                pagina: pagina,
+                pestana: i + 1
+            }));
+            localStorage.setItem(
+                "paginas_desde_tablero",
+                JSON.stringify(datosParaPestanas)
+            );
+            mostrarMensaje(
+                `Datos de "${plataforma.nombre}" enviados a pestañas`,
+                "exito"
+            );
         }
         if (btn.classList.contains("btn-actualizar")) {
             const nombrePlataforma = plataformas[index].nombre;

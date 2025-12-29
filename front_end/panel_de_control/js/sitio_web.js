@@ -20,20 +20,31 @@ function crearPestanaHTML(paginaData) {
     const pagina = document.createElement("div");
     pagina.classList.add("pagina-item");
     pagina.innerHTML = `
-        <button class="btn-icono">ICON</button>
+        <!-- ICONO -->
+        <button class="btn-icono">
+            ${paginaData.icono
+                ? `<i class="fa-solid ${paginaData.icono}"></i>`
+                : "—"}
+        </button>
         <!-- PLATAFORMA -->
         <div class="campo-texto nombre-sitio">
-            ${paginaData.nombre || "Sin plataforma"}
+            ${paginaData.plataforma || "Sin plataforma"}
+        </div>
+        <!-- PAGINA -->
+        <div class="campo-texto pagina-web">
+            ${paginaData.pagina || "Sin página"}
         </div>
         <!-- PESTAÑA -->
         <div class="campo-texto numero-pagina">
-            ${paginaData.numero || "Sin pestaña"}
+            Pestaña ${paginaData.pestana || "Sin pestaña"}
         </div>
+        <!-- BOTÓN AGREGAR (+) -->
+        <button class="btn-agregar" title="Agregar página">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+        <!-- MARCADOR -->
         <button class="btn-marcador" title="Marcar">
             <i class="fas fa-bookmark"></i>
-        </button>
-        <button class="btn-agregar" title="Agregar">
-            <i class="fas fa-plus"></i>
         </button>
     `;
     contenedorPaginas.appendChild(pagina);
@@ -41,6 +52,17 @@ function crearPestanaHTML(paginaData) {
 function guardarPaginas() {
     localStorage.setItem("paginas", JSON.stringify(paginas));
 }
+contenedorPaginas.addEventListener("click", (e) => {
+    const btnAgregar = e.target.closest(".btn-agregar");
+    if (!btnAgregar) return;
+    const paginaItem = btnAgregar.closest(".pagina-item");
+    const index = [...contenedorPaginas.children].indexOf(paginaItem);
+    if (index === -1) return;
+    console.log("➕ Acción + en página:", paginas[index]);
+    alert(
+        `Agregar contenido a:\nPlataforma: ${paginas[index].plataforma}\nPestaña: ${paginas[index].pestana}`
+    );
+});
 function mostrarPestanas() {
     listadoContainer.innerHTML = "";
     if (pestanas.length === 0) {
@@ -68,23 +90,24 @@ function mostrarPestanas() {
             height:22px;
         `;
         btnAgregar.addEventListener("click", () => {
+            const plataformaSeleccionada = selectPestana.value;
             const yaExiste = paginas.some(
                 p =>
-                    p.nombre === selectPestana.value &&
-                    p.numero === pestana
+                    p.plataforma === plataformaSeleccionada &&
+                    p.pestana === pestana
             );
             if (yaExiste) {
                 alert("Ya has creado esa misma pestaña");
                 return;
             }
             const nuevaPagina = {
-                nombre: selectPestana.value,
-                numero: pestana             
+                plataforma: plataformaSeleccionada,
+                pagina: "",
+                pestana: pestana
             };
             paginas.push(nuevaPagina);
             guardarPaginas();
             crearPestanaHTML(nuevaPagina);
-            alert(`La pestaña "${pestana}" fue añadida correctamente`);
         });
         const btnEliminar = document.createElement("button");
         btnEliminar.textContent = "X";
@@ -124,14 +147,14 @@ btnCrear.addEventListener("click", () => {
     paginas = [];
     pestanas.forEach(pestana => {
         const pagina = {
-            nombre: selectPestana.value || "Plataforma",
-            numero: pestana
+            plataforma: selectPestana.value || "Plataforma",
+            pagina: "",
+            pestana: pestana
         };
         paginas.push(pagina);
         crearPestanaHTML(pagina);
     });
     guardarPaginas();
-    alert("Se han creado todas las pestañas correctamente 🎉");
 });
 window.addEventListener("DOMContentLoaded", () => {
     mostrarPestanas();

@@ -435,7 +435,8 @@ body {
     border: none;
     border-radius: 6px;
     background: #3498db;
-    color: #fff;
+    border: 1px solid #000000;
+    color: #000000;
     font-weight: bold;
     cursor: pointer;
 }
@@ -445,23 +446,31 @@ body {
     align-items: center;
     padding: 0 12px;
     background: #ffffff;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 5px;
     font-size: 14px;
-    color: #333;
+    color: #000000;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 .nombre-sitio {
-    flex: 1;
+    width: 220px;
+    flex-shrink: 0;
     font-weight: 500;
 }
 .numero-pagina {
-    width: 140px;
+    width: 80px;
+    margin-left: 465px;
     justify-content: center;
     font-weight: bold;
-    color: #555;
+    color: #000000;
+    flex-shrink: 0;
+}
+.pagina-web {
+    flex: 1;
+    min-width: 100px;
+    max-width: 100px;
 }
 .btn-marcador,
 .btn-agregar {
@@ -472,6 +481,7 @@ body {
     font-size: 15px;
     cursor: pointer;
     background: #c7c7c7;
+    border: 1px solid #000000;
     display: flex;
     align-items: center;
     justify-content: center;
