@@ -16,6 +16,9 @@ const listadoContainer = document.querySelector(".caja-listado");
 const contenedorPaginas = document.getElementById("contenedorPaginas");
 let pestanas = JSON.parse(localStorage.getItem("pestanas")) || [];
 let paginas = JSON.parse(localStorage.getItem("paginas")) || [];
+const paginasDesdeTablero = JSON.parse(
+    localStorage.getItem("paginas_desde_tablero")
+) || [];
 function crearPestanaHTML(paginaData) {
     const pagina = document.createElement("div");
     pagina.classList.add("pagina-item");
@@ -158,5 +161,13 @@ btnCrear.addEventListener("click", () => {
 });
 window.addEventListener("DOMContentLoaded", () => {
     mostrarPestanas();
-    paginas.forEach(pagina => crearPestanaHTML(pagina));
+    if (paginasDesdeTablero.length > 0) {
+        contenedorPaginas.innerHTML = "";
+        paginas = paginasDesdeTablero;
+        paginas.forEach(pagina => crearPestanaHTML(pagina));
+        localStorage.setItem("paginas", JSON.stringify(paginas));
+        localStorage.removeItem("paginas_desde_tablero");
+    } else {
+        paginas.forEach(pagina => crearPestanaHTML(pagina));
+    }
 });
