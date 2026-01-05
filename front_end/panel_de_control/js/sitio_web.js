@@ -23,32 +23,55 @@ function crearPestanaHTML(paginaData) {
     const pagina = document.createElement("div");
     pagina.classList.add("pagina-item");
     pagina.innerHTML = `
-        <!-- ICONO -->
+        <!------------------------------------------>
+        <!--|estructura_pestañas_creados_dinamico|-->
+        <!------------------------------------------>
         <button class="btn-icono">
             ${paginaData.icono
                 ? `<i class="fa-solid ${paginaData.icono}"></i>`
                 : "—"}
         </button>
-        <!-- PLATAFORMA -->
         <div class="campo-texto nombre-sitio">
             ${paginaData.plataforma || "Sin plataforma"}
         </div>
-        <!-- PAGINA -->
         <div class="campo-texto pagina-web">
             ${paginaData.pagina || "Sin página"}
         </div>
-        <!-- PESTAÑA -->
         <div class="campo-texto numero-pagina">
             Pestaña ${paginaData.pestana || "Sin pestaña"}
         </div>
-        <!-- BOTÓN AGREGAR (+) -->
-        <button class="btn-agregar" title="Agregar página">
+        <button class="btn-agregar" title="Desplegar contenido">
             <i class="fa-solid fa-plus"></i>
         </button>
-        <!-- MARCADOR -->
         <button class="btn-marcador" title="Marcar">
             <i class="fas fa-bookmark"></i>
         </button>
+        <button class="btn-borrar" title="Eliminar pestaña">
+            <i class="fa-solid fa-trash"></i>
+        </button>
+        <!------------------------------------------------------->
+        <!--|estructura_menu_de_navegacion_desplegable_ocultos|-->
+        <!------------------------------------------------------->
+        <div class="contenido-pestana oculto">
+            <div class="menu-editor">
+                <div class="menu-top">
+                    <span class="menu-nombre">Nombre del Menú de navegación</span>
+                    <button class="btn-ver">Contenido</button>
+                    <button class="btn-quitar">Quitar</button>
+                </div>
+                <div class="menu-main">
+                    <div class="menu-icono1">Icono</div>
+                    <input type="text" placeholder="Nombre del sitio web" class="menu-input">
+                    <button class="menu-opcion">Opción 1</button>
+                    <button class="menu-opcion">Opción 2</button>
+                    <button class="menu-opcion">Opción 3</button>
+                    <button class="menu-opcion">Opción 4</button>
+                    <button class="menu-opcion">Submenú</button>
+                    <div class="menu-icono2">Ico</div>
+                    <div class="menu-icono3">Ico</div>
+                </div>
+            </div>
+        </div>
     `;
     contenedorPaginas.appendChild(pagina);
 }
@@ -56,15 +79,39 @@ function guardarPaginas() {
     localStorage.setItem("paginas", JSON.stringify(paginas));
 }
 contenedorPaginas.addEventListener("click", (e) => {
+    const btnBorrar = e.target.closest(".btn-borrar");
+    if (btnBorrar) {
+        const paginaItem = btnBorrar.closest(".pagina-item");
+        const index = [...contenedorPaginas.children].indexOf(paginaItem);
+        if (index === -1) return;
+        const confirmar = confirm(
+            `¿Seguro que deseas eliminar la pestaña "${paginas[index].pestana}"?`
+        );
+        if (!confirmar) return;
+        paginas.splice(index, 1);
+        guardarPaginas();
+        paginaItem.remove();
+        return;
+    }
     const btnAgregar = e.target.closest(".btn-agregar");
-    if (!btnAgregar) return;
-    const paginaItem = btnAgregar.closest(".pagina-item");
-    const index = [...contenedorPaginas.children].indexOf(paginaItem);
-    if (index === -1) return;
-    console.log("➕ Acción + en página:", paginas[index]);
-    alert(
-        `Agregar contenido a:\nPlataforma: ${paginas[index].plataforma}\nPestaña: ${paginas[index].pestana}`
-    );
+    if (btnAgregar) {
+        const paginaItem = btnAgregar.closest(".pagina-item");
+        const contenido = paginaItem.querySelector(".contenido-pestana");
+        contenido.classList.toggle("oculto");
+        const icono = btnAgregar.querySelector("i");
+        icono.classList.toggle("fa-plus");
+        icono.classList.toggle("fa-minus");
+        return;
+    }
+    const btnGuardarContenido = e.target.closest(".btn-guardar-contenido");
+    if (btnGuardarContenido) {
+        const paginaItem = btnGuardarContenido.closest(".pagina-item");
+        const index = [...contenedorPaginas.children].indexOf(paginaItem);
+        const texto = paginaItem.querySelector("textarea").value;
+        paginas[index].contenido = texto;
+        guardarPaginas();
+        alert("Contenido guardado correctamente ✔");
+    }
 });
 function mostrarPestanas() {
     listadoContainer.innerHTML = "";
