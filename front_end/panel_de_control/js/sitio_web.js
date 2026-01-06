@@ -49,10 +49,10 @@ function crearPestanaHTML(paginaData) {
         <button class="btn-borrar" title="Eliminar pestaña">
             <i class="fa-solid fa-trash"></i>
         </button>
-        <!------------------------------------------------------->
-        <!--|estructura_menu_de_navegacion_desplegable_ocultos|-->
-        <!------------------------------------------------------->
         <div class="contenido-pestana oculto">
+            <!-------------------------------------------->
+            <!--|menu_de_navegacion_desplegable_ocultos|-->
+            <!-------------------------------------------->
             <div class="menu-editor">
                 <div class="menu-top">
                     <span class="menu-nombre">Nombre del Menú de navegación</span>
@@ -70,6 +70,146 @@ function crearPestanaHTML(paginaData) {
                     <div class="menu-icono2">Ico</div>
                     <div class="menu-icono3">Ico</div>
                 </div>
+            </div>
+            <!---------------------------------->
+            <!--|carrusel_desplegable_ocultos|-->
+            <!---------------------------------->
+            <div class="carrusel-header">
+                <input type="text" placeholder="Nombre del carrusel" class="carrusel-input">
+                <button class="carrusel-btn">contenido</button>
+                <button class="carrusel-btn eliminar">Quitar</button>
+            </div>
+            <div class="carrusel-body">
+                <button class="carrusel-control left">control</button>
+                <div class="carrusel-area">
+                    aquí irá el carrusel
+                </div>
+                <button class="carrusel-control right">control</button>
+                <div class="carrusel-indicadores">
+                    aquí irán los indicadores
+                </div>
+            </div>
+            <!----------------------------------->
+            <!--|contenido_desplegable_ocultos|-->
+            <!----------------------------------->
+            <div class="editor-pagina">
+                <div class="editor-wrapper">
+                    <div class="editor-header">
+                        <input type="text" class="editor-input" placeholder="Nombre de la página">
+                        <div class="contenedor-editor">
+                            <button class="editor-contenido-btn">
+                                Aquí irá el contenido
+                            </button>
+                            <button class="editor-cerrar">X</button>
+                        </div>
+                        <div class="editor-acciones">
+                            <button class="editor-btn1">Añadir</button>
+                            <button class="editor-btn2 eliminar">Quitar</button>
+                        </div>
+                    </div>
+                    <div class="editor-body">
+                        <div class="editor-imagen">
+                            aquí irá la imagen
+                        </div>
+                        <div class="editor-contenido2">
+                            <div class="editor-titulo">aquí irá el título</div>
+                            <div class="editor-parrafo">aquí irá el párrafo</div>
+                            <div class="editor-subtitulo">aquí irá el subtítulo</div>
+                            <div class="editor-iconos">
+                                <div class="icono">icono 1</div>
+                                <div class="icono">icono 2</div>
+                                <div class="icono">icono 3</div>
+                                <div class="icono">icono 4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--------------------------------------->
+            <!--|chatbot_fuera_desplegable_ocultos|-->
+            <!--------------------------------------->
+            <div class="chatbot-wrapper">
+                <div class="chatbot-header">
+                    <p class="chatbot-btn-fuera">Fuera del pie de pagina</p>
+                    <button class="chatbot-btn-guardar">guardar</button>
+                    <button class="chatbot-btn-cerrar">X</button>
+                </div>
+                <div class="chatbot-body">
+                    <div class="chatbot-nombre">
+                        nombre del chatbot
+                    </div>
+                    <div class="chatbot-avatar">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                </div>
+            </div>
+            <!--------------------------------------->
+            <!--|pie_de_pagina_desplegable_ocultos|-->
+            <!--------------------------------------->
+            <div class="header">
+                <div class="title-box">Nombre pie de pagina</div>
+                <div class="header-box"></div>
+                <button class="btn1">Contenido</button>
+                <button class="btn2">Quitar</button>
+            </div>
+            <div class="main-container">
+                <div class="big-left-box"></div>
+                <div class="top-right-box">2</div>
+                <div class="chatbot-wrapper2">
+                    <div class="chatbot-header2">
+                        <p class="chatbot-btn-fuera2">Dentro del pie de pagina</p>
+                        <button class="chatbot-btn-guardar2">guardar</button>
+                        <button class="chatbot-btn-cerrar2">X</button>
+                    </div>
+                    <div class="chatbot-body2">
+                        <div class="chatbot-nombre2">
+                            nombre del chatbot
+                        </div>
+                        <div class="chatbot-avatar2">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider1"></div>
+                <div class="mini-row-empleo">
+                    <div class="mini"></div>
+                    <div class="mini wide"></div>
+                    <div class="mini"></div>
+                    <div class="mini wide"></div>
+                    <div class="mini"></div>
+                    <div class="mini wide"></div>
+                    <div class="mini"></div>
+                    <div class="mini wide"></div>
+                </div>
+                <div class="columns">
+                    <div class="col1">
+                        <div class="item1"></div>
+                        <div class="item1"></div>
+                        <div class="item1"></div>
+                        <div class="item1"></div>
+                        <div class="item1"></div>
+                    </div>
+                    <div class="col2">
+                        <div class="item2"></div>
+                        <div class="item2"></div>
+                    </div>
+                    <div class="col3">
+                        <div class="item3"></div>
+                        <div class="item3"></div>
+                        <div class="item3"></div>
+                        <div class="item3"></div>
+                        <div class="item3"></div>
+                    </div>
+                    <div class="col4">
+                        <div class="item4"></div>
+                        <div class="item4"></div>
+                        <div class="item4"></div>
+                        <div class="item4"></div>
+                        <div class="item4"></div>
+                    </div>
+                </div>
+                <div class="divider2"></div>
+                <div class="bottom-box"></div>
             </div>
         </div>
     `;

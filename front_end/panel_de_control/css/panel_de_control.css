@@ -139,7 +139,7 @@ body {
     display: flex;
     height: 30px;
     align-items: center;
-    background-color: #63e3e3;
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
 }
 .icono-visualizacion {
@@ -193,7 +193,7 @@ body {
     display: flex;
     height: 30px;
     align-items: center;
-    background-color: #63e3e3;
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
 }
 .icono-proyectos {
@@ -247,7 +247,7 @@ body {
     display: flex;
     height: 30px;
     align-items: center;
-    background-color: #63e3e3;
+    background-color: #ffffff;
     border-bottom: 1px solid #000;
 }
 .icono-aliados {
@@ -384,7 +384,7 @@ body {
     margin-left: 282px;
 }
 .grafico-header-graficos {
-    background-color: #63e6e2;
+    background-color: #ffffff;
     text-align: center;
     font-weight: bold;
     padding: 8px;
@@ -440,7 +440,7 @@ body {
 }
 .barra-graficos {
     height: 26px;               
-    background-color: #63e6e2;
+    background-color: #ffffff;
     border: 1px solid #000;
     border-radius: 5px 5px 0px 0px;
 }
