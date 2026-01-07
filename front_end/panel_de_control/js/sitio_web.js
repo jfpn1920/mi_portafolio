@@ -154,7 +154,7 @@ function crearPestanaHTML(paginaData) {
             </div>
             <div class="main-container">
                 <div class="big-left-box"></div>
-                <div class="top-right-box">2</div>
+                <div class="top-right-box"></div>
                 <div class="chatbot-wrapper2">
                     <div class="chatbot-header2">
                         <p class="chatbot-btn-fuera2">Dentro del pie de pagina</p>

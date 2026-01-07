@@ -1010,11 +1010,11 @@ body {
 /*--|estilo_base_pie_de_pagina_desplegable_ocultos|--*/
 /*---------------------------------------------------*/
 .header {
-    background: #c6c6c6;
+    background: #67e7f0;
     padding: 8px;
     width: 522px;
     margin-left: -1px;
-    margin-top: 18px;
+    margin-top: -27px;
     border: 1px solid #000000;
     border-radius: 5px 5px 0px 0px;
     align-items: center;
@@ -1055,7 +1055,7 @@ body {
     font-size: 14px;
 }
 .main-container {
-    background: #e0e0e0;
+    background: #ffffff;
     border: 1px solid #000;
     border-radius: 0px 5px 5px 5px;
     margin-top: -1px;
