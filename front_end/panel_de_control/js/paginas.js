@@ -24,17 +24,23 @@ function mostrarMensaje(texto, tipo = "info") {
 document.addEventListener("DOMContentLoaded", () => {
     const botonCrear = document.querySelector(".crear");
     const inputPagina = document.querySelector(".campo input");
-    const LIMITE_PAGINAS = 18;
+    const LIMITE_PAGINAS = 10;
     console.log("Script de agregar página cargado correctamente ✅");
     botonCrear.addEventListener("click", () => {
         const nombrePagina = inputPagina.value.trim();
         if (nombrePagina === "") {
-            mostrarMensaje("Debes escribir el nombre de la página para poder crearla", "error");
+            mostrarMensaje(
+                "Debes escribir el nombre de la página para poder crearla",
+                "error"
+            );
             return;
         }
         let paginas = JSON.parse(localStorage.getItem("paginasCreadas")) || [];
         if (paginas.length >= LIMITE_PAGINAS) {
-            mostrarMensaje("Has alcanzado el límite máximo de paginas permitidos.", "warning");
+            mostrarMensaje(
+                "Has alcanzado el límite máximo de 10 páginas permitidas en el tablero.",
+                "warning"
+            );
             return;
         }
         paginas.push({
@@ -42,7 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
             fecha: new Date().toLocaleString()
         });
         localStorage.setItem("paginasCreadas", JSON.stringify(paginas));
-        mostrarMensaje(`La página "${nombrePagina}" ha sido creada exitosamente`, "success");
+        mostrarMensaje(
+            `La página "${nombrePagina}" ha sido creada exitosamente`,
+            "success"
+        );
         inputPagina.value = "";
     });
 });
@@ -147,17 +156,23 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const menuesGuardados = JSON.parse(localStorage.getItem("menusCreados")) || [];
+        if (menuesGuardados.length >= 2) {
+            mostrarMensaje(
+                "Has alcanzado el límite máximo de 2 menús de navegación.",
+                "error"
+            );
+            return;
+        }
         menuesGuardados.push(menuActual);
         localStorage.setItem("menusCreados", JSON.stringify(menuesGuardados));
-        console.log("Menú creado con éxito:", menuActual);
         mostrarMensaje(`Menú "${menuActual.nombre}" creado correctamente.`, "success");
         const evento = new CustomEvent("menuCreado", { detail: menuActual });
         window.dispatchEvent(evento);
         menuActual = { nombre: "", logo: null, iconos: [], paginasSeleccionadas: [] };
         inputNombreMenu.value = "";
-        listaPaginas.querySelectorAll(".check-pagina1").forEach(check => (check.checked = false));
-        cajasLogo.forEach(c => (c.innerHTML = "+"));
-        cajasIconos.forEach(c => (c.innerHTML = "+"));
+        listaPaginas.querySelectorAll(".check-pagina1").forEach(c => c.checked = false);
+        cajasLogo.forEach(c => c.innerHTML = "+");
+        cajasIconos.forEach(c => c.innerHTML = "+");
     });
     cargarPaginasDisponibles();
 });
@@ -380,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nombreMenuActual = document.getElementById("nombreMenuActual");
     function mostrarMensaje(texto, tipo = "info") {
         const estado = document.getElementById("estadoEdicion");
-        if (!estado) return; 
+        if (!estado) return;
         estado.innerHTML = "";
         const mensaje = document.createElement("div");
         mensaje.classList.add("mensaje", tipo);
@@ -390,28 +405,31 @@ document.addEventListener("DOMContentLoaded", () => {
     function mostrarMenu(dataMenus, dataSubmenus) {
         tablaBody.innerHTML = "";
         if (!dataMenus || dataMenus.length === 0) {
-            tablaBody.innerHTML = `<tr><td colspan="4">No hay elementos en el menú</td></tr>`;
+            tablaBody.innerHTML = `
+                <tr>
+                    <td colspan="6">No hay menu de navegacion disponible</td>
+                </tr>
+            `;
             nombreMenuActual.textContent = "Sin menú";
-            mostrarMensaje(" No hay menús disponibles para mostrar.", "warning");
+            mostrarMensaje("No hay menús disponibles para mostrar.", "warning");
             return false;
         }
         mostrarMensaje("Menú de navegación cargado correctamente.", "success");
-        dataMenus.forEach(item => {
+        dataMenus.forEach((item, index) => {
             const logo = item.logo || "fa-solid fa-circle-question";
             const paginas = Array.isArray(item.paginasSeleccionadas)
                 ? item.paginasSeleccionadas
-                : (item.paginasSeleccionadas ? [item.paginasSeleccionadas] : []);
-            const nombreMenu = item.nombre || item.nombreMenu || "Sin nombre";
+                : [];
+            const nombreMenu = item.nombre || item.nombreMenu || "Sin menú";
             const iconos = Array.isArray(item.iconos)
                 ? item.iconos
-                : (item.iconos ? [item.iconos] : []);
+                : [];
             const submenus = dataSubmenus || [];
             const listaSubmenus = submenus.length
-                ? submenus.map((s) => `
-                    <div class="submenu-item2" 
-                        data-nombre="${s.nombre}" 
-                        data-opciones='${JSON.stringify(s.paginas)}'
-                        style="cursor:pointer; margin:3px 0; color:#000000; text-decoration:underline;">
+                ? submenus.map(s => `
+                    <div class="submenu-item2"
+                        data-nombre="${s.nombre}"
+                        data-opciones='${JSON.stringify(s.paginas)}'>
                         ${s.nombre}
                     </div>
                 `).join("")
@@ -419,39 +437,67 @@ document.addEventListener("DOMContentLoaded", () => {
             nombreMenuActual.textContent = nombreMenu;
             const fila = document.createElement("tr");
             fila.innerHTML = `
-                <!-- Logo -->
-                <td style="text-align:center; width:15%;">
-                    <i class="${logo}"></i>
-                </td>
-                <!-- Opciones -->
-                <td style="text-align:left; width:40%; padding-left:10px;">
+                <td style="font-weight:bold;">${nombreMenu}</td>
+                <td><i class="${logo}"></i></td>
+                <td>
                     ${paginas.length
-                        ? `<ul style="font-size: 13.4px; margin:4px 0 4px 18px; padding:0; list-style:disc; margin-left: 5px;">
-                            ${paginas.map(p => `<li>${p}</li>`).join("")}
-                            </ul>`
+                        ? `<ul>${paginas.map(p => `<li>${p}</li>`).join("")}</ul>`
                         : "—"}
                 </td>
-                <!-- Submenú -->
-                <td style="text-align:center; width:25%; font-size: 13.4px;">
-                    ${listaSubmenus}
-                </td>
-                <!-- Iconos -->
-                <td style="text-align:center; width:20%;">
+                <td>${listaSubmenus}</td>
+                <td>
                     ${iconos.length
-                        ? iconos.map(ic => `<i class="${ic}" style="margin:0 6px;"></i>`).join("")
+                        ? iconos.map(ic => `<i class="${ic}" style="margin: 5px 6px;"></i>`).join("")
                         : "—"}
+                </td>
+                <td>
+                    <i class="fa-solid fa-plus accion-agregar" title="Añadir"></i>
+                    <i class="fa-solid fa-pen accion-editar" title="Editar"></i>
+                    <i class="fa-solid fa-trash accion-eliminar" title="Eliminar"></i>
                 </td>
             `;
             tablaBody.appendChild(fila);
-            fila.querySelectorAll(".submenu-item2").forEach(submenu => {
-                submenu.addEventListener("click", () => {
-                    const nombre = submenu.dataset.nombre;
-                    const opciones = JSON.parse(submenu.dataset.opciones);
-                    mostrarMensaje(` Submenú "${nombre}" contiene ${opciones.length} opciones.`, "info");
-                });
+            fila.querySelector(".accion-agregar").addEventListener("click", () => {
+                mostrarMensaje(
+                    `El menú de navegación "${nombreMenu}" se ha desplegado correctamente.`,
+                    "success"
+                );
+            });
+            fila.querySelector(".accion-editar").addEventListener("click", () => {
+                const nuevoNombre = prompt(
+                    `Editar menú de navegación:\n\nMenú actual: "${nombreMenu}"`,
+                    nombreMenu
+                );
+                if (!nuevoNombre || nuevoNombre.trim() === nombreMenu) {
+                    mostrarMensaje("Edición cancelada o sin cambios.", "warning");
+                    return;
+                }
+                const menus = JSON.parse(localStorage.getItem("menusCreados")) || [];
+                menus[index].nombre = nuevoNombre.trim();
+                localStorage.setItem("menusCreados", JSON.stringify(menus));
+                mostrarMensaje(
+                    `El menú "${nombreMenu}" fue editado correctamente a "${nuevoNombre}".`,
+                    "success"
+                );
+                cargarMenus();
+            });
+            fila.querySelector(".accion-eliminar").addEventListener("click", () => {
+                const confirmar = confirm(`¿Seguro que deseas eliminar el menú "${nombreMenu}"?`);
+                if (!confirmar) {
+                    mostrarMensaje("Eliminación cancelada por el usuario.", "info");
+                    return;
+                }
+                const menus = JSON.parse(localStorage.getItem("menusCreados")) || [];
+                menus.splice(index, 1);
+                localStorage.setItem("menusCreados", JSON.stringify(menus));
+                mostrarMensaje(
+                    `El menú "${nombreMenu}" fue eliminado correctamente.`,
+                    "warning"
+                );         
+                cargarMenus();
             });
         });
-        return true; 
+        return true;
     }
     function cargarMenus() {
         const menuesGuardados = JSON.parse(localStorage.getItem("menusCreados")) || [];
@@ -459,23 +505,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return mostrarMenu(menuesGuardados, submenusGuardados);
     }
     btnDespliegue.addEventListener("click", () => {
-        console.log("📂 Botón 'Despliegue' presionado.");
-        const exito = cargarMenus();
-        if (exito) {
-            const nombre = nombreMenuActual.textContent || "sin nombre";
-            mostrarMensaje(`"${nombre}" se ha desplegado con éxito.`, "success");
-        } else {
-            mostrarMensaje(" Debes añadir los datos para así crear el menú de navegación.", "warning");
+        const desplegado = cargarMenus();
+        const nombreMenu = nombreMenuActual.textContent || "Sin menú";
+        if (desplegado) {
+            mostrarMensaje(
+                `El menú de navegación "${nombreMenu}" se ha desplegado completamente.`,
+                "success"
+            );
         }
     });
-    window.addEventListener("submenuCreado", () => {
-        cargarMenus();
-        mostrarMensaje("Submenú creado y añadido correctamente al menú.", "info");
-    });
-    window.addEventListener("menuCreado", () => {
-        cargarMenus();
-        mostrarMensaje("Nuevo menú creado correctamente.", "info");
-    });
+    window.addEventListener("submenuCreado", cargarMenus);
+    window.addEventListener("menuCreado", cargarMenus);
     cargarMenus();
     console.log("✅ Funcionalidad del despliegue lista.");
 });

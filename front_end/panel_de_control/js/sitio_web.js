@@ -56,7 +56,7 @@ function crearPestanaHTML(paginaData) {
             <div class="menu-editor">
                 <div class="menu-top">
                     <span class="menu-nombre">Nombre del Menú de navegación</span>
-                    <button id="btn-ver-contenido" class="btn-ver">Contenido</button>
+                    <button class="btn-ver">Contenido</button>
                     <button class="btn-quitar">Quitar</button>
                 </div>
                 <div class="menu-main">
@@ -69,28 +69,6 @@ function crearPestanaHTML(paginaData) {
                     <button class="menu-opcion">Submenú</button>
                     <div class="menu-icono2">Ico</div>
                     <div class="menu-icono3">Ico</div>
-                </div>
-            </div>
-            <!------------------------------------------>
-            <!--|ventana_emergente_menu_de_navegacion|-->
-            <!------------------------------------------>
-            <div class="modal-menu oculto" id="modalMenu">
-                <div class="modal-header">
-                    <span>Ventana emergente - Menú de navegación</span>
-                    <button class="modal-cerrar" type="button">X</button>
-                </div>
-                <div class="modal-columnas">
-                    <div>Menú de navegación</div>
-                    <div>Logo</div>
-                    <div>Opciones</div>
-                    <div>Submenú</div>
-                    <div>Iconos</div>
-                </div>
-                <div class="modal-mensaje">
-                    No hay datos del menú de navegación
-                </div>
-                <div class="modal-body">
-                    <!-- AQUÍ SE CARGARÁ EL CONTENIDO DINÁMICO -->
                 </div>
             </div>
             <!---------------------------------->
@@ -378,49 +356,5 @@ window.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("paginas_desde_tablero");
     } else {
         paginas.forEach(pagina => crearPestanaHTML(pagina));
-    }
-});
-//--------------------------------------------------------//
-//--|funcionalidad_ventana_emergente_menu_de_navegacion|--//
-//--------------------------------------------------------//
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("btn-ver")) {
-        const menu = e.target.closest(".menu-editor");
-        if (!menu) return;
-        const menuMain = menu.querySelector(".menu-main");
-        if (menuMain) {
-            menuMain.classList.toggle("oculto");
-            e.target.textContent =
-                menuMain.classList.contains("oculto")
-                    ? "Mostrar"
-                    : "Contenido";
-        }
-        const modalMenu = document.querySelector(".modal-menu");
-        const btnCerrarModal = document.querySelector(".modal-cerrar");
-        if (!modalMenu || !btnCerrarModal) {
-            console.error("❌ El modal aún no existe en el DOM");
-            return;
-        }
-        modalMenu.classList.remove("oculto");
-    }
-    if (e.target.classList.contains("modal-cerrar")) {
-        const modalMenu = e.target.closest(".modal-menu");
-        if (modalMenu) {
-            modalMenu.classList.add("oculto");
-        }
-    }
-    if (e.target.classList.contains("btn-quitar")) {
-        const menu = e.target.closest(".menu-editor");
-        if (!menu) return;
-        if (confirm("¿Seguro que deseas quitar este menú?")) {
-            menu.remove();
-        }
-    }
-    if (e.target.classList.contains("menu-opcion")) {
-        const menu = e.target.closest(".menu-editor");
-        if (!menu) return;
-        const opciones = menu.querySelectorAll(".menu-opcion");
-        opciones.forEach(o => o.classList.remove("activo"));
-        e.target.classList.add("activo");
     }
 });
