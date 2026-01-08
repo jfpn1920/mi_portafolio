@@ -512,6 +512,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 `El menú de navegación "${nombreMenu}" se ha desplegado completamente.`,
                 "success"
             );
+        } else {
+            mostrarMensaje(
+                "No hay ningún dato a desplegar.",
+                "warning"
+            );
         }
     });
     window.addEventListener("submenuCreado", cargarMenus);
