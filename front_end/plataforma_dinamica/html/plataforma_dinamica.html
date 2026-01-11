@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma dinamica</title>
+    <link rel="stylesheet" href="../css/plataforma_dinamica.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="../js/plataforma_dinamica.js" defer></script>
+</head>
+<body>
+    <!-------------------------------------------->
+    <!--|estructura_menu_de_navegacion_dinamico|-->
+    <!-------------------------------------------->
+    <nav class="menu-nav" id="menuNav">
+        <div class="menu-logo" id="menuLogo">
+            <img src="logo.png" alt="Logo" id="menuLogoImg">
+            <span id="menuLogoTexto">Mi Web</span>
+        </div>
+        <ul class="menu-opciones" id="menuOpciones">
+            <li id="opcionInicio">
+                <a href="#">Inicio</a>
+            </li>
+            <li id="opcionServicios">
+                <a href="#">Servicios</a>
+            </li>
+            <li id="opcionContacto">
+                <a href="#">Contacto</a>
+            </li>
+            <li class="submenu" id="submenuMas">
+                <button class="submenu-btn" id="submenuBtn">
+                    Más <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <ul class="submenu-lista" id="submenuLista">
+                    <li id="submenuOpcion1">
+                        <a href="#">Opción 1</a>
+                    </li>
+                    <li id="submenuOpcion2">
+                        <a href="#">Opción 2</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="menu-iconos" id="menuIconos">
+            <i class="fa-solid fa-question" id="iconoAyuda1"></i>
+            <i class="fa-solid fa-question" id="iconoAyuda2"></i>
+        </div>    
+    </nav>
+</body>
+</html>

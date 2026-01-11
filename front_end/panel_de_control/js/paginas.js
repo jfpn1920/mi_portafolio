@@ -506,18 +506,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     btnDespliegue.addEventListener("click", () => {
         const desplegado = cargarMenus();
-        const nombreMenu = nombreMenuActual.textContent || "Sin menú";
-        if (desplegado) {
-            mostrarMensaje(
-                `El menú de navegación "${nombreMenu}" se ha desplegado completamente.`,
-                "success"
-            );
-        } else {
+        if (!desplegado) {
             mostrarMensaje(
                 "No hay ningún dato a desplegar.",
                 "warning"
             );
+            return;
         }
+        const menuesGuardados = JSON.parse(localStorage.getItem("menusCreados")) || [];
+        const submenusGuardados = JSON.parse(localStorage.getItem("submenusCreados")) || [];
+        if (menuesGuardados.length === 0) {
+            mostrarMensaje(
+                "No hay ningún menú para desplegar.",
+                "warning"
+            );
+            return;
+        }
+        const menuActivo = menuesGuardados[0];
+        const datosMenu = {
+            nombre: menuActivo.nombre || "Sin nombre",
+            logo: menuActivo.logo || "",
+            paginas: menuActivo.paginasSeleccionadas || [],
+            iconos: menuActivo.iconos || [],
+            submenus: submenusGuardados || []
+        };
+        localStorage.setItem(
+            "menu_navegacion_dinamico",
+            JSON.stringify(datosMenu)
+        );
+        window.dispatchEvent(
+            new CustomEvent("menuDesplegado", {
+                detail: datosMenu
+            })
+        );
+        mostrarMensaje(
+            `El menú "${datosMenu.nombre}" fue desplegado correctamente.`,
+            "success"
+        );
     });
     window.addEventListener("submenuCreado", cargarMenus);
     window.addEventListener("menuCreado", cargarMenus);
