@@ -25,10 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnCrear = document.querySelector(".btn-crear");
     const inputNombre = document.querySelector(".input-texto");
     const selectPrincipal = document.querySelector(".select-principal");
-    const selectIcono = document.querySelector(".select-icono");
-    const selectPestanas = document.querySelector(".select-pestanas"); // 🔹 NUEVO
+    const inputImagenIcono = document.getElementById("inputImagenIcono");
+    const selectPestanas = document.querySelector(".select-pestanas");
     const contenedorPaginas = document.querySelector(".contenedor-paginas");
     let paginasSeleccionadas = [];
+    let imagenIconoBase64 = "";
     function mostrarMensaje(texto, tipo = "info") {
         const estado = document.getElementById("estadoEdicion");
         if (!estado) return;
@@ -43,20 +44,31 @@ document.addEventListener("DOMContentLoaded", () => {
             option => option.value
         );
     }
-    const iconos = [
-        { nombre: "Inicio", valor: "fa-house" },
-        { nombre: "Usuarios", valor: "fa-users" },
-        { nombre: "Configuración", valor: "fa-gear" },
-        { nombre: "Reportes", valor: "fa-chart-line" },
-        { nombre: "Portafolio", valor: "fa-briefcase" },
-        { nombre: "Tienda", valor: "fa-store" },
-        { nombre: "Hospital", valor: "fa-hospital" }
-    ];
-    iconos.forEach(icono => {
-        const option = document.createElement("option");
-        option.value = icono.valor;
-        option.textContent = icono.nombre;
-        selectIcono.appendChild(option);
+    inputImagenIcono.addEventListener("change", () => {
+        const archivo = inputImagenIcono.files[0];
+        if (!archivo) {
+            imagenIconoBase64 = "";
+            return;
+        }
+        if (!archivo.type.startsWith("image/")) {
+            mostrarMensaje("El archivo seleccionado no es una imagen válida", "error");
+            inputImagenIcono.value = "";
+            imagenIconoBase64 = "";
+            return;
+        }
+        const MAX_SIZE = 2 * 1024 * 1024;
+        if (archivo.size > MAX_SIZE) {
+            mostrarMensaje("La imagen no debe superar los 2MB", "warning");
+            inputImagenIcono.value = "";
+            imagenIconoBase64 = "";
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+            imagenIconoBase64 = reader.result;
+            mostrarMensaje("Imagen cargada correctamente", "exito");
+        };
+        reader.readAsDataURL(archivo);
     });
     document.addEventListener("enviar_paginas_a_formulario", (e) => {
         const paginas = e.detail || [];
@@ -120,18 +132,17 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCrear.addEventListener("click", () => {
         const nombre = inputNombre.value.trim();
         const principal = selectPrincipal.value;
-        const icono = selectIcono.value;
-        const pestanas = obtenerPestanasSeleccionadas(); // 🔹 NUEVO
-        if (nombre === "" && paginasSeleccionadas.length === 0 && icono === "") {
-            mostrarMensaje("No hay ninguna plataforma", "error");
-            return;
-        }
-        if (nombre === "") {
+        const pestanas = obtenerPestanasSeleccionadas();
+        if (!nombre) {
             mostrarMensaje("Debes escribir el nombre de la plataforma", "error");
             return;
         }
         if (paginasSeleccionadas.length === 0) {
             mostrarMensaje("Debes seleccionar al menos una página", "error");
+            return;
+        }
+        if (!imagenIconoBase64) {
+            mostrarMensaje("Debes seleccionar una imagen representativa", "error");
             return;
         }
         if (pestanas.length === 0) {
@@ -141,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const plataforma = {
             nombre,
             principal,
-            icono,
+            imagen: imagenIconoBase64,
             paginas: paginasSeleccionadas,
             pestanas
         };
@@ -162,11 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
             new Event("actualizar_tablero_plataforma")
         );
         mostrarMensaje("Plataforma creada y enviada al tablero", "exito");
-        // 🔹 RESET
         paginasSeleccionadas = [];
+        imagenIconoBase64 = "";
         inputNombre.value = "";
         selectPrincipal.value = "";
-        selectIcono.value = "";
+        inputImagenIcono.value = "";
         selectPestanas.selectedIndex = -1;
         contenedorPaginas.innerHTML = "";
     });
@@ -281,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (plataformas.length === 0) {
             const filaVacia = document.createElement("tr");
             filaVacia.classList.add("fila-vacia");
-            filaVacia.innerHTML = `<td colspan="5">No hay plataformas creadas</td>`;
+            filaVacia.innerHTML = `<td colspan="6">No hay plataformas creadas</td>`;
             tbody.appendChild(filaVacia);
             return;
         }
@@ -289,50 +300,63 @@ document.addEventListener("DOMContentLoaded", () => {
         plataformas.forEach((item, index) => {
             if (item.bloqueada === undefined) item.bloqueada = false;
             const fila = document.createElement("tr");
-                fila.innerHTML = `
-                    <td>${item.nombre}</td>
-                    <td>${item.principal || "—"}</td>
-                    <!-- NUEVA CELDA: PESTAÑAS -->
-                    <td class="celda-pestanas">
-                        ${
-                            item.pestanas && item.pestanas.length > 0
-                                ? item.pestanas.map(p => `<span>${p}</span>`).join("")
-                                : "<span>—</span>"
-                        }
-                    </td>
-                    <td style="text-align:center;">
-                        ${item.icono ? `<i class="fa-solid ${item.icono}"></i>` : "—"}
-                    </td>
-                    <td class="celda-vinculos">
-                        ${item.paginas.map(p => `<span>${p}</span>`).join("")}
-                    </td>
-                    <td class="celda-acciones">
-                        <button class="btn-pagina" data-index="${index}">
-                            <i class="fa-solid fa-file"></i>
-                        </button>
-                        <button class="btn-editar1" data-index="${index}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button class="btn-agregar" data-index="${index}">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                        ${
-                            item.bloqueada
-                                ? `<button class="btn-desbloquear" data-index="${index}">
-                                        <i class="fa-solid fa-lock-open"></i>
-                                    </button>`
-                                : `<button class="btn-bloquear" data-index="${index}">
-                                        <i class="fa-solid fa-lock"></i>
-                                    </button>`
-                        }
-                        <button class="btn-actualizar" data-index="${index}">
-                            <i class="fa-solid fa-arrows-rotate"></i>
-                        </button>
-                        <button class="btn-eliminar1" data-index="${index}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                `;
+            fila.innerHTML = `
+                <td>${item.nombre}</td>
+                <td>${item.principal || "—"}</td>
+                <td class="celda-pestanas">
+                    ${
+                        item.pestanas && item.pestanas.length > 0
+                            ? item.pestanas.map(p => `<span>${p}</span>`).join("")
+                            : "<span>—</span>"
+                    }
+                </td>
+                <!-- CELDA IMAGEN -->
+                <td style="text-align:center;">
+                    ${
+                        item.imagen
+                            ? `<img 
+                                    src="${item.imagen}" 
+                                    alt="Icono plataforma"
+                                    style="
+                                        width: 32px;
+                                        height: 32px;
+                                        object-fit: contain;
+                                        border-radius: 4px;
+                                    "
+                                >`
+                            : "—"
+                    }
+                </td>
+                <td class="celda-vinculos">
+                    ${item.paginas.map(p => `<span>${p}</span>`).join("")}
+                </td>
+                <td class="celda-acciones">
+                    <button class="btn-pagina" data-index="${index}">
+                        <i class="fa-solid fa-file"></i>
+                    </button>
+                    <button class="btn-editar1" data-index="${index}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn-agregar" data-index="${index}">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    ${
+                        item.bloqueada
+                            ? `<button class="btn-desbloquear" data-index="${index}">
+                                    <i class="fa-solid fa-lock-open"></i>
+                                </button>`
+                            : `<button class="btn-bloquear" data-index="${index}">
+                                    <i class="fa-solid fa-lock"></i>
+                                </button>`
+                    }
+                    <button class="btn-actualizar" data-index="${index}">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                    <button class="btn-eliminar1" data-index="${index}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            `;
             tbody.appendChild(fila);
         });
         localStorage.setItem(
@@ -377,25 +401,31 @@ document.addEventListener("DOMContentLoaded", () => {
             );
             mostrarTableroPlataforma();
             mostrarMensaje(
-                `La plataforma "${nombreAnterior}" a "${nuevoNombre.trim()}" correctamente`,
+                `La plataforma "${nombreAnterior}" fue actualizada`,
                 "exito"
             );
         }
         if (btn.classList.contains("btn-agregar")) {
             const plataforma = plataformas[index];
-            const datosParaPestanas = plataforma.paginas.map((pagina, i) => ({
-                icono: plataforma.icono || "",
-                plataforma: plataforma.nombre,
-                principal: plataforma.principal || "—",
-                pagina: pagina,
-                pestana: i + 1
-            }));
+            localStorage.setItem(
+                "plataforma_activa",
+                JSON.stringify(plataforma)
+            );
+            const datosParaPestanas = Array.isArray(plataforma.paginas)
+                ? plataforma.paginas.map((pagina, i) => ({
+                    imagen: plataforma.imagen || "",
+                    plataforma: plataforma.nombre,
+                    principal: plataforma.principal || "—",
+                    pagina: pagina,
+                    pestana: i + 1
+                }))
+                : [];
             localStorage.setItem(
                 "paginas_desde_tablero",
                 JSON.stringify(datosParaPestanas)
             );
             mostrarMensaje(
-                `Datos de "${plataforma.nombre}" enviados a pestañas`,
+                `Datos de "${plataforma.nombre}" enviados correctamente`,
                 "exito"
             );
         }
@@ -409,17 +439,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (btn.classList.contains("btn-bloquear")) {
             plataformas[index].bloqueada = true;
-            mostrarMensaje("Se ha bloqueado la plataforma", "warning");
+            mostrarMensaje("Plataforma bloqueada", "warning");
         }
         if (btn.classList.contains("btn-desbloquear")) {
             plataformas[index].bloqueada = false;
-            mostrarMensaje("Se ha desbloqueado la plataforma", "info");
+            mostrarMensaje("Plataforma desbloqueada", "info");
         }
         if (btn.classList.contains("btn-eliminar1")) {
             const nombrePlataforma = plataformas[index].nombre;
             plataformas.splice(index, 1);
             mostrarMensaje(
-                `La plataforma "${nombrePlataforma}" ha sido eliminada`,
+                `La plataforma "${nombrePlataforma}" fue eliminada`,
                 "error"
             );
         }
