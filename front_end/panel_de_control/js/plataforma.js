@@ -26,16 +26,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputNombre = document.querySelector(".input-texto");
     const selectPrincipal = document.querySelector(".select-principal");
     const selectIcono = document.querySelector(".select-icono");
+    const selectPestanas = document.querySelector(".select-pestanas"); // 🔹 NUEVO
     const contenedorPaginas = document.querySelector(".contenedor-paginas");
     let paginasSeleccionadas = [];
     function mostrarMensaje(texto, tipo = "info") {
         const estado = document.getElementById("estadoEdicion");
-        if (!estado) return; 
+        if (!estado) return;
         estado.innerHTML = "";
         const mensaje = document.createElement("div");
         mensaje.classList.add("mensaje", tipo);
         mensaje.textContent = texto;
         estado.appendChild(mensaje);
+    }
+    function obtenerPestanasSeleccionadas() {
+        return Array.from(selectPestanas.selectedOptions).map(
+            option => option.value
+        );
     }
     const iconos = [
         { nombre: "Inicio", valor: "fa-house" },
@@ -104,7 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
             contenedorPaginas.appendChild(item);
         });
     }
-    const paginasGuardadas = JSON.parse(localStorage.getItem("paginasAgregadasMenu")) || [];
+    const paginasGuardadas = JSON.parse(
+        localStorage.getItem("paginasAgregadasMenu")
+    ) || [];
     if (paginasGuardadas.length > 0) {
         cargarPaginasEnSelect(paginasGuardadas);
         mostrarPaginasEnContenedor(paginasGuardadas);
@@ -113,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const nombre = inputNombre.value.trim();
         const principal = selectPrincipal.value;
         const icono = selectIcono.value;
+        const pestanas = obtenerPestanasSeleccionadas(); // 🔹 NUEVO
         if (nombre === "" && paginasSeleccionadas.length === 0 && icono === "") {
             mostrarMensaje("No hay ninguna plataforma", "error");
             return;
@@ -125,21 +134,40 @@ document.addEventListener("DOMContentLoaded", () => {
             mostrarMensaje("Debes seleccionar al menos una página", "error");
             return;
         }
-        const plataforma = { nombre, principal, icono, paginas: paginasSeleccionadas };
+        if (pestanas.length === 0) {
+            mostrarMensaje("Debes seleccionar al menos una pestaña", "error");
+            return;
+        }
+        const plataforma = {
+            nombre,
+            principal,
+            icono,
+            paginas: paginasSeleccionadas,
+            pestanas
+        };
         const MAX_PLATAFORMAS = 12;
-        const plataformas = JSON.parse(localStorage.getItem("_plataforma_tablero")) || [];
+        const plataformas = JSON.parse(
+            localStorage.getItem("_plataforma_tablero")
+        ) || [];
         if (plataformas.length >= MAX_PLATAFORMAS) {
             mostrarMensaje("Has alcanzado el máximo de datos en el tablero", "warning");
             return;
         }
         plataformas.push(plataforma);
-        localStorage.setItem("_plataforma_tablero", JSON.stringify(plataformas));
-        document.dispatchEvent(new Event("actualizar_tablero_plataforma"));
+        localStorage.setItem(
+            "_plataforma_tablero",
+            JSON.stringify(plataformas)
+        );
+        document.dispatchEvent(
+            new Event("actualizar_tablero_plataforma")
+        );
         mostrarMensaje("Plataforma creada y enviada al tablero", "exito");
+        // 🔹 RESET
         paginasSeleccionadas = [];
         inputNombre.value = "";
         selectPrincipal.value = "";
         selectIcono.value = "";
+        selectPestanas.selectedIndex = -1;
         contenedorPaginas.innerHTML = "";
     });
 });
@@ -261,42 +289,50 @@ document.addEventListener("DOMContentLoaded", () => {
         plataformas.forEach((item, index) => {
             if (item.bloqueada === undefined) item.bloqueada = false;
             const fila = document.createElement("tr");
-            fila.innerHTML = `
-                <td>${item.nombre}</td>
-                <td>${item.principal || "—"}</td>
-                <td style="text-align:center;">
-                    ${item.icono ? `<i class="fa-solid ${item.icono}"></i>` : "—"}
-                </td>
-                <td class="celda-vinculos">
-                    ${item.paginas.map(p => `<span>${p}</span>`).join("")}
-                </td>
-                <td class="celda-acciones">
-                    <button class="btn-pagina" data-index="${index}">
-                        <i class="fa-solid fa-file"></i>
-                    </button>
-                    <button class="btn-editar1" data-index="${index}">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-agregar" data-index="${index}">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    ${
-                        item.bloqueada
-                        ? `<button class="btn-desbloquear" data-index="${index}">
-                                <i class="fa-solid fa-lock-open"></i>
-                            </button>`
-                        : `<button class="btn-bloquear" data-index="${index}">
-                                <i class="fa-solid fa-lock"></i>
-                            </button>`
-                    }
-                    <button class="btn-actualizar" data-index="${index}">
-                        <i class="fa-solid fa-arrows-rotate"></i>
-                    </button>
-                    <button class="btn-eliminar1" data-index="${index}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
-            `;
+                fila.innerHTML = `
+                    <td>${item.nombre}</td>
+                    <td>${item.principal || "—"}</td>
+                    <!-- NUEVA CELDA: PESTAÑAS -->
+                    <td class="celda-pestanas">
+                        ${
+                            item.pestanas && item.pestanas.length > 0
+                                ? item.pestanas.map(p => `<span>${p}</span>`).join("")
+                                : "<span>—</span>"
+                        }
+                    </td>
+                    <td style="text-align:center;">
+                        ${item.icono ? `<i class="fa-solid ${item.icono}"></i>` : "—"}
+                    </td>
+                    <td class="celda-vinculos">
+                        ${item.paginas.map(p => `<span>${p}</span>`).join("")}
+                    </td>
+                    <td class="celda-acciones">
+                        <button class="btn-pagina" data-index="${index}">
+                            <i class="fa-solid fa-file"></i>
+                        </button>
+                        <button class="btn-editar1" data-index="${index}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn-agregar" data-index="${index}">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        ${
+                            item.bloqueada
+                                ? `<button class="btn-desbloquear" data-index="${index}">
+                                        <i class="fa-solid fa-lock-open"></i>
+                                    </button>`
+                                : `<button class="btn-bloquear" data-index="${index}">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </button>`
+                        }
+                        <button class="btn-actualizar" data-index="${index}">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                        <button class="btn-eliminar1" data-index="${index}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
             tbody.appendChild(fila);
         });
         localStorage.setItem(

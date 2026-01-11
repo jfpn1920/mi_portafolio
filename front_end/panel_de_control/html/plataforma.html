@@ -56,14 +56,20 @@
     <!-------------------------------------------------->
     <div class="contenedor-edicion">
         <div class="bloque-edicion">
-            <p class="titulo-edicion">
-                Edición predeterminada - Plataforma
-            </p>
-            <div class="estado-edicion" id="estadoEdicion">Datos no encontrados</div>
+            <h2 class="titulo-edicion">Edición predeterminado - Plataforma</h2>
+            <div class="estado-edicion" id="estadoEdicion">
+                Datos no encontrados
+            </div>
         </div>
-        <button class="btn-contenedor">
-            <i class="fa-solid fa-trash"></i> Contenedor
-        </button>
+        <div class="acciones-edicion">
+            <select class="select-estado">
+                <option value="publico">Publicar</option>
+                <option value="privado">Privado</option>
+            </select>
+            <button class="btn-guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+            <button class="btn-sitio-web"><i class="fas fa-globe"></i> Sitio web</button>
+            <button class="btn-contenedor"><i class="fa-solid fa-trash"></i> Contenedor</button>
+        </div>
     </div>
     <!----------------------------------------->
     <!--|estructura_formulario_de_plataforma|-->
@@ -82,6 +88,18 @@
                     <option value="">Ningun principal</option>
                     <option value=""></option>
                     <option value=""></option>
+                </select>
+            </div>
+            <label class="etiqueta">Selecciona las pestañas</label>
+            <div class="select-grupo">
+                <select class="select-pestanas">
+                    <option value="pestaña 1">pestaña 1</option>
+                    <option value="pestaña 2">pestaña 2</option>
+                    <option value="pestaña 3">pestaña 3</option>
+                    <option value="pestaña 4">pestaña 4</option>
+                    <option value="pestaña 5">pestaña 5</option>
+                    <option value="pestaña 6">pestaña 6</option>
+                    <option value="pestaña 7">pestaña 7</option>
                 </select>
             </div>
             <label class="etiqueta">Añade icono representativo</label>
@@ -123,6 +141,7 @@
                 <tr>
                     <th>Plataforma</th>
                     <th>Principal</th>
+                    <th>Pestañas</th> 
                     <th>Icono</th>
                     <th>Vinculos</th>
                     <th>Acciones</th>
