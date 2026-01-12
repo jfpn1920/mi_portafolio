@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!----------------------------------->
+    <!--|estructura_menu_de_navegacion|-->
+    <!----------------------------------->
+    <header class="panel-header">
+        <h1>Panel de control</h1>
+        <div class="panel-icons">
+            <i class="fa-duotone fa-solid fa-download"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-user"></i>
+        </div>
+    </header>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <button class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2>Herramientas</h2>
+        </div>
+    </aside>
+    <div class="contenedor_gris"></div>
+    <div class="contenedor_de_opciones">
+        <ul class="menu" id="menu">
+            <li><a href="../html/panel_de_control.html" class="enlace_opciones"><i class="fas fa-tachometer-alt"></i> Panel de control</a></li>
+            <li><a href="../html/sitio_web.html" class="enlace_opciones"><i class="fas fa-globe"></i> Sitio web</a></li>
+            <li><a href="../html/plataforma.html" class="enlace_opciones"><i class="fas fa-desktop"></i> Plataforma</a></li>
+            <li><a href="../html/paginas.html" class="enlace_opciones"><i class="fas fa-file-code"></i> Páginas</a></li>
+            <li><a href="../html/carrusel.html" class="enlace_opciones"><i class="fas fa-images"></i> Carrusel</a></li>
+            <li><a href="../html/contenido.html" class="enlace_opciones"><i class="fas fa-pencil-alt"></i> Contenido</a></li>
+            <li><a href="../html/categorias.html" class="enlace_opciones"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="../html/pie_de_pagina.html" class="enlace_opciones"><i class="fas fa-shoe-prints"></i> Pie de página</a></li>
+            <li><a href="../html/chatbot.html" class="enlace_opciones"><i class="fas fa-robot"></i> Chatbot</a></li>
+            <li><a href="../html/aliados.html" class="enlace_opciones"><i class="fas fa-handshake"></i> Aliados</a></li>
+            <li><a href="../html/comunicaciones.html" class="enlace_opciones"><i class="fas fa-envelope"></i> Comunicaciones</a></li>
+            <li><a href="../html/pedidos.html" class="enlace_opciones"><i class="fas fa-box-open"></i> Pedidos</a></li>
+            <li><a href="../html/calificados.html" class="enlace_opciones"><i class="fas fa-star"></i> Calificados</a></li>
+            <li><a href="../html/estado.html" class="enlace_opciones"><i class="fas fa-chart-line"></i> Estado</a></li>
+            <li><a href="../html/sesion_de_aliados.html" class="enlace_opciones"><i class="fas fa-users"></i> Sesión de aliados</a></li>
+            <li><a href="../html/instaladores.html" class="enlace_opciones"><i class="fas fa-plug"></i> Instaladores</a></li>
+            <li><a href="../html/contenedor.html" class="enlace_opciones"><i class="fas fa-trash"></i> Contenedor</a></li>
+            <li><a href="../html/configuracion.html" class="enlace_opciones"><i class="fas fa-cog"></i> Configuración</a></li>
+        </ul>
+    </div>
+    <!------------------------------------------------>
+    <!--|estructura_edicion_predeterminada_carrusel|-->
+    <!------------------------------------------------>
+    <div class="contenedor-edicion">
+        <div class="bloque-edicion">
+            <p class="titulo-edicion">
+                Edición predeterminada - Carrusel
+            </p>
+            <div class="estado-edicion" id="estadoEdicion">Datos no encontrados</div>
+        </div>
+        <button class="btn-contenedor">
+            <i class="fa-solid fa-trash"></i> Contenedor
+        </button>
+    </div>
+    <!--------------------------------------->
+    <!--|estructura_formulario_de_carrusel|-->
+    <!--------------------------------------->
+    <div class="formulario-carrusel">
+        <div class="form-header">
+            <span>Formulario de carrusel</span>
+            <button class="btn-crear">Crear</button>
+        </div>
+        <div class="seccion">
+            <p class="titulo-seccion">Agregar las imágenes</p>
+            <div class="contenedor-imagen">
+                <i class="fa-solid fa-image icono-imagen"></i>
+            </div>
+        </div>
+        <div class="seccion">
+            <label class="nombre-carrusel">Nombre para el carrusel</label>
+            <input type="text" placeholder="Escribe el nombre para el carrusel"class="input-carrusel">
+        </div>
+        <div class="seccion">
+            <label class="seccionar-tiempo">Seleccionar el tiempo</label>
+            <select>
+                <option>Ningún tiempo</option>
+                <option>3 segundos</option>
+                <option>5 segundos</option>
+                <option>10 segundos</option>
+            </select>
+        </div>
+        <div class="seccion">
+            <label class="marcar-configuracion">Marcar la configuración</label>
+            <div class="opciones">
+                <label class="marcar-confi"><input type="checkbox"> Automático</label>
+                <label class="marcar-confi"><input type="checkbox"> Indicadores</label>
+                <label class="marcar-confi"><input type="checkbox"> Controladores</label>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------>
+    <!--|estructura_vista_previa_del_carrusel|-->
+    <!------------------------------------------>
+    <div class="contenedor-carrusel">
+        <div class="encabezado-carrusel">
+            <span class="titulo-carrusel">Vista previa del carrusel</span>
+            <div class="contenedor-blanco"></div>
+            <button class="btn-despliegue">Despliegue</button>
+        </div>
+        <div class="zona-carrusel">
+            <button class="btn-lateral izquierda"></button>
+            <div class="carrusel-blanco">
+            </div>
+            <div class="indicadores-container"></div>
+            <button class="btn-lateral derecha"></button>
+        </div>
+    </div>
+    <!------------------------------------->
+    <!--|estructura_tablero_del_carrusel|-->
+    <!------------------------------------->
+    <div class="contenedor-tablero">
+        <div class="encabezado-tablero">
+            <div class="titulo-tablero">Tablero del carrusel</div>
+        </div>
+        <table class="tabla-paginas">
+            <thead>
+                <tr>
+                    <th>Carrusel</th>
+                    <th>Img</th>
+                    <th>Tiempo</th>
+                    <th>Automatico</th>
+                    <th>Inicadores</th>
+                    <th>Controladores</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las carrusel creadas aparecerán aquí -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
