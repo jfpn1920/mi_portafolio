@@ -6,9 +6,9 @@ const menu = document.getElementById('menu');
 menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
-//---------------------------------------------------//
-//--|funcionalidad_edicion_predeterminada_carrusel|--//
-//---------------------------------------------------//
+//-------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_pagina|--//
+//-------------------------------------------------//
 function mostrarMensaje(texto, tipo = "info") {
     const estado = document.getElementById("estadoEdicion");
     if (!estado) return; 
@@ -18,299 +18,383 @@ function mostrarMensaje(texto, tipo = "info") {
     mensaje.textContent = texto;
     estado.appendChild(mensaje);
 }
-//------------------------------------//
-//--|funcionalidad_agregar_carrusel|--//
-//------------------------------------//
+//------------------------------------------//
+//--|funcionalidad_formulario_de_carrusel|--//
+//------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script del carrusel cargado correctamente.");
-    const botonCrear = document.querySelector(".crear");
-    const inputPagina = document.querySelector(".campo input");
-    const contenedorBlanco = document.querySelector(".contenedor-blanco");
-    const estado = document.getElementById("estadoEdicion");
-    function mostrarMensaje(texto, tipo = "info") {
-        if (!estado) return;
-        estado.innerHTML = "";
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("mensaje", tipo);
-        mensaje.textContent = texto;
-        estado.appendChild(mensaje);
-    }
-    botonCrear.addEventListener("click", () => {
-        const nombreCarrusel = inputPagina.value.trim();
-        if (nombreCarrusel === "") {
-            mostrarMensaje("No hay carrusel creado", "error");
-            inputPagina.focus();
-            return;
-        }
-        const carruseles = JSON.parse(localStorage.getItem("carruselesCreados")) || [];
-        const nuevoCarrusel = { nombre: nombreCarrusel, imagenes: [] };
-        carruseles.push(nuevoCarrusel);
-        localStorage.setItem("carruselesCreados", JSON.stringify(carruseles));
-        contenedorBlanco.textContent = nombreCarrusel;
-        mostrarMensaje(`El carrusel ${nombreCarrusel} ha sido creado`, "exito");
-        inputPagina.value = "";
+    const btnCrear_carrusel = document.querySelector(".btn-crear");
+    const inputNombre_carrusel = document.querySelector(".input-carrusel");
+    const selectTiempo_carrusel = document.querySelector(".select-tiempo");
+    const checkboxes_carrusel = document.querySelectorAll(
+        ".opciones input[type='checkbox']"
+    );
+    const contenedorImagen_carrusel = document.querySelector(".contenedor-imagen");
+    const inputImagenes_carrusel = document.createElement("input");
+    inputImagenes_carrusel.type = "file";
+    inputImagenes_carrusel.multiple = true;
+    inputImagenes_carrusel.accept = "image/*";
+    inputImagenes_carrusel.style.display = "none";
+    document.body.appendChild(inputImagenes_carrusel);
+    let imagenesSeleccionadas_carrusel = [];
+    console.log("Formulario de carrusel cargado correctamente ✅");
+    contenedorImagen_carrusel.addEventListener("click", () => {
+        inputImagenes_carrusel.click();
     });
-});
-//----------------------------------//
-//--|funcionalidad_agregar_imagen|--//
-//----------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script de agregar imagen cargado correctamente.");
-    const imagenBox = document.querySelector(".imagen-box");
-    const botonAgregar = document.querySelector(".imagen-btn");
-    const inputImagen = document.createElement("input");
-    const estado = document.getElementById("estadoEdicion");
-    inputImagen.type = "file";
-    inputImagen.accept = "image/*";
-    inputImagen.multiple = true;
-    inputImagen.style.display = "none";
-    document.body.appendChild(inputImagen);
-    let imagenesSeleccionadas = [];
-    function mostrarMensaje(texto, tipo = "info") {
-        if (!estado) return;
-        estado.innerHTML = "";
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("mensaje", tipo);
-        mensaje.textContent = texto;
-        estado.appendChild(mensaje);
-    }
-    imagenBox.addEventListener("click", () => {
-        inputImagen.click();
-    });
-    inputImagen.addEventListener("change", (e) => {
-        const archivos = Array.from(e.target.files);
+    inputImagenes_carrusel.addEventListener("change", () => {
+        const archivos = Array.from(inputImagenes_carrusel.files);
+        imagenesSeleccionadas_carrusel = [];
+        contenedorImagen_carrusel.innerHTML = "";
         if (archivos.length === 0) return;
-        imagenesSeleccionadas = [];
-        imagenBox.innerHTML = "";
-        archivos.forEach((archivo) => {
-            const lector = new FileReader();
-            lector.onload = (evento) => {
-                imagenesSeleccionadas.push(evento.target.result);
+        archivos.forEach(archivo => {
+            if (!archivo.type.startsWith("image/")) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                imagenesSeleccionadas_carrusel.push(e.target.result);
                 const img = document.createElement("img");
-                img.src = evento.target.result;
-                img.style.width = "100px";
-                img.style.height = "100px";
+                img.src = e.target.result;
+                img.style.width = "60px";
+                img.style.height = "60px";
                 img.style.objectFit = "cover";
-                img.style.margin = "5px";
+                img.style.margin = "4px";
                 img.style.borderRadius = "5px";
-                imagenBox.appendChild(img);
+                contenedorImagen_carrusel.appendChild(img);
             };
-            lector.readAsDataURL(archivo);
+            reader.readAsDataURL(archivo);
         });
-        mostrarMensaje(`🖼️ ${archivos.length} imagen(es) seleccionada(s).`, "info");
     });
-    botonAgregar.addEventListener("click", () => {
-        if (imagenesSeleccionadas.length === 0) {
-            mostrarMensaje("No hay imágenes seleccionadas.", "error");
+    btnCrear_carrusel.addEventListener("click", () => {
+        const nombreCarrusel = inputNombre_carrusel.value.trim();
+        const tiempoCarrusel = selectTiempo_carrusel.value;
+        const [chkAutomatico, chkIndicadores, chkControladores] = checkboxes_carrusel;
+        if (
+            nombreCarrusel === "" ||
+            tiempoCarrusel === "" ||
+            imagenesSeleccionadas_carrusel.length === 0
+        ) {
+            mostrarMensaje(
+                "No hay ningún carrusel creado. Verifica los campos y las imágenes.",
+                "error"
+            );
             return;
         }
-        localStorage.setItem("imagenesCarrusel", JSON.stringify(imagenesSeleccionadas));
-        mostrarMensaje(`Se han agregado ${imagenesSeleccionadas.length} imágenes con éxito.`, "exito");
-        imagenBox.innerHTML = `<i class="fa-regular fa-image"></i>`;
-        inputImagen.value = "";
-        imagenesSeleccionadas = [];
+        let carruseles =
+            JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
+        if (carruseles.some(c => c.nombre === nombreCarrusel)) {
+            mostrarMensaje(
+                `Ya existe un carrusel con el nombre "${nombreCarrusel}".`,
+                "error"
+            );
+            return;
+        }
+        const nuevoCarrusel = {
+            nombre: nombreCarrusel,
+            imagenes: imagenesSeleccionadas_carrusel,
+            tiempo: tiempoCarrusel ? Number(tiempoCarrusel) : null,
+            automatico: chkAutomatico.checked,
+            indicadores: chkIndicadores.checked,
+            controladores: chkControladores.checked,
+            creadoEn: Date.now()
+        };
+        carruseles.push(nuevoCarrusel);
+        localStorage.setItem(
+            "carruselesCreados_tablero_del_carrusel",
+            JSON.stringify(carruseles)
+        );
+        mostrarMensaje(
+            "Se ha creado el carrusel exitosamente.",
+            "success"
+        );
+        inputNombre_carrusel.value = "";
+        selectTiempo_carrusel.selectedIndex = 0;
+        checkboxes_carrusel.forEach(chk => chk.checked = false);
+        imagenesSeleccionadas_carrusel = [];
+        inputImagenes_carrusel.value = "";
+        contenedorImagen_carrusel.innerHTML =
+            '<i class="fa-solid fa-image icono-imagen"></i>';
+        document.dispatchEvent(
+            new CustomEvent("carrusel_creado", {
+                detail: nuevoCarrusel
+            })
+        );
     });
 });
-//---------------------------------------------//
-//--|funcionalidad_seleccionar_controladores|--//
-//---------------------------------------------//
+//----------------------------------------//
+//--|funcionalidad_tablero_del_carrusel|--//
+//----------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script de controladores cargado correctamente.");
-    const btnAgregarControl = document.querySelector(".controladores-btn");
-    const selectTiempo = document.querySelector(".controladores-select select");
-    const checkboxes = document.querySelectorAll(".controladores-opciones input[type='checkbox']");
-    const checkboxAutomatico = checkboxes[0];
-    const checkboxIndicadores = checkboxes[1];
-    const checkboxControladores = checkboxes[2];
-    const estado = document.getElementById("estadoEdicion");
-    function mostrarMensaje(texto, tipo = "info") {
-        if (!estado) return;
-        estado.innerHTML = "";
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("mensaje", tipo);
-        mensaje.textContent = texto;
-        estado.appendChild(mensaje);
-    }
-    function actualizarConfiguracion() {
-        const tiempoTexto = selectTiempo.value;
-        let tiempoMs = 0;
-        if (tiempoTexto.includes("5")) tiempoMs = 5000;
-        else if (tiempoTexto.includes("10")) tiempoMs = 10000;
-        else if (tiempoTexto.includes("15")) tiempoMs = 15000;
-        const configuracion = {
-            automatico: checkboxAutomatico.checked,
-            indicadores: checkboxIndicadores.checked,
-            controladores: checkboxControladores.checked,
-            tiempo: tiempoMs
-        };
-        localStorage.setItem("configCarrusel", JSON.stringify(configuracion));
-        console.log("⚙️ Configuración guardada:", configuracion);
-        window.dispatchEvent(new Event("storage"));
-        return configuracion;
-    }
-    selectTiempo.addEventListener("change", (e) => {
-        const tiempoSeleccionado = e.target.value;
-        mostrarMensaje(`⏱️ Tiempo seleccionado: ${tiempoSeleccionado}`, "info");
-        actualizarConfiguracion();
-    });
-    checkboxAutomatico.addEventListener("change", (e) => {
-        const estadoTexto = e.target.checked ? "activado" : "desactivado";
-        mostrarMensaje(`🔘 Automático ${estadoTexto}`, "info");
-        actualizarConfiguracion();
-    });
-    checkboxIndicadores.addEventListener("change", (e) => {
-        const estadoTexto = e.target.checked ? "activados" : "desactivados";
-        mostrarMensaje(`🔘 Indicadores ${estadoTexto}`, "info");
-        actualizarConfiguracion();
-        aplicarConfiguracion?.();
-    });
-    checkboxControladores.addEventListener("change", (e) => {
-        const estadoTexto = e.target.checked ? "visibles" : "ocultos";
-        mostrarMensaje(`🎮 Controladores ${estadoTexto}`, "info");
-        actualizarConfiguracion();
-    });
-    checkboxes.forEach((checkbox, index) => {
-        if (index < 3) return;
-        checkbox.addEventListener("change", (e) => {
-            const estadoTexto = e.target.checked ? "activado" : "desactivado";
-            mostrarMensaje(`🔘 ${e.target.nextSibling.textContent.trim()} ${estadoTexto}`, "info");
+    const tablaBody_tablero_del_carrusel =
+        document.querySelector(".tabla-paginas tbody");
+    console.log("Script del tablero del carrusel cargado correctamente ✅");
+    function mostrarCarruseles_tablero_del_carrusel() {
+        tablaBody_tablero_del_carrusel.innerHTML = "";
+        const carruseles_tablero_del_carrusel =
+            JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
+        if (carruseles_tablero_del_carrusel.length === 0) {
+            const filaVacia = document.createElement("tr");
+            filaVacia.innerHTML = `
+                <td colspan="7" style="text-align:center;">
+                    No hay carruseles creados
+                </td>
+            `;
+            tablaBody_tablero_del_carrusel.appendChild(filaVacia);
+            return;
+        }
+        carruseles_tablero_del_carrusel.forEach((carrusel, index) => {
+            const fila = document.createElement("tr");
+            const celdaImagenes = document.createElement("td");
+            const contenedorImgs = document.createElement("div");
+            contenedorImgs.className = "imagenes-tablero";
+            carrusel.imagenes.forEach(src => {
+                const img = document.createElement("img");
+                img.src = src;
+                img.alt = carrusel.nombre;
+                contenedorImgs.appendChild(img);
+            });
+            celdaImagenes.appendChild(contenedorImgs);
+            fila.innerHTML = `
+                <td>${carrusel.nombre}</td>
+                <td></td>
+                <td>${carrusel.tiempo || "-"}</td>
+                <td>${carrusel.automatico ? "Sí" : "No"}</td>
+                <td>${carrusel.indicadores ? "Sí" : "No"}</td>
+                <td>${carrusel.controladores ? "Sí" : "No"}</td>
+                <td class="contenerdor-icono">
+                    <button class="btn-anadir" data-index="${index}" title="Añadir carrusel">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="btn-editar" data-index="${index}" title="Editar carrusel">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn-visualizar" data-index="${index}" title="Visualizar carrusel">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <button class="btn-eliminar" data-index="${index}" title="Eliminar carrusel">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            fila.children[1].replaceWith(celdaImagenes);
+            tablaBody_tablero_del_carrusel.appendChild(fila);
         });
-    });
-    btnAgregarControl.addEventListener("click", () => {
-        console.log("🟢 Botón 'añadir control' presionado.");
-        const config = actualizarConfiguracion();
-        const algoAñadido =
-            config.automatico || config.indicadores || config.controladores || config.tiempo > 0;
-        if (algoAñadido) {
-            mostrarMensaje("Se ha añadido todo el control por completo.", "exito");
-        } else {
-            mostrarMensaje("No has añadido nada.", "error");
+    }
+    tablaBody_tablero_del_carrusel.addEventListener("click", (e) => {
+        if (e.target.closest(".btn-anadir")) {
+            const index = e.target.closest(".btn-anadir").dataset.index;
+            const carruseles_tablero_del_carrusel =
+                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
+            const carruselSeleccionado = carruseles_tablero_del_carrusel[index];
+            if (!carruselSeleccionado) return;
+            if (typeof window.cargarCarruselEnVistaPrevia === "function") {
+                window.cargarCarruselEnVistaPrevia(carruselSeleccionado);
+            }
+            mostrarMensaje(
+                `Carrusel "${carruselSeleccionado.nombre}" añadido a la vista previa.`,
+                "success"
+            );
+        }
+        if (e.target.closest(".btn-eliminar")) {
+            const index = e.target.closest(".btn-eliminar").dataset.index;
+            let carruseles_tablero_del_carrusel =
+                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
+            const nombreCarrusel = carruseles_tablero_del_carrusel[index].nombre;
+            if (!confirm(`¿Seguro que deseas eliminar el carrusel "${nombreCarrusel}"?`)) return;
+            carruseles_tablero_del_carrusel.splice(index, 1);
+            localStorage.setItem(
+                "carruselesCreados_tablero_del_carrusel",
+                JSON.stringify(carruseles_tablero_del_carrusel)
+            );
+            mostrarCarruseles_tablero_del_carrusel();
+            mostrarMensaje(
+                `Carrusel "${nombreCarrusel}" eliminado correctamente.`,
+                "success"
+            );
+        }
+        if (e.target.closest(".btn-editar")) {
+            const index = e.target.closest(".btn-editar").dataset.index;
+            let carruseles_tablero_del_carrusel =
+                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
+            const nombreActual = carruseles_tablero_del_carrusel[index].nombre;
+            const nuevoNombre = prompt(
+                `Editar nombre del carrusel "${nombreActual}":`,
+                nombreActual
+            );
+            if (!nuevoNombre || nuevoNombre.trim() === "") return;
+            carruseles_tablero_del_carrusel[index].nombre = nuevoNombre.trim();
+            localStorage.setItem(
+                "carruselesCreados_tablero_del_carrusel",
+                JSON.stringify(carruseles_tablero_del_carrusel)
+            );
+            mostrarCarruseles_tablero_del_carrusel();
+            mostrarMensaje(
+                `Carrusel renombrado a "${nuevoNombre.trim()}".`,
+                "info"
+            );
+        }
+        if (e.target.closest(".btn-visualizar")) {
+            const index = e.target.closest(".btn-visualizar").dataset.index;
+            const carruseles_tablero_del_carrusel =
+                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
+            const carrusel = carruseles_tablero_del_carrusel[index];
+            mostrarMensaje(
+                `Vista previa del carrusel "${carrusel.nombre}".`,
+                "info"
+            );
         }
     });
+    mostrarCarruseles_tablero_del_carrusel();
 });
 //---------------------------------------------//
 //--|funcionalidad_vista_previa_del_carrusel|--//
 //---------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script de vista previa del carrusel cargado correctamente.");
-    const btnIzquierda = document.querySelector(".btn-lateral.izquierda");
-    const btnDerecha = document.querySelector(".btn-lateral.derecha");
-    if (btnIzquierda && btnDerecha) {
-        const iconoIzq = document.createElement("i");
-        iconoIzq.classList.add("fas", "fa-chevron-left");
-        const iconoDer = document.createElement("i");
-        iconoDer.classList.add("fas", "fa-chevron-right");
-        if (!btnIzquierda.querySelector("i")) btnIzquierda.appendChild(iconoIzq);
-        if (!btnDerecha.querySelector("i")) btnDerecha.appendChild(iconoDer);
+    const STORAGE_KEY = "carruselActivo_vista_previa";
+    const vistaPrevia = document.getElementById("vistaPreviaCarrusel");
+    if (!vistaPrevia) {
+        console.warn("❌ Vista previa del carrusel no encontrada");
+        return;
     }
-    const btnCentro = document.querySelector(".btn-centro");
-    const btnEnviar = document.querySelector(".btn-enviar");
-    const contenedorBlanco = document.querySelector(".contenedor-blanco");
-    const carruselBlanco = document.querySelector(".carrusel-blanco");
-    const carruseles = JSON.parse(localStorage.getItem("carruselesCreados")) || [];
-    if (carruseles.length > 0) {
-        const ultimoCarrusel = carruseles[carruseles.length - 1];
-        contenedorBlanco.textContent = ultimoCarrusel.nombre;
-    }
-    const imagenesGuardadas = JSON.parse(localStorage.getItem("imagenesCarrusel")) || [];
+    const carruselContenedor = document.getElementById("contenedorImagenCarrusel");
+    const btnIzquierda = document.getElementById("btnCarruselIzq");
+    const btnDerecha = document.getElementById("btnCarruselDer");
+    const indicadoresContainer = document.getElementById("indicadoresCarrusel");
+    const titulo = document.getElementById("tituloCarrusel");
+    const btnDespliegue = document.getElementById("btnDespliegue");
+    let imagenes = [];
     let indiceActual = 0;
-    let intervalo = null;
-    const mostrarImagen = () => {
-        carruselBlanco.innerHTML = "";
-        if (imagenesGuardadas.length === 0) {
-            carruselBlanco.innerHTML = `<p style="text-align:center;">No hay imágenes cargadas.</p>`;
+    let timeoutId = null;
+    let carruselActual = null;
+    const img = document.createElement("img");
+    carruselContenedor.innerHTML = "";
+    carruselContenedor.appendChild(img);
+    window.cargarCarruselEnVistaPrevia = function (carrusel) {
+        if (!carrusel || !Array.isArray(carrusel.imagenes) || carrusel.imagenes.length === 0) {
+            mostrarMensaje("No hay ningún dato a desplegar", "error");
             return;
         }
-        const img = document.createElement("img");
-        img.src = imagenesGuardadas[indiceActual];
-        carruselBlanco.appendChild(img);
-        actualizarIndicadores();
+        carruselActual = {
+            ...carrusel,
+            automatico: carrusel.automatico === true || carrusel.automatico === "true",
+            indicadores: carrusel.indicadores === true || carrusel.indicadores === "true",
+            controladores: carrusel.controladores === true || carrusel.controladores === "true",
+            tiempo: carrusel.tiempo && Number(carrusel.tiempo) > 0
+                ? Number(carrusel.tiempo) * 1000
+                : null
+        };
+        indiceActual = 0;
+        guardarEstado();
+        mostrarMensaje("Carrusel cargado correctamente", "success");
     };
-    const siguienteImagen = () => {
-        if (imagenesGuardadas.length > 0) {
-            indiceActual = (indiceActual + 1) % imagenesGuardadas.length;
-            mostrarImagen();
-        }
-    };
-    const anteriorImagen = () => {
-        if (imagenesGuardadas.length > 0) {
-            indiceActual = (indiceActual - 1 + imagenesGuardadas.length) % imagenesGuardadas.length;
-            mostrarImagen();
-        }
-    };
-    btnIzquierda.addEventListener("click", anteriorImagen);
-    btnDerecha.addEventListener("click", siguienteImagen);
-    btnCentro.addEventListener("click", () => {
-        console.log(`⏺️ Imagen actual: ${indiceActual + 1} / ${imagenesGuardadas.length}`);
-    });
-    btnEnviar.addEventListener("click", () => {
-        const nombreCarrusel = contenedorBlanco.textContent.trim();
-        const estado = document.getElementById("estadoEdicion");
-        estado.innerHTML = "";
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("mensaje", "info");
-        if (nombreCarrusel && nombreCarrusel !== "") {
-            mensaje.textContent = `"${nombreCarrusel}" se ha enviado correctamente.`;
+    if (btnDespliegue) {
+        btnDespliegue.addEventListener("click", () => {
+            if (!carruselActual) {
+                mostrarMensaje("No hay ningún dato a desplegar", "error");
+                return;
+            }
+            if (!Array.isArray(carruselActual.imagenes) || carruselActual.imagenes.length === 0) {
+                mostrarMensaje("No hay ningún dato a desplegar", "error");
+                return;
+            }
+            mostrarMensaje("Desplegando carrusel correctamente", "success");
+            detenerAutoplay();
+            renderizarCarrusel();
+            iniciarAutoplay();
+        });
+    }
+    function renderizarCarrusel() {
+        if (!carruselActual) return;
+        imagenes = carruselActual.imagenes || [];
+        if (imagenes.length === 0) return;
+        img.src = imagenes[indiceActual];
+        renderizarIndicadores();
+        if (carruselActual.controladores) {
+            btnIzquierda.style.display = "flex";
+            btnDerecha.style.display = "flex";
+            btnIzquierda.innerHTML = `<i class="fa-solid fa-chevron-left"></i>`;
+            btnDerecha.innerHTML = `<i class="fa-solid fa-chevron-right"></i>`;
         } else {
-            mensaje.textContent = "No hay un carrusel en la vista previa.";
-        }
-        estado.appendChild(mensaje);
-    });
-    function actualizarIndicadores() {
-        const config = JSON.parse(localStorage.getItem("configCarrusel")) || {};
-        const contenedorIndicadores = document.querySelector(".indicadores-container");
-        contenedorIndicadores.innerHTML = "";
-        if (config.indicadores && imagenesGuardadas.length > 0) {
-            imagenesGuardadas.forEach((_, i) => {
-                const indicador = document.createElement("span");
-                indicador.classList.add("indicador");
-                if (i === indiceActual) indicador.classList.add("activo");
-                indicador.addEventListener("click", () => {
-                    indiceActual = i;
-                    mostrarImagen();
-                });
-                contenedorIndicadores.appendChild(indicador);
-            });
+            btnIzquierda.style.display = "none";
+            btnDerecha.style.display = "none";
         }
     }
-    const aplicarConfiguracion = () => {
-        const config = JSON.parse(localStorage.getItem("configCarrusel")) || {};
-        console.log("🔄 Configuración recibida:", config);
-        const mostrarControladores = (estado) => {
-            const btnIzq = document.querySelector(".btn-lateral.izquierda");
-            const btnDer = document.querySelector(".btn-lateral.derecha");
-            if (btnIzq && btnDer) {
-                btnIzq.style.display = estado ? "flex" : "none";
-                btnDer.style.display = estado ? "flex" : "none";
-            }
-        };
-        if (config.controladores) {
-            console.log("🎮 Controladores visibles");
-            mostrarControladores(true);
-        } else {
-            console.log("🙈 Controladores ocultos");
-            mostrarControladores(false);
+    function renderizarIndicadores() {
+        indicadoresContainer.innerHTML = "";
+        if (!carruselActual.indicadores) {
+            indicadoresContainer.style.display = "none";
+            return;
         }
-        clearInterval(intervalo);
-        if (config.automatico && config.tiempo > 0) {
-            intervalo = setInterval(siguienteImagen, config.tiempo);
-            console.log(`▶️ Modo automático activado cada ${config.tiempo / 1000}s`);
-        } else {
-            console.log("⏸️ Modo automático desactivado");
-        }
-        actualizarIndicadores();
-    };
-    mostrarImagen();
-    aplicarConfiguracion();
-    window.addEventListener("storage", aplicarConfiguracion);
-    const imagenesSeleccionadas = [];
-    const imagenBox = document.querySelector(".imagen-box");
-    const lector = new FileReader();
-    lector.onload = (evento) => {
-        imagenesSeleccionadas.push(evento.target.result);
-        const img = document.createElement("img");
-        img.src = evento.target.result;
-        img.classList.add("miniatura-carrusel");
-        if (imagenBox) imagenBox.appendChild(img);
-    };
+        imagenes.forEach((_, i) => {
+            const ind = document.createElement("div");
+            ind.className = "indicador";
+            if (i === indiceActual) ind.classList.add("activo");
+            ind.addEventListener("click", () => {
+                indiceActual = i;
+                actualizarCarrusel();
+                reiniciarAutoplay();
+            });
+            indicadoresContainer.appendChild(ind);
+        });
+        indicadoresContainer.style.display = "flex";
+    }
+    function actualizarCarrusel() {
+        img.style.opacity = 0;
+        setTimeout(() => {
+            img.src = imagenes[indiceActual];
+            img.style.opacity = 1;
+            actualizarIndicadores();
+        }, 150);
+    }
+    function actualizarIndicadores() {
+        indicadoresContainer.querySelectorAll(".indicador")
+            .forEach((el, i) =>
+                el.classList.toggle("activo", i === indiceActual)
+            );
+    }
+    function siguiente() {
+        indiceActual = (indiceActual + 1) % imagenes.length;
+        actualizarCarrusel();
+    }
+    function anterior() {
+        indiceActual = (indiceActual - 1 + imagenes.length) % imagenes.length;
+        actualizarCarrusel();
+    }
+    function iniciarAutoplay() {
+        if (!carruselActual?.automatico || !carruselActual.tiempo || imagenes.length <= 1) return;
+        timeoutId = setTimeout(() => {
+            siguiente();
+            iniciarAutoplay();
+        }, carruselActual.tiempo);
+    }
+    function detenerAutoplay() {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+    }
+    function reiniciarAutoplay() {
+        detenerAutoplay();
+        iniciarAutoplay();
+    }
+    btnIzquierda.addEventListener("click", () => {
+        if (!carruselActual || !carruselActual.controladores) return;
+        anterior();
+        reiniciarAutoplay();
+    });
+    btnDerecha.addEventListener("click", () => {
+        if (!carruselActual || !carruselActual.controladores) return;
+        siguiente();
+        reiniciarAutoplay();
+    });
+    function guardarEstado() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            carrusel: carruselActual,
+            indiceActual
+        }));
+    }
+    function restaurarEstado() {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        carruselActual = data.carrusel;
+        indiceActual = data.indiceActual || 0;
+        renderizarCarrusel();
+        iniciarAutoplay();
+    }
+    restaurarEstado();
 });

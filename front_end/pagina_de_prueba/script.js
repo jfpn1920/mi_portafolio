@@ -1,10 +1,22 @@
+//-------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_pagina|--//
+//-------------------------------------------------//
+function mostrarMensaje(texto, tipo = "info") {
+    const estado = document.getElementById("estadoEdicion");
+    if (!estado) return; 
+    estado.innerHTML = "";
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    estado.appendChild(mensaje);
+}
 //------------------------------------------//
 //--|funcionalidad_formulario_de_carrusel|--//
 //------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
     const btnCrear_carrusel = document.querySelector(".btn-crear");
     const inputNombre_carrusel = document.querySelector(".input-carrusel");
-    const selectTiempo_carrusel = document.querySelector("select");
+    const selectTiempo_carrusel = document.querySelector(".select-tiempo");
     const checkboxes_carrusel = document.querySelectorAll(
         ".opciones input[type='checkbox']"
     );
@@ -48,25 +60,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const [chkAutomatico, chkIndicadores, chkControladores] = checkboxes_carrusel;
         if (
             nombreCarrusel === "" ||
-            tiempoCarrusel === "Ningún tiempo" ||
-            imagenesSeleccionadas_carrusel.length === 0 ||
-            !chkAutomatico.checked ||
-            !chkIndicadores.checked ||
-            !chkControladores.checked
+            tiempoCarrusel === "" ||
+            imagenesSeleccionadas_carrusel.length === 0
         ) {
-            alert("No hay ningún carrusel creado");
+            mostrarMensaje(
+                "No hay ningún carrusel creado. Verifica los campos y las imágenes.",
+                "error"
+            );
             return;
         }
         let carruseles =
             JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
         if (carruseles.some(c => c.nombre === nombreCarrusel)) {
-            alert(`Ya existe un carrusel con el nombre "${nombreCarrusel}"`);
+            mostrarMensaje(
+                `Ya existe un carrusel con el nombre "${nombreCarrusel}".`,
+                "error"
+            );
             return;
         }
         const nuevoCarrusel = {
             nombre: nombreCarrusel,
             imagenes: imagenesSeleccionadas_carrusel,
-            tiempo: tiempoCarrusel,
+            tiempo: tiempoCarrusel ? Number(tiempoCarrusel) : null,
             automatico: chkAutomatico.checked,
             indicadores: chkIndicadores.checked,
             controladores: chkControladores.checked,
@@ -77,7 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
             "carruselesCreados_tablero_del_carrusel",
             JSON.stringify(carruseles)
         );
-        alert("Se ha creado el carrusel exitosamente");
+        mostrarMensaje(
+            "Se ha creado el carrusel exitosamente.",
+            "success"
+        );
         inputNombre_carrusel.value = "";
         selectTiempo_carrusel.selectedIndex = 0;
         checkboxes_carrusel.forEach(chk => chk.checked = false);
@@ -133,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${carrusel.indicadores ? "Sí" : "No"}</td>
                 <td>${carrusel.controladores ? "Sí" : "No"}</td>
                 <td class="contenerdor-icono">
-                    <!-- 🔹 BOTÓN AÑADIR -->
                     <button class="btn-anadir" data-index="${index}" title="Añadir carrusel">
                         <i class="fa-solid fa-plus"></i>
                     </button>
@@ -154,24 +171,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     tablaBody_tablero_del_carrusel.addEventListener("click", (e) => {
         if (e.target.closest(".btn-anadir")) {
-            alert("Se ha añadido con éxito");
+            const index = e.target.closest(".btn-anadir").dataset.index;
+            const carruseles_tablero_del_carrusel =
+                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
+            const carruselSeleccionado = carruseles_tablero_del_carrusel[index];
+            if (!carruselSeleccionado) return;
+            if (typeof window.cargarCarruselEnVistaPrevia === "function") {
+                window.cargarCarruselEnVistaPrevia(carruselSeleccionado);
+            }
+            mostrarMensaje(
+                `Carrusel "${carruselSeleccionado.nombre}" añadido a la vista previa.`,
+                "success"
+            );
         }
         if (e.target.closest(".btn-eliminar")) {
             const index = e.target.closest(".btn-eliminar").dataset.index;
             let carruseles_tablero_del_carrusel =
                 JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
             const nombreCarrusel = carruseles_tablero_del_carrusel[index].nombre;
-            const confirmar = confirm(
-                `¿Seguro que deseas eliminar el carrusel "${nombreCarrusel}"?`
-            );
-            if (!confirmar) return;
+            if (!confirm(`¿Seguro que deseas eliminar el carrusel "${nombreCarrusel}"?`)) return;
             carruseles_tablero_del_carrusel.splice(index, 1);
             localStorage.setItem(
                 "carruselesCreados_tablero_del_carrusel",
                 JSON.stringify(carruseles_tablero_del_carrusel)
             );
-            alert(`Se ha eliminado el carrusel "${nombreCarrusel}"`);
             mostrarCarruseles_tablero_del_carrusel();
+            mostrarMensaje(
+                `Carrusel "${nombreCarrusel}" eliminado correctamente.`,
+                "success"
+            );
         }
         if (e.target.closest(".btn-editar")) {
             const index = e.target.closest(".btn-editar").dataset.index;
@@ -182,33 +210,183 @@ document.addEventListener("DOMContentLoaded", () => {
                 `Editar nombre del carrusel "${nombreActual}":`,
                 nombreActual
             );
-            if (!nuevoNombre || nuevoNombre.trim() === "") {
-                alert("El nombre no puede estar vacío");
-                return;
-            }
-            if (
-                carruseles_tablero_del_carrusel.some(
-                    (c, i) => c.nombre === nuevoNombre && i !== Number(index)
-                )
-            ) {
-                alert(`Ya existe un carrusel con el nombre "${nuevoNombre}"`);
-                return;
-            }
+            if (!nuevoNombre || nuevoNombre.trim() === "") return;
             carruseles_tablero_del_carrusel[index].nombre = nuevoNombre.trim();
             localStorage.setItem(
                 "carruselesCreados_tablero_del_carrusel",
                 JSON.stringify(carruseles_tablero_del_carrusel)
             );
             mostrarCarruseles_tablero_del_carrusel();
-            alert("Se ha editado correctamente");
+            mostrarMensaje(
+                `Carrusel renombrado a "${nuevoNombre.trim()}".`,
+                "info"
+            );
         }
         if (e.target.closest(".btn-visualizar")) {
             const index = e.target.closest(".btn-visualizar").dataset.index;
             const carruseles_tablero_del_carrusel =
                 JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
             const carrusel = carruseles_tablero_del_carrusel[index];
-            alert(`Vista previa del carrusel "${carrusel.nombre}"`);
+            mostrarMensaje(
+                `Vista previa del carrusel "${carrusel.nombre}".`,
+                "info"
+            );
         }
     });
     mostrarCarruseles_tablero_del_carrusel();
+});
+//---------------------------------------------//
+//--|funcionalidad_vista_previa_del_carrusel|--//
+//---------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    const STORAGE_KEY = "carruselActivo_vista_previa";
+    const vistaPrevia = document.getElementById("vistaPreviaCarrusel");
+    if (!vistaPrevia) {
+        console.warn("❌ Vista previa del carrusel no encontrada");
+        return;
+    }
+    const carruselContenedor = document.getElementById("contenedorImagenCarrusel");
+    const btnIzquierda = document.getElementById("btnCarruselIzq");
+    const btnDerecha = document.getElementById("btnCarruselDer");
+    const indicadoresContainer = document.getElementById("indicadoresCarrusel");
+    const titulo = document.getElementById("tituloCarrusel");
+    const btnDespliegue = document.getElementById("btnDespliegue");
+    let imagenes = [];
+    let indiceActual = 0;
+    let timeoutId = null;
+    let carruselActual = null;
+    const img = document.createElement("img");
+    carruselContenedor.innerHTML = "";
+    carruselContenedor.appendChild(img);
+    window.cargarCarruselEnVistaPrevia = function (carrusel) {
+        if (!carrusel || !Array.isArray(carrusel.imagenes) || carrusel.imagenes.length === 0) {
+            mostrarMensaje("No hay ningún dato a desplegar", "error");
+            return;
+        }
+        carruselActual = {
+            ...carrusel,
+            automatico: carrusel.automatico === true || carrusel.automatico === "true",
+            indicadores: carrusel.indicadores === true || carrusel.indicadores === "true",
+            controladores: carrusel.controladores === true || carrusel.controladores === "true",
+            tiempo: carrusel.tiempo && Number(carrusel.tiempo) > 0
+                ? Number(carrusel.tiempo) * 1000
+                : null
+        };
+        indiceActual = 0;
+        guardarEstado();
+        mostrarMensaje("Carrusel cargado correctamente", "success");
+    };
+    if (btnDespliegue) {
+        btnDespliegue.addEventListener("click", () => {
+            if (!carruselActual) {
+                mostrarMensaje("No hay ningún dato a desplegar", "error");
+                return;
+            }
+            if (!Array.isArray(carruselActual.imagenes) || carruselActual.imagenes.length === 0) {
+                mostrarMensaje("No hay ningún dato a desplegar", "error");
+                return;
+            }
+            mostrarMensaje("Desplegando carrusel correctamente", "success");
+            detenerAutoplay();
+            renderizarCarrusel();
+            iniciarAutoplay();
+        });
+    }
+    function renderizarCarrusel() {
+        if (!carruselActual) return;
+        imagenes = carruselActual.imagenes || [];
+        if (imagenes.length === 0) return;
+        img.src = imagenes[indiceActual];
+        renderizarIndicadores();
+        if (carruselActual.controladores) {
+            btnIzquierda.style.display = "flex";
+            btnDerecha.style.display = "flex";
+            btnIzquierda.innerHTML = `<i class="fa-solid fa-chevron-left"></i>`;
+            btnDerecha.innerHTML = `<i class="fa-solid fa-chevron-right"></i>`;
+        } else {
+            btnIzquierda.style.display = "none";
+            btnDerecha.style.display = "none";
+        }
+    }
+    function renderizarIndicadores() {
+        indicadoresContainer.innerHTML = "";
+        if (!carruselActual.indicadores) {
+            indicadoresContainer.style.display = "none";
+            return;
+        }
+        imagenes.forEach((_, i) => {
+            const ind = document.createElement("div");
+            ind.className = "indicador";
+            if (i === indiceActual) ind.classList.add("activo");
+            ind.addEventListener("click", () => {
+                indiceActual = i;
+                actualizarCarrusel();
+                reiniciarAutoplay();
+            });
+            indicadoresContainer.appendChild(ind);
+        });
+        indicadoresContainer.style.display = "flex";
+    }
+    function actualizarCarrusel() {
+        img.style.opacity = 0;
+        setTimeout(() => {
+            img.src = imagenes[indiceActual];
+            img.style.opacity = 1;
+            actualizarIndicadores();
+        }, 150);
+    }
+    function actualizarIndicadores() {
+        indicadoresContainer.querySelectorAll(".indicador")
+            .forEach((el, i) =>
+                el.classList.toggle("activo", i === indiceActual)
+            );
+    }
+    function siguiente() {
+        indiceActual = (indiceActual + 1) % imagenes.length;
+        actualizarCarrusel();
+    }
+    function anterior() {
+        indiceActual = (indiceActual - 1 + imagenes.length) % imagenes.length;
+        actualizarCarrusel();
+    }
+    function iniciarAutoplay() {
+        if (!carruselActual?.automatico || !carruselActual.tiempo || imagenes.length <= 1) return;
+        timeoutId = setTimeout(() => {
+            siguiente();
+            iniciarAutoplay();
+        }, carruselActual.tiempo);
+    }
+    function detenerAutoplay() {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+    }
+    function reiniciarAutoplay() {
+        detenerAutoplay();
+        iniciarAutoplay();
+    }
+    btnIzquierda.addEventListener("click", () => {
+        if (!carruselActual || !carruselActual.controladores) return;
+        anterior();
+        reiniciarAutoplay();
+    });
+    btnDerecha.addEventListener("click", () => {
+        if (!carruselActual || !carruselActual.controladores) return;
+        siguiente();
+        reiniciarAutoplay();
+    });
+    function guardarEstado() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            carrusel: carruselActual,
+            indiceActual
+        }));
+    }
+    function restaurarEstado() {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        carruselActual = data.carrusel;
+        indiceActual = data.indiceActual || 0;
+        renderizarCarrusel();
+        iniciarAutoplay();
+    }
+    restaurarEstado();
 });

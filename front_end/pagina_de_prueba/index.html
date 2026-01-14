@@ -57,7 +57,7 @@
     <div class="contenedor-edicion">
         <div class="bloque-edicion">
             <p class="titulo-edicion">
-                Edición predeterminada - Carrusel
+                Edición predeterminada - Paginas
             </p>
             <div class="estado-edicion" id="estadoEdicion">Datos no encontrados</div>
         </div>
@@ -81,41 +81,52 @@
         </div>
         <div class="seccion">
             <label class="nombre-carrusel">Nombre para el carrusel</label>
-            <input type="text" placeholder="Escribe el nombre para el carrusel"class="input-carrusel">
+            <input
+                type="text"
+                placeholder="Escribe el nombre para el carrusel"
+                class="input-carrusel"
+            >
         </div>
         <div class="seccion">
             <label class="seccionar-tiempo">Seleccionar el tiempo</label>
-            <select>
-                <option>Ningún tiempo</option>
-                <option>3 segundos</option>
-                <option>5 segundos</option>
-                <option>10 segundos</option>
+            <select class="select-tiempo">
+                <option value="">Ningún tiempo</option>
+                <option value="3">3 segundos</option>
+                <option value="5">5 segundos</option>
+                <option value="10">10 segundos</option>
             </select>
         </div>
         <div class="seccion">
             <label class="marcar-configuracion">Marcar la configuración</label>
             <div class="opciones">
-                <label class="marcar-confi"><input type="checkbox"> Automático</label>
-                <label class="marcar-confi"><input type="checkbox"> Indicadores</label>
-                <label class="marcar-confi"><input type="checkbox"> Controladores</label>
+                <label class="marcar-confi">
+                    <input type="checkbox"> Automático
+                </label>
+                <label class="marcar-confi">
+                    <input type="checkbox"> Indicadores
+                </label>
+                <label class="marcar-confi">
+                    <input type="checkbox"> Controladores
+                </label>
             </div>
         </div>
     </div>
     <!------------------------------------------>
     <!--|estructura_vista_previa_del_carrusel|-->
     <!------------------------------------------>
-    <div class="contenedor-carrusel">
+    <div class="contenedor-carrusel" id="vistaPreviaCarrusel">
         <div class="encabezado-carrusel">
-            <span class="titulo-carrusel">Vista previa del carrusel</span>
+            <span class="titulo-carrusel" id="tituloCarrusel">
+                Vista previa del carrusel
+            </span>
             <div class="contenedor-blanco"></div>
-            <button class="btn-despliegue">Despliegue</button>
+            <button class="btn-despliegue" id="btnDespliegue">Despliegue</button>
         </div>
         <div class="zona-carrusel">
-            <button class="btn-lateral izquierda"></button>
-            <div class="carrusel-blanco">
-            </div>
-            <div class="indicadores-container"></div>
-            <button class="btn-lateral derecha"></button>
+            <button class="btn-lateral izquierda" id="btnCarruselIzq"></button>
+            <div class="carrusel-blanco" id="contenedorImagenCarrusel"></div>
+            <div class="indicadores-container" id="indicadoresCarrusel"></div>
+            <button class="btn-lateral derecha" id="btnCarruselDer"></button>
         </div>
     </div>
     <!------------------------------------->
