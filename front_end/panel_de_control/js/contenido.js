@@ -630,76 +630,54 @@ document.addEventListener("DOMContentLoaded", () => {
             const imagenesCarrusel = JSON.parse(localStorage.getItem("imagenesCarrusel") || "[]");
             if (imagenesCarrusel.length > 0) {
                 contenedorImagen.innerHTML = imagenesCarrusel.map(
-                    src => `<img src="${src}" alt="imagen carrusel" style="width:282px; border-radius:5px; margin-left:0; height: 378px;">`
+                    src => `<img src="${src}" style="width:282px;height:378px;border-radius:5px;">`
                 ).join("");
-                console.log(`🖼️ ${imagenesCarrusel.length} imagen(es) cargadas.`);
             } else if (ultimaImagen) {
-                contenedorImagen.innerHTML = `<img src="${ultimaImagen}" alt="imagen seleccionada" style="width:100%; border-radius:10px; object-fit:cover;">`;
+                contenedorImagen.innerHTML = `<img src="${ultimaImagen}" style="width:100%;border-radius:10px;">`;
             } else {
-                contenedorImagen.innerHTML = `<p style="color:#888;">No hay imagen seleccionada aún.</p>`;
+                contenedorImagen.innerHTML = `<p style="color:#888;">No hay imagen seleccionada.</p>`;
             }
             inicializarBotonera();
             restaurarImagenesEnBotones(imagenesBotonera);
             const titulo = areaContenido.querySelector(".titulo");
             const parrafo = areaContenido.querySelector(".parrafo");
             const subtitulo = areaContenido.querySelector(".subtitulo");
-            limitarTexto(titulo, "Has alcanzado el máximo de espacio.");
-            limitarTexto(parrafo, "Has llegado al máximo permitido.");
-            limitarTexto(subtitulo, "Has alcanzado el máximo de espacio.");
-            [titulo, parrafo, subtitulo].forEach((el) => {
+            [titulo, parrafo, subtitulo].forEach(el => {
+                limitarTexto(el, "Has alcanzado el máximo de espacio.");
                 el.addEventListener("input", guardarContenidoEditable);
             });
             restaurarContenidoEditable();
         }
         else if (tipo === "2") {
-            console.log("🔄 Reconstruyendo Contenido 2...");
             const imagenesBotonera = JSON.parse(localStorage.getItem("imagenesBotonera2") || "[]");
             areaContenido.innerHTML = `
-                <div class="contenido2">
-                    <div class="columna-izquierda2">
-                        <div class="titulo2" contenteditable="true">Aquí irá el título</div>
-                        <div class="parrafo2" contenteditable="true">Aquí irá el párrafo</div>
-                        <div class="subtitulo2" contenteditable="true">Aquí irá el subtítulo</div>
-                        <div class="botonera2">
-                            <button class="btn-add2">+</button>
-                            <button class="btn-add2">+</button>
-                            <button class="btn-add2">+</button>
-                            <button class="btn-add2">+</button>
+                <div class="contenido21">
+                    <div class="columna-izquierda21">
+                        <div class="titulo21" contenteditable="true">Aquí irá el título</div>
+                        <div class="parrafo21" contenteditable="true">Aquí irá el párrafo</div>
+                        <div class="subtitulo21" contenteditable="true">Aquí irá el subtítulo</div>
+                        <div class="botonera21">
+                            <button class="btn-add21">+</button>
+                            <button class="btn-add21">+</button>
+                            <button class="btn-add21">+</button>
+                            <button class="btn-add21">+</button>
                         </div>
                     </div>
-                    <div class="columna-derecha2">
-                        <div class="imagen2">Aquí irá la imagen</div>
+                    <div class="columna-derecha21">
+                        <div class="imagen21">Aquí irá la imagen</div>
                     </div>
                 </div>
             `;
-            const contenedorImagen = areaContenido.querySelector(".imagen2");
-            const ultimaImagen = localStorage.getItem("ultimaImagenSeleccionada2");
-            const imagenesCarrusel = JSON.parse(localStorage.getItem("imagenesCarrusel2") || "[]");
-            if (imagenesCarrusel.length > 0) {
-                contenedorImagen.innerHTML = imagenesCarrusel.map(
-                    src => `<img src="${src}" alt="imagen carrusel" style="width:100%; border-radius:8px; object-fit:cover;">`
-                ).join("");
-                console.log(`🖼️ ${imagenesCarrusel.length} imagen(es) cargadas (Contenido 2).`);
-            } else if (ultimaImagen) {
-                contenedorImagen.innerHTML = `<img src="${ultimaImagen}" alt="imagen seleccionada" style="width: 100%; border-radius:5px; object-fit:cover;">`;
-            } else {
-                contenedorImagen.innerHTML = `<p style="color:#fff;">Aquí irá la imagen</p>`;
-            }
             inicializarBotonera2();
             restaurarImagenesEnBotones2(imagenesBotonera);
-            const titulo = areaContenido.querySelector(".titulo2");
-            const parrafo = areaContenido.querySelector(".parrafo2");
-            const subtitulo = areaContenido.querySelector(".subtitulo2");
-            limitarTexto(titulo, "Has alcanzado el máximo de espacio.");
-            limitarTexto(parrafo, "Has llegado al máximo permitido.");
-            limitarTexto(subtitulo, "Has alcanzado el máximo de espacio.");
-            [titulo, parrafo, subtitulo].forEach((el) => {
+            ["titulo21", "parrafo21", "subtitulo21"].forEach(clase => {
+                const el = areaContenido.querySelector(`.${clase}`);
+                limitarTexto(el, "Has alcanzado el máximo de espacio.");
                 el.addEventListener("input", guardarContenidoEditable);
             });
             restaurarContenidoEditable();
         }
         else if (tipo === "3") {
-            console.log("🔄 Reconstruyendo Contenido 3...");
             const imagenesBotonera = JSON.parse(localStorage.getItem("imagenesBotonera3") || "[]");
             areaContenido.innerHTML = `
                 <div class="contenido3">
@@ -749,47 +727,114 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             inicializarBotonera3();
             restaurarImagenesEnBotones3(imagenesBotonera);
-            const titulo3 = areaContenido.querySelector(".titulo3");
-            const parrafo3 = areaContenido.querySelector(".parrafo3");
-            const subtitulos3 = areaContenido.querySelectorAll(".subtitulo3");
-            const titulo3Derecha = areaContenido.querySelector(".titulo3-derecha");
-            limitarTexto(titulo3, "Has alcanzado el máximo de espacio.");
-            limitarTexto(parrafo3, "Has llegado al máximo permitido.");
-            limitarTexto(titulo3Derecha, "Has alcanzado el máximo de espacio.");
-            subtitulos3.forEach(s => limitarTexto(s, "Has alcanzado el máximo de espacio."));
-            [titulo3, parrafo3, titulo3Derecha, ...subtitulos3].forEach((el) => {
+            const editables = areaContenido.querySelectorAll(
+                ".titulo3, .subtitulo3, .titulo3-derecha, .parrafo3"
+            );
+            editables.forEach(el => {
+                limitarTexto(el, "Has alcanzado el máximo de espacio.");
                 el.addEventListener("input", guardarContenidoEditable);
             });
             restaurarContenidoEditable();
-            function aplicarLimitesContenido3(titulo3, parrafo3, titulo3Derecha, subtitulos3) {
-                titulo3.addEventListener("input", () => {
-                    if (titulo3.textContent.length > 60) {
-                        mostrarMensaje("Has alcanzado el máximo permitido de 60 caracteres para el título.", "warn");
-                        titulo3.textContent = titulo3.textContent.substring(0, 60);
-                    }
-                });
-                subtitulos3.forEach(sub => {
-                    sub.addEventListener("input", () => {
-                        if (sub.textContent.length > 80) {
-                            mostrarMensaje("Has alcanzado el máximo permitido de 80 caracteres para el subtítulo.", "warn");
-                            sub.textContent = sub.textContent.substring(0, 80);
-                        }
-                    });
-                });
-                titulo3Derecha.addEventListener("input", () => {
-                    if (titulo3Derecha.textContent.length > 60) {
-                        mostrarMensaje("Has alcanzado el máximo permitido de 60 caracteres para el título derecho.", "warn");
-                        titulo3Derecha.textContent = titulo3Derecha.textContent.substring(0, 60);
-                    }
-                });
-                parrafo3.addEventListener("input", () => {
-                    if (parrafo3.textContent.length > 1000) {
-                        mostrarMensaje("Has alcanzado el máximo permitido de 1000 caracteres para el párrafo.", "warn");
-                        parrafo3.textContent = parrafo3.textContent.substring(0, 1000);
-                    }
-                });
+        }
+        else if (tipo === "4") {
+            areaContenido.innerHTML = `
+                <div class="contenido4">
+                    <h1 class="titulo-principal2" contenteditable="true">
+                        aqui ira el titulo
+                    </h1>
+                    <div class="bloque2">
+                        <h2 class="subtitulo2" contenteditable="true">
+                            aqui ira el subtitulo
+                        </h2>
+                        <div class="grid2">
+                            ${Array(4).fill().map(() => `
+                                <div class="card2">
+                                    <div class="imagen2" contenteditable="true">
+                                        Aqui ira la imagen
+                                    </div>
+                                    <button contenteditable="true">
+                                        aqui ira el boton
+                                    </button>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+                    <div class="bloque2">
+                        <h2 class="subtitulo2" contenteditable="true">
+                            aqui ira el subtitulo
+                        </h2>
+                        <div class="grid2">
+                            ${Array(4).fill().map(() => `
+                                <div class="card2">
+                                    <div class="imagen2" contenteditable="true">
+                                        Aqui ira la imagen
+                                    </div>
+                                    <button contenteditable="true">
+                                        aqui ira el boton
+                                    </button>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+                </div>
+            `;
+            const editables = areaContenido.querySelectorAll(
+                ".titulo-principal4, .subtitulo4, .imagen4, .card4 button"
+            );
+            editables.forEach(el => {
+                limitarTexto(el, "Has alcanzado el máximo de espacio.");
+                el.addEventListener("input", guardarContenidoEditable);
+            });
+            restaurarContenidoEditable();
+        }
+        else if (tipo === "5") {
+            areaContenido.innerHTML = `
+                <div class="contenido5">
+                    <div class="barra-titulo5" contenteditable="true">
+                        Anuncio de próximos proyectos
+                    </div>
+                    <div class="imagen-proximos3">
+                        Aquí irá la imagen de proyectos próximamente
+                    </div>
+                </div>
+            `;
+            const titulo = areaContenido.querySelector(".barra-titulo5");
+            if (titulo) {
+                limitarTexto(titulo, "Has alcanzado el máximo de espacio.");
+                titulo.addEventListener("input", guardarContenidoEditable);
             }
-            aplicarLimitesContenido3(titulo3, parrafo3, titulo3Derecha, subtitulos3);
+            restaurarContenidoEditable();
+        }
+        else if (tipo === "6") {
+            areaContenido.innerHTML = `
+                <div class="contenido6">
+                    <div class="titulo-nuevos6" contenteditable="true">
+                        aquí irá el título
+                    </div>
+                    <div class="grid-nuevos6">
+                        <div class="card-nuevo6" contenteditable="true">
+                            Aquí irá la imagen de proyectos nuevos
+                        </div>
+                        <div class="card-nuevo6" contenteditable="true">
+                            Aquí irá la imagen de proyectos nuevos
+                        </div>
+                        <div class="card-nuevo6" contenteditable="true">
+                            Aquí irá la imagen de proyectos nuevos
+                        </div>
+                        <div class="card-nuevo6" contenteditable="true">
+                            Aquí irá la imagen de proyectos nuevos
+                        </div>
+                    </div>
+                </div>
+            `;
+            const editables = areaContenido.querySelectorAll(
+                ".titulo-nuevos6, .card-nuevo6"
+            );
+            editables.forEach(el => {
+                limitarTexto(el, "Has alcanzado el máximo de espacio.");
+                el.addEventListener("input", guardarContenidoEditable);
+            });
+            restaurarContenidoEditable();
         }
     }
     window.addEventListener("storage", (event) => {
@@ -963,6 +1008,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <div data-id="1">Contenido 1</div>
             <div data-id="2">Contenido 2</div>
             <div data-id="3">Contenido 3</div>
+            <div data-id="4">Contenido 4</div>
+            <div data-id="5">Contenido 5</div>
+            <div data-id="6">Contenido 6</div>
         `;
         btnContenido.insertAdjacentElement("afterend", menu);
         menu.querySelectorAll("div").forEach(item => {
