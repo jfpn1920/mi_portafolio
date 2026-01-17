@@ -2,45 +2,39 @@
 //--|contenidos_por_pestañas|--//
 //-----------------------------//
 const CONTENIDOS_PESTANAS = {
-    1: `
-        <section class="bloque">
-            <h2>Pestaña 1</h2>
-            <p>Contenido principal de la plataforma.</p>
-        </section>
-    `,
     2: `
         <section class="bloque">
-            <h2>Pestaña 2</h2>
+            <h2>Servicios</h2>
             <p>Servicios ofrecidos.</p>
         </section>
     `,
     3: `
         <section class="bloque">
-            <h2>Pestaña 3</h2>
+            <h2>Proyectos</h2>
             <p>Proyectos desarrollados.</p>
         </section>
     `,
     4: `
         <section class="bloque">
-            <h2>Pestaña 4</h2>
+            <h2>Equipo</h2>
             <p>Equipo de trabajo.</p>
         </section>
     `,
     5: `
         <section class="bloque">
-            <h2>Pestaña 5</h2>
+            <h2>Blog</h2>
             <p>Blog y noticias.</p>
         </section>
     `,
     6: `
         <section class="bloque">
-            <h2>Pestaña 6</h2>
+            <h2>Contacto</h2>
             <p>Formulario de contacto.</p>
         </section>
     `,
     7: `
         <section class="bloque">
-            <h2>Pestaña 7</h2>
+            <h2>Soporte</h2>
             <p>Soporte técnico.</p>
         </section>
     `
@@ -75,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
     contenedorContenido.innerHTML =
         CONTENIDOS_PESTANAS[pestana] ||
         `
-        <section class="bloque">
-            <h2>Contenido no disponible</h2>
+        <section class="bloque ocultar1">
+            <h2 class="ocultar1">Contenido no disponible</h2>
             <p>Esta pestaña no tiene contenido asignado.</p>
         </section>
         `;
@@ -114,9 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const numeroPestana = index + 1;
         link.textContent = pagina;
         link.href = `plataforma_dinamica.html?pestana=${numeroPestana}`;
-        link.addEventListener("click", () => {
-            localStorage.setItem("pestana_activa", numeroPestana);
-        });
+        link.target = "_blank";
         li.appendChild(link);
         menuOpciones.appendChild(li);
     });
@@ -139,9 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const numeroPestana = offset + index + 1;
             link.textContent = pagina;
             link.href = `plataforma_dinamica.html?pestana=${numeroPestana}`;
-            link.addEventListener("click", () => {
-                localStorage.setItem("pestana_activa", numeroPestana);
-            });
+            link.target = "_blank";
             li.appendChild(link);
             listaSubmenu.appendChild(li);
         });
@@ -166,4 +156,116 @@ document.addEventListener("DOMContentLoaded", () => {
         icono.style.marginLeft = "10px";
         menuIconos.appendChild(icono);
     });
+    const params = new URLSearchParams(window.location.search);
+    const pestana = params.get("pestana");
+    const contenidoBase = document.getElementById("contenidoBase");
+    const contenedor = document.getElementById("contenidoPlataforma");
+    if (!pestana || pestana === "1") {
+        contenidoBase.style.display = "block";
+        contenedor.innerHTML = "";
+        return;
+    }
+    contenidoBase.style.display = "none";
+    if (CONTENIDOS_PESTANAS[pestana]) {
+        contenedor.innerHTML = CONTENIDOS_PESTANAS[pestana];
+        return;
+    }
+    fetch(`pages/pestana_${pestana}.html`)
+        .then(res => res.ok ? res.text() : null)
+        .then(html => {
+            contenedor.innerHTML = html || `
+                <section class="bloque">
+                    <h2>Contenido no disponible</h2>
+                </section>
+            `;
+        })
+        .catch(() => {
+            contenedor.innerHTML = `
+                <section class="bloque">
+                    <h2>Error al cargar contenido</h2>
+                </section>
+            `;
+        });
 });
+//-------------------------------------//
+//--|funcionalidad_carrusel_dinamico|--//
+//-------------------------------------//
+function cargarCarruselDinamico() {
+    const data = JSON.parse(localStorage.getItem("carrusel_dinamico"));
+    if (!data || !Array.isArray(data.imagenes) || data.imagenes.length === 0) {
+        console.warn("❌ No hay datos de carrusel dinámico");
+        return;
+    }
+    const contenedor = document.getElementById("carrusel-contenedor");
+    const btnPrev = document.getElementById("btn-prev");
+    const btnNext = document.getElementById("btn-next");
+    const indicadoresCont = document.getElementById("indicadores");
+    let indexActual = 0;
+    let autoplayId = null;
+    contenedor.innerHTML = "";
+    indicadoresCont.innerHTML = "";
+    data.imagenes.forEach((src, i) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.className = "carrusel-item";
+        if (i === 0) img.classList.add("activo");
+        contenedor.appendChild(img);
+    });
+    const items = contenedor.querySelectorAll(".carrusel-item");
+    if (!data.controladores) {
+        btnPrev.style.display = "none";
+        btnNext.style.display = "none";
+    } else {
+        btnPrev.style.display = "";
+        btnNext.style.display = "";
+    }
+    if (data.indicadores) {
+        data.imagenes.forEach((_, i) => {
+            const dot = document.createElement("span");
+            dot.className = "indicador";
+            if (i === 0) dot.classList.add("activo");
+            dot.addEventListener("click", () => {
+                indexActual = i;
+                mostrar(indexActual);
+                reiniciarAutoplay();
+            });
+            indicadoresCont.appendChild(dot);
+        });
+        indicadoresCont.style.display = "flex";
+    } else {
+        indicadoresCont.style.display = "none";
+    }
+    function mostrar(index) {
+        items.forEach(item => item.classList.remove("activo"));
+        items[index].classList.add("activo");
+        indicadoresCont
+            .querySelectorAll(".indicador")
+            .forEach((dot, i) =>
+                dot.classList.toggle("activo", i === index)
+            );
+    }
+    btnNext.onclick = () => {
+        indexActual = (indexActual + 1) % items.length;
+        mostrar(indexActual);
+        reiniciarAutoplay();
+    };
+    btnPrev.onclick = () => {
+        indexActual = (indexActual - 1 + items.length) % items.length;
+        mostrar(indexActual);
+        reiniciarAutoplay();
+    };
+    function iniciarAutoplay() {
+        if (!data.automatico || items.length <= 1 || !data.tiempo) return;
+        autoplayId = setInterval(() => {
+            indexActual = (indexActual + 1) % items.length;
+            mostrar(indexActual);
+        }, data.tiempo);
+    }
+    function reiniciarAutoplay() {
+        clearInterval(autoplayId);
+        iniciarAutoplay();
+    }
+    iniciarAutoplay();
+}
+document.addEventListener("DOMContentLoaded", cargarCarruselDinamico);
+window.addEventListener("carruselActualizado", cargarCarruselDinamico);

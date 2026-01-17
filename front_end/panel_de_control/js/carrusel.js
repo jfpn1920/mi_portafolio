@@ -286,18 +286,16 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     if (btnDespliegue) {
         btnDespliegue.addEventListener("click", () => {
-            if (!carruselActual) {
+            if (!carruselActual || !Array.isArray(carruselActual.imagenes) || carruselActual.imagenes.length === 0) {
                 mostrarMensaje("No hay ningún dato a desplegar", "error");
                 return;
             }
-            if (!Array.isArray(carruselActual.imagenes) || carruselActual.imagenes.length === 0) {
-                mostrarMensaje("No hay ningún dato a desplegar", "error");
-                return;
-            }
-            mostrarMensaje("Desplegando carrusel correctamente", "success");
-            detenerAutoplay();
-            renderizarCarrusel();
-            iniciarAutoplay();
+            localStorage.setItem(
+                "carrusel_dinamico",
+                JSON.stringify(carruselActual)
+            );
+            mostrarMensaje("Carrusel desplegado correctamente", "success");
+            window.dispatchEvent(new Event("carruselActualizado"));
         });
     }
     function renderizarCarrusel() {
@@ -344,7 +342,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 150);
     }
     function actualizarIndicadores() {
-        indicadoresContainer.querySelectorAll(".indicador")
+        indicadoresContainer
+            .querySelectorAll(".indicador")
             .forEach((el, i) =>
                 el.classList.toggle("activo", i === indiceActual)
             );
