@@ -1,6 +1,6 @@
-//-------------------------------------------------//
-//--|funcionalidad_edicion_predeterminada_pagina|--//
-//-------------------------------------------------//
+//----------------------------------------------------//
+//--|funcionalidad_edicion_predeterminada_contenido|--//
+//----------------------------------------------------//
 function mostrarMensaje(texto, tipo = "info") {
     const estado = document.getElementById("estadoEdicion");
     if (!estado) return; 
@@ -10,383 +10,300 @@ function mostrarMensaje(texto, tipo = "info") {
     mensaje.textContent = texto;
     estado.appendChild(mensaje);
 }
-//------------------------------------------//
-//--|funcionalidad_formulario_de_carrusel|--//
-//------------------------------------------//
+//-----------------------------------------------//
+//--|funcionalidad_tablero_editor_de_contenido|--//
+//-----------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    const btnCrear_carrusel = document.querySelector(".btn-crear");
-    const inputNombre_carrusel = document.querySelector(".input-carrusel");
-    const selectTiempo_carrusel = document.querySelector(".select-tiempo");
-    const checkboxes_carrusel = document.querySelectorAll(
-        ".opciones input[type='checkbox']"
-    );
-    const contenedorImagen_carrusel = document.querySelector(".contenedor-imagen");
-    const inputImagenes_carrusel = document.createElement("input");
-    inputImagenes_carrusel.type = "file";
-    inputImagenes_carrusel.multiple = true;
-    inputImagenes_carrusel.accept = "image/*";
-    inputImagenes_carrusel.style.display = "none";
-    document.body.appendChild(inputImagenes_carrusel);
-    let imagenesSeleccionadas_carrusel = [];
-    console.log("Formulario de carrusel cargado correctamente ✅");
-    contenedorImagen_carrusel.addEventListener("click", () => {
-        inputImagenes_carrusel.click();
-    });
-    inputImagenes_carrusel.addEventListener("change", () => {
-        const archivos = Array.from(inputImagenes_carrusel.files);
-        imagenesSeleccionadas_carrusel = [];
-        contenedorImagen_carrusel.innerHTML = "";
-        if (archivos.length === 0) return;
-        archivos.forEach(archivo => {
-            if (!archivo.type.startsWith("image/")) return;
-            const reader = new FileReader();
-            reader.onload = e => {
-                imagenesSeleccionadas_carrusel.push(e.target.result);
-                const img = document.createElement("img");
-                img.src = e.target.result;
-                img.style.width = "60px";
-                img.style.height = "60px";
-                img.style.objectFit = "cover";
-                img.style.margin = "4px";
-                img.style.borderRadius = "5px";
-                contenedorImagen_carrusel.appendChild(img);
-            };
-            reader.readAsDataURL(archivo);
+    const previewBox = document.getElementById("previewBox");
+    const tipoTexto = document.getElementById("tipoTexto");
+    const tamanoTexto = document.getElementById("tamanoTexto");
+    const posicionTexto = document.getElementById("posicionTexto");
+    const fuenteTexto = document.getElementById("fuenteTexto");
+    const contenidoSeleccionado = document.getElementById("contenidoSeleccionado");
+    const btnBold = document.getElementById("btnBold");
+    const btnItalic = document.getElementById("btnItalic");
+    const btnStrike = document.getElementById("btnStrike");
+    const btnColor = document.getElementById("btnColor");
+    const btnCrear = document.getElementById("btnCrear");
+    let elementoActivo = null;
+    const inputImagen = document.createElement("input");
+    inputImagen.type = "file";
+    inputImagen.accept = "image/*";
+    inputImagen.style.display = "none";
+    document.body.appendChild(inputImagen);
+    let contenedorImagenActivo = null;
+    //-----------------------------//
+    //--|solo_texto_seleccionado|--//
+    //-----------------------------//
+    function aplicarEstiloATextoSeleccionado(estilos = {}) {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) {
+            mostrarMensaje("Debes seleccionar el texto primero", "warning");
+            return;
+        }
+        const range = selection.getRangeAt(0);
+        if (range.collapsed) {
+            mostrarMensaje("Debes seleccionar el texto primero", "warning");
+            return;
+        }
+        if (!previewBox.contains(range.commonAncestorContainer)) return;
+        const span = document.createElement("span");
+        Object.keys(estilos).forEach(prop => {
+            span.style[prop] = estilos[prop];
         });
-    });
-    btnCrear_carrusel.addEventListener("click", () => {
-        const nombreCarrusel = inputNombre_carrusel.value.trim();
-        const tiempoCarrusel = selectTiempo_carrusel.value;
-        const [chkAutomatico, chkIndicadores, chkControladores] = checkboxes_carrusel;
-        if (
-            nombreCarrusel === "" ||
-            tiempoCarrusel === "" ||
-            imagenesSeleccionadas_carrusel.length === 0
-        ) {
-            mostrarMensaje(
-                "No hay ningún carrusel creado. Verifica los campos y las imágenes.",
-                "error"
-            );
-            return;
-        }
-        let carruseles =
-            JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
-        if (carruseles.some(c => c.nombre === nombreCarrusel)) {
-            mostrarMensaje(
-                `Ya existe un carrusel con el nombre "${nombreCarrusel}".`,
-                "error"
-            );
-            return;
-        }
-        const nuevoCarrusel = {
-            nombre: nombreCarrusel,
-            imagenes: imagenesSeleccionadas_carrusel,
-            tiempo: tiempoCarrusel ? Number(tiempoCarrusel) : null,
-            automatico: chkAutomatico.checked,
-            indicadores: chkIndicadores.checked,
-            controladores: chkControladores.checked,
-            creadoEn: Date.now()
-        };
-        carruseles.push(nuevoCarrusel);
-        localStorage.setItem(
-            "carruselesCreados_tablero_del_carrusel",
-            JSON.stringify(carruseles)
-        );
-        mostrarMensaje(
-            "Se ha creado el carrusel exitosamente.",
-            "success"
-        );
-        inputNombre_carrusel.value = "";
-        selectTiempo_carrusel.selectedIndex = 0;
-        checkboxes_carrusel.forEach(chk => chk.checked = false);
-        imagenesSeleccionadas_carrusel = [];
-        inputImagenes_carrusel.value = "";
-        contenedorImagen_carrusel.innerHTML =
-            '<i class="fa-solid fa-image icono-imagen"></i>';
-        document.dispatchEvent(
-            new CustomEvent("carrusel_creado", {
-                detail: nuevoCarrusel
-            })
-        );
-    });
-});
-//----------------------------------------//
-//--|funcionalidad_tablero_del_carrusel|--//
-//----------------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    const tablaBody_tablero_del_carrusel =
-        document.querySelector(".tabla-paginas tbody");
-    console.log("Script del tablero del carrusel cargado correctamente ✅");
-    function mostrarCarruseles_tablero_del_carrusel() {
-        tablaBody_tablero_del_carrusel.innerHTML = "";
-        const carruseles_tablero_del_carrusel =
-            JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
-        if (carruseles_tablero_del_carrusel.length === 0) {
-            const filaVacia = document.createElement("tr");
-            filaVacia.innerHTML = `
-                <td colspan="7" style="text-align:center;">
-                    No hay carruseles creados
-                </td>
-            `;
-            tablaBody_tablero_del_carrusel.appendChild(filaVacia);
-            return;
-        }
-        carruseles_tablero_del_carrusel.forEach((carrusel, index) => {
-            const fila = document.createElement("tr");
-            const celdaImagenes = document.createElement("td");
-            const contenedorImgs = document.createElement("div");
-            contenedorImgs.className = "imagenes-tablero";
-            carrusel.imagenes.forEach(src => {
-                const img = document.createElement("img");
-                img.src = src;
-                img.alt = carrusel.nombre;
-                contenedorImgs.appendChild(img);
-            });
-            celdaImagenes.appendChild(contenedorImgs);
-            fila.innerHTML = `
-                <td>${carrusel.nombre}</td>
-                <td></td>
-                <td>${carrusel.tiempo || "-"}</td>
-                <td>${carrusel.automatico ? "Sí" : "No"}</td>
-                <td>${carrusel.indicadores ? "Sí" : "No"}</td>
-                <td>${carrusel.controladores ? "Sí" : "No"}</td>
-                <td class="contenerdor-icono">
-                    <button class="btn-anadir" data-index="${index}" title="Añadir carrusel">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <button class="btn-editar" data-index="${index}" title="Editar carrusel">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button class="btn-visualizar" data-index="${index}" title="Visualizar carrusel">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                    <button class="btn-eliminar" data-index="${index}" title="Eliminar carrusel">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
-            `;
-            fila.children[1].replaceWith(celdaImagenes);
-            tablaBody_tablero_del_carrusel.appendChild(fila);
-        });
+        range.surroundContents(span);
+        selection.removeAllRanges();
     }
-    tablaBody_tablero_del_carrusel.addEventListener("click", (e) => {
-        if (e.target.closest(".btn-anadir")) {
-            const index = e.target.closest(".btn-anadir").dataset.index;
-            const carruseles_tablero_del_carrusel =
-                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
-            const carruselSeleccionado = carruseles_tablero_del_carrusel[index];
-            if (!carruselSeleccionado) return;
-            if (typeof window.cargarCarruselEnVistaPrevia === "function") {
-                window.cargarCarruselEnVistaPrevia(carruselSeleccionado);
-            }
-            mostrarMensaje(
-                `Carrusel "${carruselSeleccionado.nombre}" añadido a la vista previa.`,
-                "success"
-            );
-        }
-        if (e.target.closest(".btn-eliminar")) {
-            const index = e.target.closest(".btn-eliminar").dataset.index;
-            let carruseles_tablero_del_carrusel =
-                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
-            const nombreCarrusel = carruseles_tablero_del_carrusel[index].nombre;
-            if (!confirm(`¿Seguro que deseas eliminar el carrusel "${nombreCarrusel}"?`)) return;
-            carruseles_tablero_del_carrusel.splice(index, 1);
-            localStorage.setItem(
-                "carruselesCreados_tablero_del_carrusel",
-                JSON.stringify(carruseles_tablero_del_carrusel)
-            );
-            mostrarCarruseles_tablero_del_carrusel();
-            mostrarMensaje(
-                `Carrusel "${nombreCarrusel}" eliminado correctamente.`,
-                "success"
-            );
-        }
-        if (e.target.closest(".btn-editar")) {
-            const index = e.target.closest(".btn-editar").dataset.index;
-            let carruseles_tablero_del_carrusel =
-                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
-            const nombreActual = carruseles_tablero_del_carrusel[index].nombre;
-            const nuevoNombre = prompt(
-                `Editar nombre del carrusel "${nombreActual}":`,
-                nombreActual
-            );
-            if (!nuevoNombre || nuevoNombre.trim() === "") return;
-            carruseles_tablero_del_carrusel[index].nombre = nuevoNombre.trim();
-            localStorage.setItem(
-                "carruselesCreados_tablero_del_carrusel",
-                JSON.stringify(carruseles_tablero_del_carrusel)
-            );
-            mostrarCarruseles_tablero_del_carrusel();
-            mostrarMensaje(
-                `Carrusel renombrado a "${nuevoNombre.trim()}".`,
-                "info"
-            );
-        }
-        if (e.target.closest(".btn-visualizar")) {
-            const index = e.target.closest(".btn-visualizar").dataset.index;
-            const carruseles_tablero_del_carrusel =
-                JSON.parse(localStorage.getItem("carruselesCreados_tablero_del_carrusel")) || [];
-            const carrusel = carruseles_tablero_del_carrusel[index];
-            mostrarMensaje(
-                `Vista previa del carrusel "${carrusel.nombre}".`,
-                "info"
-            );
-        }
-    });
-    mostrarCarruseles_tablero_del_carrusel();
-});
-//---------------------------------------------//
-//--|funcionalidad_vista_previa_del_carrusel|--//
-//---------------------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    const STORAGE_KEY = "carruselActivo_vista_previa";
-    const vistaPrevia = document.getElementById("vistaPreviaCarrusel");
-    if (!vistaPrevia) {
-        console.warn("❌ Vista previa del carrusel no encontrada");
-        return;
-    }
-    const carruselContenedor = document.getElementById("contenedorImagenCarrusel");
-    const btnIzquierda = document.getElementById("btnCarruselIzq");
-    const btnDerecha = document.getElementById("btnCarruselDer");
-    const indicadoresContainer = document.getElementById("indicadoresCarrusel");
-    const titulo = document.getElementById("tituloCarrusel");
-    const btnDespliegue = document.getElementById("btnDespliegue");
-    let imagenes = [];
-    let indiceActual = 0;
-    let timeoutId = null;
-    let carruselActual = null;
-    const img = document.createElement("img");
-    carruselContenedor.innerHTML = "";
-    carruselContenedor.appendChild(img);
-    window.cargarCarruselEnVistaPrevia = function (carrusel) {
-        if (!carrusel || !Array.isArray(carrusel.imagenes) || carrusel.imagenes.length === 0) {
-            mostrarMensaje("No hay ningún dato a desplegar", "error");
-            return;
-        }
-        carruselActual = {
-            ...carrusel,
-            automatico: carrusel.automatico === true || carrusel.automatico === "true",
-            indicadores: carrusel.indicadores === true || carrusel.indicadores === "true",
-            controladores: carrusel.controladores === true || carrusel.controladores === "true",
-            tiempo: carrusel.tiempo && Number(carrusel.tiempo) > 0
-                ? Number(carrusel.tiempo) * 1000
-                : null
-        };
-        indiceActual = 0;
-        guardarEstado();
-        mostrarMensaje("Carrusel cargado correctamente", "success");
+    //------------------------------//
+    //--|seleccionar_el_contenido|--//
+    //------------------------------//
+    const contenidosHTML = {
+        "Contenido 1": `
+            <div class="contenido1">
+                <div class="columna-izquierda">
+                    <div class="imagen">img</div>
+                </div>
+                <div class="columna-derecha">
+                    <div class="titulo" contenteditable="true">Aquí irá el título</div>
+                    <div class="parrafo" contenteditable="true">Aquí irá el párrafo</div>
+                    <div class="subtitulo" contenteditable="true">Aquí irá el subtítulo</div>
+                    <div class="botonera">
+                        <button class="btn-add">+</button>
+                        <button class="btn-add">+</button>
+                        <button class="btn-add">+</button>
+                        <button class="btn-add">+</button>
+                    </div>
+                </div>
+            </div>
+        `,
+        "Contenido 2": `
+            <div class="contenido2">
+                <div class="columna-izquierda2">
+                    <div class="titulo2" contenteditable="true">Aquí irá el título</div>
+                    <div class="parrafo2" contenteditable="true">Aquí irá el párrafo</div>
+                    <div class="subtitulo2" contenteditable="true">Aquí irá el subtítulo</div>
+                    <div class="botonera2">
+                        <button class="btn-add2">+</button>
+                        <button class="btn-add2">+</button>
+                        <button class="btn-add2">+</button>
+                        <button class="btn-add2">+</button>
+                    </div>
+                </div>
+                <div class="columna-derecha2">
+                    <div class="imagen2">img</div>
+                </div>
+            </div>
+        `,
+        "Contenido 3": `
+            <div class="contenido3">
+                <div class="columna-izquierda3">
+                    <div class="fila3 fila-titulo">
+                        <button class="btn-add3">+</button>
+                        <div class="titulo3" contenteditable="true">Aquí irá un título</div>
+                    </div>
+                    <div class="fila3">
+                        <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                    </div>
+                    <div class="fila3 fila-botones">
+                        <button class="btn-add3">+</button>
+                        <button class="btn-add3">+</button>
+                    </div>
+                    <div class="fila3">
+                        <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                    </div>
+                    <div class="fila3 fila-botones">
+                        <button class="btn-add3">+</button>
+                        <button class="btn-add3">+</button>
+                        <button class="btn-add3">+</button>
+                        <button class="btn-add3">+</button>
+                        <button class="btn-add3">+</button>
+                    </div>
+                    <div class="fila3">
+                        <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                    </div>
+                    <div class="fila3 fila-botones">
+                        <button class="btn-add3">+</button>
+                    </div>
+                    <div class="fila3">
+                        <div class="subtitulo3" contenteditable="true">Aquí irá un subtítulo</div>
+                    </div>
+                    <div class="fila3 fila-botones">
+                        <button class="btn-add3">+</button>
+                        <button class="btn-add3">+</button>
+                    </div>
+                </div>
+                <div class="columna-derecha3">
+                    <div class="titulo3-derecha" contenteditable="true">Aquí irá un título</div>
+                    <div class="imagen3">
+                        <div class="parrafo3" contenteditable="true">Aquí irá el párrafo</div>
+                    </div>
+                </div>
+            </div>
+        `,
+        "Contenido 4": `
+            <div class="contenido4">
+                <h1 class="titulo-principal4" contenteditable="true">
+                    aqui ira el titulo
+                </h1>
+                <div class="bloque4">
+                    <h2 class="subtitulo4" contenteditable="true">
+                        aqui ira el subtitulo
+                    </h2>
+                    <div class="grid4">
+                        ${Array(4).fill().map(() => `
+                            <div class="card4">
+                                <div class="imagen4" contenteditable="true">
+                                    img
+                                </div>
+                                <button contenteditable="true">
+                                    aqui ira el boton
+                                </button>
+                            </div>
+                        `).join("")}
+                    </div>
+                </div>
+                <div class="bloque42">
+                    <h2 class="subtitulo4" contenteditable="true">
+                        aqui ira el subtitulo
+                    </h2>
+                    <div class="grid4">
+                        ${Array(4).fill().map(() => `
+                            <div class="card4">
+                                <div class="imagen4" contenteditable="true">
+                                    img
+                                </div>
+                                <button contenteditable="true">
+                                    aqui ira el boton
+                                </button>
+                            </div>
+                        `).join("")}
+                    </div>
+                </div>
+            </div>
+        `,
+        "Contenido 5": `
+            <div class="contenido5">
+                <div class="barra-titulo5" contenteditable="true">
+                    Anuncio de próximos proyectos
+                </div>
+                <div class="imagen-proximos5">
+                    img
+                </div>
+            </div>
+        `,
+        "Contenido 6": `
+            <div class="contenido6">
+                <div class="titulo-nuevos6" contenteditable="true">
+                    aquí irá el título
+                </div>
+                <div class="grid-nuevos6">
+                    <div class="card-nuevo6">
+                        img
+                    </div>
+                    <div class="card-nuevo6">
+                        img
+                    </div>
+                    <div class="card-nuevo6">
+                        img
+                    </div>
+                    <div class="card-nuevo6">
+                        img
+                    </div>
+                </div>
+            </div>
+        `
     };
-    if (btnDespliegue) {
-        btnDespliegue.addEventListener("click", () => {
-            if (!carruselActual) {
-                mostrarMensaje("No hay ningún dato a desplegar", "error");
-                return;
-            }
-            if (!Array.isArray(carruselActual.imagenes) || carruselActual.imagenes.length === 0) {
-                mostrarMensaje("No hay ningún dato a desplegar", "error");
-                return;
-            }
-            mostrarMensaje("Desplegando carrusel correctamente", "success");
-            detenerAutoplay();
-            renderizarCarrusel();
-            iniciarAutoplay();
+    contenidoSeleccionado.addEventListener("change", () => {
+        previewBox.innerHTML = contenidosHTML[contenidoSeleccionado.value] || "";
+        elementoActivo = null;
+        activarSeleccionDeTexto();
+    });
+    //--------------------------------//
+    //--|activar_seleccion_de_texto|--//
+    //--------------------------------//
+    function activarSeleccionDeTexto() {
+        const editables = previewBox.querySelectorAll("[contenteditable='true']");
+        editables.forEach(el => {
+            el.addEventListener("click", e => {
+                e.stopPropagation();
+                elementoActivo = el;
+            });
         });
     }
-    function renderizarCarrusel() {
-        if (!carruselActual) return;
-        imagenes = carruselActual.imagenes || [];
-        if (imagenes.length === 0) return;
-        img.src = imagenes[indiceActual];
-        renderizarIndicadores();
-        if (carruselActual.controladores) {
-            btnIzquierda.style.display = "flex";
-            btnDerecha.style.display = "flex";
-            btnIzquierda.innerHTML = `<i class="fa-solid fa-chevron-left"></i>`;
-            btnDerecha.innerHTML = `<i class="fa-solid fa-chevron-right"></i>`;
-        } else {
-            btnIzquierda.style.display = "none";
-            btnDerecha.style.display = "none";
-        }
-    }
-    function renderizarIndicadores() {
-        indicadoresContainer.innerHTML = "";
-        if (!carruselActual.indicadores) {
-            indicadoresContainer.style.display = "none";
+    //---------------------------//
+    //--|seleccion_de_imagenes|--//
+    //---------------------------//
+    previewBox.addEventListener("click", e => {
+        const elemento = e.target.closest(
+            ".imagen, .imagen2, .imagen3, .imagen4, .imagen-proximos5, .card-nuevo6, .btn-add, .btn-add2, .btn-add3"
+        );
+        if (!elemento) return;
+        e.preventDefault();
+        contenedorImagenActivo = elemento;
+        inputImagen.click();
+    });
+    inputImagen.addEventListener("change", () => {
+        if (!contenedorImagenActivo) return;
+        const file = inputImagen.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            contenedorImagenActivo.innerHTML = `
+                <img src="${reader.result}" style="width:100%;height:100%;object-fit:cover;">
+            `;
+        };
+        reader.readAsDataURL(file);
+        inputImagen.value = "";
+    });
+    //-----------------------//
+    //--|control_del_texto|--//
+    //-----------------------//
+    tipoTexto.addEventListener("change", () => {
+        const tamanos = {
+            "Título": "32px",
+            "Subtítulo": "22px",
+            "Párrafo": "16px"
+        };
+        aplicarEstiloATextoSeleccionado({ fontSize: tamanos[tipoTexto.value] });
+    });
+    tamanoTexto.addEventListener("change", () => {
+        aplicarEstiloATextoSeleccionado({
+            fontSize: tamanoTexto.value.replace(" px", "px")
+        });
+    });
+    fuenteTexto.addEventListener("change", () => {
+        aplicarEstiloATextoSeleccionado({ fontFamily: fuenteTexto.value });
+    });
+    posicionTexto.addEventListener("change", () => {
+        if (!elementoActivo) return;
+        elementoActivo.style.textAlign =
+            posicionTexto.value === "Centro" ? "center" :
+            posicionTexto.value === "Derecha" ? "right" :
+            posicionTexto.value === "Justificado" ? "justify" : "left";
+    });
+    //-----------------------//
+    //--|formato_del_texto|--//
+    //-----------------------//
+    btnBold.addEventListener("click", () => {
+        aplicarEstiloATextoSeleccionado({ fontWeight: "bold" });
+    });
+    btnItalic.addEventListener("click", () => {
+        aplicarEstiloATextoSeleccionado({ fontStyle: "italic" });
+    });
+    btnStrike.addEventListener("click", () => {
+        aplicarEstiloATextoSeleccionado({ textDecoration: "line-through" });
+    });
+    btnColor.addEventListener("click", () => {
+        aplicarEstiloATextoSeleccionado({ color: "red" });
+    });
+    //---------------------------//
+    //--|boton_crear_contenido|--//
+    //---------------------------//
+    btnCrear.addEventListener("click", () => {
+        if (!previewBox.innerHTML.trim()) {
+            mostrarMensaje("Debes crear contenido antes de continuar", "error");
             return;
         }
-        imagenes.forEach((_, i) => {
-            const ind = document.createElement("div");
-            ind.className = "indicador";
-            if (i === indiceActual) ind.classList.add("activo");
-            ind.addEventListener("click", () => {
-                indiceActual = i;
-                actualizarCarrusel();
-                reiniciarAutoplay();
-            });
-            indicadoresContainer.appendChild(ind);
-        });
-        indicadoresContainer.style.display = "flex";
-    }
-    function actualizarCarrusel() {
-        img.style.opacity = 0;
-        setTimeout(() => {
-            img.src = imagenes[indiceActual];
-            img.style.opacity = 1;
-            actualizarIndicadores();
-        }, 150);
-    }
-    function actualizarIndicadores() {
-        indicadoresContainer.querySelectorAll(".indicador")
-            .forEach((el, i) =>
-                el.classList.toggle("activo", i === indiceActual)
-            );
-    }
-    function siguiente() {
-        indiceActual = (indiceActual + 1) % imagenes.length;
-        actualizarCarrusel();
-    }
-    function anterior() {
-        indiceActual = (indiceActual - 1 + imagenes.length) % imagenes.length;
-        actualizarCarrusel();
-    }
-    function iniciarAutoplay() {
-        if (!carruselActual?.automatico || !carruselActual.tiempo || imagenes.length <= 1) return;
-        timeoutId = setTimeout(() => {
-            siguiente();
-            iniciarAutoplay();
-        }, carruselActual.tiempo);
-    }
-    function detenerAutoplay() {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-    }
-    function reiniciarAutoplay() {
-        detenerAutoplay();
-        iniciarAutoplay();
-    }
-    btnIzquierda.addEventListener("click", () => {
-        if (!carruselActual || !carruselActual.controladores) return;
-        anterior();
-        reiniciarAutoplay();
+        mostrarMensaje("El contenido fue creado con éxito", "success");
     });
-    btnDerecha.addEventListener("click", () => {
-        if (!carruselActual || !carruselActual.controladores) return;
-        siguiente();
-        reiniciarAutoplay();
-    });
-    function guardarEstado() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-            carrusel: carruselActual,
-            indiceActual
-        }));
-    }
-    function restaurarEstado() {
-        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (!data) return;
-        carruselActual = data.carrusel;
-        indiceActual = data.indiceActual || 0;
-        renderizarCarrusel();
-        iniciarAutoplay();
-    }
-    restaurarEstado();
 });
