@@ -269,3 +269,106 @@ function cargarCarruselDinamico() {
 }
 document.addEventListener("DOMContentLoaded", cargarCarruselDinamico);
 window.addEventListener("carruselActualizado", cargarCarruselDinamico);
+//-----------------------------------------------//
+//--|funcionalidad_contenido_sobre_mi_dinamico|--//
+//-----------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    const datosGuardados = JSON.parse(localStorage.getItem("contenido_publicado"));
+    if (!datosGuardados || !datosGuardados.contenido1) return; // solo cargar contenido1
+    renderizarContenido1(datosGuardados.contenido1);
+});
+//-------------------------------------//
+//--|datos_a_recibir_del_contenido_1|--//
+//-------------------------------------//
+function renderizarContenido1(datos) {
+    const imagen    = document.getElementById("imagenSobreMi");
+    const titulo    = document.getElementById("tituloSobreMi");
+    const parrafo   = document.getElementById("parrafoSobreMi");
+    const subtitulo = document.getElementById("subtituloSobreMi");
+    //--------------------------//
+    //--|dectectando_el_texto|--//
+    //--------------------------//
+    titulo.innerHTML    = datos.titulo || "";
+    parrafo.innerHTML   = datos.parrafo || "";
+    subtitulo.innerHTML = datos.subtitulo || "";
+    //----------------------------//
+    //--|dectectando_el_estilos|--//
+    //----------------------------//
+    if (datos.estilos) {
+        Object.assign(titulo.style, datos.estilos.titulo || {});
+        Object.assign(parrafo.style, datos.estilos.parrafo || {});
+        Object.assign(subtitulo.style, datos.estilos.subtitulo || {});
+    }
+    //---------------------------//
+    //--|dectectando_la_imagen|--//
+    //---------------------------//
+    if (datos.imagen) {
+        imagen.innerHTML = `<img src="${datos.imagen}" style="width:100%;height:100%;object-fit:cover;">`;
+    } else {
+        imagen.innerHTML = "";
+    }
+    //----------------------------//
+    //--|dectectando_los_iconos|--//
+    //----------------------------//
+    if (Array.isArray(datos.iconos)) {
+        datos.iconos.forEach((src, index) => {
+            const span = document.getElementById(`icono${index + 1}`);
+            if (span && src) {
+                span.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:contain;">`;
+            }
+        });
+    }
+}
+//-----------------------------------------------------------//
+//--|funcionalidad_contenido_proyectos_realizados_dinamico|--//
+//-----------------------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    //-------------------------------------//
+    //--|datos_a_recibir_del_contenido_4|--//
+    //-------------------------------------//
+    const storage = JSON.parse(
+        localStorage.getItem("contenido_publicado")
+    );
+    if (!storage || !storage.contenido4) return;
+    const datos = storage.contenido4;
+    //-----------------------//
+    //--|detectando_titulo|--//
+    //-----------------------//
+    const titulo = document.getElementById("tituloProyectos");
+    if (titulo) {
+        titulo.innerHTML = datos.titulo;
+    }
+    //---------------------------//
+    //--|detectando_subtitulos|--//
+    //---------------------------//
+    datos.subtitulos.forEach((sub, index) => {
+        const subEl = document.getElementById(
+            `subtituloProyectos${index + 1}`
+        );
+        if (subEl) {
+            subEl.innerHTML = sub;
+        }
+    });
+    //-----------------------------------//
+    //--|detectando_imagenes_y_botones|--//
+    //-----------------------------------//
+    datos.imagenesBotones.forEach((item, index) => {
+        const bloque = index < 4 ? 1 : 2;
+        const posicion = (index % 4) + 1;
+        const imgEl = document.getElementById(
+            `imagen${bloque}-${posicion}`
+        );
+        const btnEl = document.getElementById(
+            `boton${bloque}-${posicion}`
+        );
+        if (imgEl && item.imagen) {
+            imgEl.innerHTML = `
+                <img src="${item.imagen}"
+                    style="width:100%;height:100%;object-fit:cover;">
+            `;
+        }
+        if (btnEl) {
+            btnEl.textContent = item.boton;
+        }
+    });
+});

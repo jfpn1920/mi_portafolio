@@ -188,9 +188,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <div class="imagen4 imagen-editable" contenteditable="true">
                                     img
                                 </div>
-                                <button contenteditable="true">
-                                    aqui ira el boton
-                                </button>
+                                <div class="btn-texto4" contenteditable="true" data-tipo="boton">
+                                    Visualizar proyecto
+                                </div>
                             </div>
                         `).join("")}
                     </div>
@@ -205,9 +205,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <div class="imagen4 imagen-editable" contenteditable="true">
                                     img
                                 </div>
-                                <button contenteditable="true">
-                                    aqui ira el boton
-                                </button>
+                                <div class="btn-texto4" contenteditable="true" data-tipo="boton">
+                                    Visualizar proyecto
+                                </div>
                             </div>
                         `).join("")}
                     </div>
@@ -267,20 +267,19 @@ document.addEventListener("DOMContentLoaded", () => {
     //--|seleccion_de_imagenes|--//
     //---------------------------//
     previewBox.addEventListener("mousedown", e => {
-        const elemento = e.target.closest(
-            `
+        const elemento = e.target.closest(`
             .imagen,
             .imagen2,
             .imagen3,
             .imagen-editable,
+            contenteditable,
             .imagen4,
             .imagen-proximos5,
             .card-nuevo6,
             .btn-add,
             .btn-add2,
             .btn-add3
-            `
-        );
+        `);
         if (!elemento) return;
         if (elemento.hasAttribute("contenteditable")) {
             e.preventDefault();
@@ -343,6 +342,82 @@ document.addEventListener("DOMContentLoaded", () => {
     btnColor.addEventListener("click", () => {
         aplicarEstiloATextoSeleccionado({ color: "red" });
     });
+    //----------------------------------//
+    //--|obtener_datos_de_contenido_1|--//
+    //----------------------------------//
+    function obtenerDatosContenido1() {
+        const contenedor = previewBox.querySelector(".contenido1");
+        if (!contenedor) return null;
+        const tituloEl    = contenedor.querySelector(".titulo");
+        const parrafoEl   = contenedor.querySelector(".parrafo");
+        const subtituloEl = contenedor.querySelector(".subtitulo");
+        const titulo    = tituloEl?.innerHTML.trim() || "";
+        const parrafo   = parrafoEl?.innerHTML.trim() || "";
+        const subtitulo = subtituloEl?.innerHTML.trim() || "";
+        const imgPrincipal = contenedor.querySelector(".imagen img");
+        const imagen = imgPrincipal ? imgPrincipal.src : "";
+        const botones = contenedor.querySelectorAll(".btn-add");
+        const iconos = [];
+        botones.forEach(btn => {
+            const img = btn.querySelector("img");
+            iconos.push(img ? img.src : "");
+        });
+        return {
+            tipo: "contenido1",
+            titulo,
+            parrafo,
+            subtitulo,
+            imagen,
+            iconos,
+            estilos: {
+                titulo: {
+                    textAlign: tituloEl?.style.textAlign || "left",
+                    fontFamily: tituloEl?.style.fontFamily || "",
+                    fontSize: tituloEl?.style.fontSize || ""
+                },
+                parrafo: {
+                    textAlign: parrafoEl?.style.textAlign || "left",
+                    fontFamily: parrafoEl?.style.fontFamily || "",
+                    fontSize: parrafoEl?.style.fontSize || ""
+                },
+                subtitulo: {
+                    textAlign: subtituloEl?.style.textAlign || "left",
+                    fontFamily: subtituloEl?.style.fontFamily || "",
+                    fontSize: subtituloEl?.style.fontSize || ""
+                }
+            }
+        };
+    }
+    //-------------------------------//
+    //--|obtener_datos_contenido_4|--//
+    //-------------------------------//
+    function obtenerDatosContenido4() {
+        const contenedor = previewBox.querySelector(".contenido4");
+        if (!contenedor) return null;
+        const tituloEl = contenedor.querySelector(".titulo-principal4");
+        const titulo = tituloEl?.innerHTML.trim() || "";
+        const subtitulos = Array.from(contenedor.querySelectorAll(".subtitulo4"))
+            .map(el => el.innerHTML.trim());
+        const grids = contenedor.querySelectorAll(".grid4");
+        const imagenesBotones = [];
+        grids.forEach(grid => {
+            const cards = grid.querySelectorAll(".card4");
+            cards.forEach(card => {
+                const imgEl = card.querySelector(".imagen4 img") || card.querySelector(".imagen4");
+                const btnEl = card.querySelector(".btn-texto4");
+                imagenesBotones.push({
+                    imagen: imgEl?.tagName === "IMG" ? imgEl.src : imgEl?.innerHTML.trim() || "",
+                    boton: btnEl?.innerHTML.trim() || ""
+                });
+            });
+        });
+        return {
+            tipo: "contenido4",
+            titulo,
+            subtitulos,
+            imagenesBotones
+        };
+    }
     //---------------------------//
     //--|boton_crear_contenido|--//
     //---------------------------//
@@ -351,14 +426,26 @@ document.addEventListener("DOMContentLoaded", () => {
             mostrarMensaje("Debes crear contenido antes de continuar", "error");
             return;
         }
+        let datos = null;
+        if (contenidoSeleccionado.value === "Contenido 1") {
+            datos = obtenerDatosContenido1();
+        } else if (contenidoSeleccionado.value === "Contenido 4") {
+            datos = obtenerDatosContenido4();
+        }
+        if (!datos) {
+            mostrarMensaje("No se pudieron obtener los datos", "error");
+            return;
+        }
+        const todosLosContenidos = JSON.parse(localStorage.getItem("contenido_publicado")) || {};
+        todosLosContenidos[datos.tipo] = datos;
+        localStorage.setItem("contenido_publicado", JSON.stringify(todosLosContenidos));
         mostrarMensaje("El contenido fue creado con éxito", "success");
     });
     //--------------------------------------//
     //--|recibe_las_paginas_desde_tablero|--//
     //--------------------------------------//
     document.addEventListener("enviar_paginas_a_formulario", (e) => {
-        const paginas = e.detail;
-        renderizarUbicaciones(paginas);
+        renderizarUbicaciones(e.detail);
         mostrarMensaje("Ubicaciones actualizadas correctamente", "success");
     });
     //----------------------------------//
