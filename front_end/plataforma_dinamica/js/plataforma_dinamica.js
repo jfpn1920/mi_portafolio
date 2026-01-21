@@ -372,3 +372,82 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+//---------------------------------------------------------//
+//--|funcionalidad_contenido_proximos_proyectos_dinamico|--//
+//---------------------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    const titulo = document.getElementById("tituloProximos");
+    const contenedorImagen = document.getElementById("contenedorImagenProximos");
+    const textoImagen = document.getElementById("textoImagenProximos");
+    //-------------------------------------//
+    //--|datos_a_recibir_del_contenido_5|--//
+    //-------------------------------------//
+    const contenidos = JSON.parse(
+        localStorage.getItem("contenido_publicado")
+    ) || {};
+    const datos = contenidos.contenido5;
+    if (!datos) return;
+    //-----------------------//
+    //--|detectando_titulo|--//
+    //-----------------------//
+    if (datos.titulo) {
+        titulo.innerHTML = datos.titulo;
+    }
+    //---------------------------//
+    //--|dectectando_la_imagen|--//
+    //---------------------------//
+    if (datos.imagen) {
+        const img = document.createElement("img");
+        img.src = datos.imagen;
+        img.alt = "Próximos proyectos";
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "0 0 5px 5px";
+        contenedorImagen.innerHTML = "";
+        contenedorImagen.appendChild(img);
+    } else {
+        textoImagen.style.display = "block";
+    }
+});
+//-------------------------------------------------------//
+//--|funcionalidad_contenido_nuevos_proyectos_dinamico|--//
+//-------------------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    const titulo = document.getElementById("tituloNuevos");
+    const grid = document.getElementById("gridNuevos");
+    //-------------------------------------//
+    //--|datos_a_recibir_del_contenido_6|--//
+    //-------------------------------------//
+    const contenidos = JSON.parse(
+        localStorage.getItem("contenido_publicado")
+    ) || {};
+    const datos = contenidos.contenido6;
+    if (!datos) return;
+    //-----------------------//
+    //--|detectando_titulo|--//
+    //-----------------------//
+    titulo.innerHTML = datos.titulo || "";
+    //---------------------------//
+    //--|dectectando_la_imagen|--//
+    //---------------------------//
+    grid.innerHTML = "";
+    if (Array.isArray(datos.imagenes)) {
+        datos.imagenes.slice(0, 4).forEach(src => {
+            const card = document.createElement("div");
+            card.className = "card-nuevo4";
+            if (src) {
+                const img = document.createElement("img");
+                img.src = src;
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "cover";
+                img.style.borderRadius = "5px";
+                card.appendChild(img);
+            } else {
+                card.textContent = "Sin imagen";
+            }
+            grid.appendChild(card);
+        });
+    }
+});

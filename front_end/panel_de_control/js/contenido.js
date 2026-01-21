@@ -418,6 +418,40 @@ document.addEventListener("DOMContentLoaded", () => {
             imagenesBotones
         };
     }
+    //-------------------------------//
+    //--|obtener_datos_contenido_5|--//
+    //-------------------------------//
+    function obtenerDatosContenido5() {
+        const contenedor = previewBox.querySelector(".contenido5");
+        if (!contenedor) return null;
+        const tituloEl = contenedor.querySelector(".barra-titulo5");
+        const imagenEl = contenedor.querySelector(".imagen-proximos5 img");
+        return {
+            tipo: "contenido5",
+            titulo: tituloEl?.innerHTML.trim() || "",
+            imagen: imagenEl ? imagenEl.src : ""
+        };
+    }
+    //-------------------------------//
+    //--|obtener_datos_contenido_6|--//
+    //-------------------------------//
+    function obtenerDatosContenido6() {
+        const contenedor = previewBox.querySelector(".contenido6");
+        if (!contenedor) return null;
+        const tituloEl = contenedor.querySelector(".titulo-nuevos6");
+        const titulo = tituloEl?.innerHTML.trim() || "";
+        const cards = contenedor.querySelectorAll(".card-nuevo6");
+        const imagenes = [];
+        cards.forEach(card => {
+            const img = card.querySelector("img");
+            imagenes.push(img ? img.src : "");
+        });
+        return {
+            tipo: "contenido6",
+            titulo,
+            imagenes
+        };
+    }
     //---------------------------//
     //--|boton_crear_contenido|--//
     //---------------------------//
@@ -429,16 +463,28 @@ document.addEventListener("DOMContentLoaded", () => {
         let datos = null;
         if (contenidoSeleccionado.value === "Contenido 1") {
             datos = obtenerDatosContenido1();
-        } else if (contenidoSeleccionado.value === "Contenido 4") {
+        } 
+        else if (contenidoSeleccionado.value === "Contenido 4") {
             datos = obtenerDatosContenido4();
+        } 
+        else if (contenidoSeleccionado.value === "Contenido 5") {
+            datos = obtenerDatosContenido5();
+        }
+        else if (contenidoSeleccionado.value === "Contenido 6") {
+            datos = obtenerDatosContenido6();
         }
         if (!datos) {
             mostrarMensaje("No se pudieron obtener los datos", "error");
             return;
         }
-        const todosLosContenidos = JSON.parse(localStorage.getItem("contenido_publicado")) || {};
+        const todosLosContenidos = JSON.parse(
+            localStorage.getItem("contenido_publicado")
+        ) || {};
         todosLosContenidos[datos.tipo] = datos;
-        localStorage.setItem("contenido_publicado", JSON.stringify(todosLosContenidos));
+        localStorage.setItem(
+            "contenido_publicado",
+            JSON.stringify(todosLosContenidos)
+        );
         mostrarMensaje("El contenido fue creado con éxito", "success");
     });
     //--------------------------------------//
