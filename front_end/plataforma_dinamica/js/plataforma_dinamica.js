@@ -274,42 +274,27 @@ window.addEventListener("carruselActualizado", cargarCarruselDinamico);
 //-----------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
     const datosGuardados = JSON.parse(localStorage.getItem("contenido_publicado"));
-    if (!datosGuardados || !datosGuardados.contenido1) return; // solo cargar contenido1
+    if (!datosGuardados || !datosGuardados.contenido1) return;
     renderizarContenido1(datosGuardados.contenido1);
 });
-//-------------------------------------//
-//--|datos_a_recibir_del_contenido_1|--//
-//-------------------------------------//
 function renderizarContenido1(datos) {
     const imagen    = document.getElementById("imagenSobreMi");
     const titulo    = document.getElementById("tituloSobreMi");
     const parrafo   = document.getElementById("parrafoSobreMi");
     const subtitulo = document.getElementById("subtituloSobreMi");
-    //--------------------------//
-    //--|dectectando_el_texto|--//
-    //--------------------------//
     titulo.innerHTML    = datos.titulo || "";
     parrafo.innerHTML   = datos.parrafo || "";
     subtitulo.innerHTML = datos.subtitulo || "";
-    //----------------------------//
-    //--|dectectando_el_estilos|--//
-    //----------------------------//
     if (datos.estilos) {
         Object.assign(titulo.style, datos.estilos.titulo || {});
         Object.assign(parrafo.style, datos.estilos.parrafo || {});
         Object.assign(subtitulo.style, datos.estilos.subtitulo || {});
     }
-    //---------------------------//
-    //--|dectectando_la_imagen|--//
-    //---------------------------//
     if (datos.imagen) {
         imagen.innerHTML = `<img src="${datos.imagen}" style="width:100%;height:100%;object-fit:cover;">`;
     } else {
         imagen.innerHTML = "";
     }
-    //----------------------------//
-    //--|dectectando_los_iconos|--//
-    //----------------------------//
     if (Array.isArray(datos.iconos)) {
         datos.iconos.forEach((src, index) => {
             const span = document.getElementById(`icono${index + 1}`);
@@ -323,24 +308,15 @@ function renderizarContenido1(datos) {
 //--|funcionalidad_contenido_proyectos_realizados_dinamico|--//
 //-----------------------------------------------------------//
 document.addEventListener("DOMContentLoaded", () => {
-    //-------------------------------------//
-    //--|datos_a_recibir_del_contenido_4|--//
-    //-------------------------------------//
     const storage = JSON.parse(
         localStorage.getItem("contenido_publicado")
     );
     if (!storage || !storage.contenido4) return;
     const datos = storage.contenido4;
-    //-----------------------//
-    //--|detectando_titulo|--//
-    //-----------------------//
     const titulo = document.getElementById("tituloProyectos");
     if (titulo) {
         titulo.innerHTML = datos.titulo;
     }
-    //---------------------------//
-    //--|detectando_subtitulos|--//
-    //---------------------------//
     datos.subtitulos.forEach((sub, index) => {
         const subEl = document.getElementById(
             `subtituloProyectos${index + 1}`
@@ -349,9 +325,6 @@ document.addEventListener("DOMContentLoaded", () => {
             subEl.innerHTML = sub;
         }
     });
-    //-----------------------------------//
-    //--|detectando_imagenes_y_botones|--//
-    //-----------------------------------//
     datos.imagenesBotones.forEach((item, index) => {
         const bloque = index < 4 ? 1 : 2;
         const posicion = (index % 4) + 1;
@@ -379,23 +352,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const titulo = document.getElementById("tituloProximos");
     const contenedorImagen = document.getElementById("contenedorImagenProximos");
     const textoImagen = document.getElementById("textoImagenProximos");
-    //-------------------------------------//
-    //--|datos_a_recibir_del_contenido_5|--//
-    //-------------------------------------//
     const contenidos = JSON.parse(
         localStorage.getItem("contenido_publicado")
     ) || {};
     const datos = contenidos.contenido5;
     if (!datos) return;
-    //-----------------------//
-    //--|detectando_titulo|--//
-    //-----------------------//
     if (datos.titulo) {
         titulo.innerHTML = datos.titulo;
     }
-    //---------------------------//
-    //--|dectectando_la_imagen|--//
-    //---------------------------//
     if (datos.imagen) {
         const img = document.createElement("img");
         img.src = datos.imagen;
@@ -416,21 +380,12 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     const titulo = document.getElementById("tituloNuevos");
     const grid = document.getElementById("gridNuevos");
-    //-------------------------------------//
-    //--|datos_a_recibir_del_contenido_6|--//
-    //-------------------------------------//
     const contenidos = JSON.parse(
         localStorage.getItem("contenido_publicado")
     ) || {};
     const datos = contenidos.contenido6;
     if (!datos) return;
-    //-----------------------//
-    //--|detectando_titulo|--//
-    //-----------------------//
     titulo.innerHTML = datos.titulo || "";
-    //---------------------------//
-    //--|dectectando_la_imagen|--//
-    //---------------------------//
     grid.innerHTML = "";
     if (Array.isArray(datos.imagenes)) {
         datos.imagenes.slice(0, 4).forEach(src => {
@@ -449,5 +404,78 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             grid.appendChild(card);
         });
+    }
+});
+//------------------------------------------//
+//--|funcionalidad_pie_de_pagina_dinamico|--//
+//------------------------------------------//
+document.addEventListener("DOMContentLoaded", () => {
+    const footerDataDefault = {
+        logo: "logo.png",
+        titulo: "Mi Plataforma Dinámica",
+        iconos: [
+            '<i class="fa-solid fa-house"></i>',
+            '<i class="fa-solid fa-user"></i>',
+            '<i class="fa-solid fa-gear"></i>',
+            '<i class="fa-solid fa-envelope"></i>'
+        ],
+        subtitulos: ["Inicio", "Nosotros", "Servicios", "Contacto"],
+        opciones: [
+            "Opción 1", "Opción 2", "Opción 3", "Opción 4",
+            "Opción 5", "Opción 6",
+            "Opción 7", "Opción 8", "Opción 9", "Opción 10",
+            "Opción 11", "Opción 12", "Opción 13", "Opción 14"
+        ],
+        bottom: "© 2026 Todos los derechos reservados"
+    };
+    let footerData = footerDataDefault;
+    const raw = localStorage.getItem("footer_plataforma_dinamica");
+    if (raw) {
+        try {
+            footerData = JSON.parse(raw);
+        } catch {
+            console.error("❌ Error leyendo footer dinámico, usando fallback");
+        }
+    }
+    const footerLogo = document.getElementById("footerLogo");
+    const footerTitle = document.getElementById("footerTitle");
+    const footerBottom = document.getElementById("footerBottom");
+    const footerOptions = document.getElementById("footerOptions");
+    if (footerLogo && footerData.logo) {
+        footerLogo.src = footerData.logo;
+    }
+    if (footerTitle) {
+        footerTitle.textContent = footerData.titulo || "";
+    }
+    (footerData.iconos || []).forEach((iconHTML, i) => {
+        const icon = document.getElementById(`icon${i + 1}`);
+        if (icon) icon.innerHTML = iconHTML;
+    });
+    (footerData.subtitulos || []).forEach((text, i) => {
+        const sub = document.getElementById(`sub${i + 1}`);
+        if (sub) sub.textContent = text;
+    });
+    if (footerOptions) {
+        footerOptions.innerHTML = "";
+        const opciones = footerData.opciones || [];
+        const columnasConfig = [5, 2, 5, 5]; 
+        let index = 0;
+        columnasConfig.forEach(cantidad => {
+            const columna = document.createElement("div");
+            columna.className = "options-column";
+            const slice = opciones.slice(index, index + cantidad);
+            index += cantidad;
+            slice.forEach(texto => {
+                if (!texto) return;
+                const opt = document.createElement("div");
+                opt.className = "option";
+                opt.textContent = texto;
+                columna.appendChild(opt);
+            });
+            footerOptions.appendChild(columna);
+        });
+    }
+    if (footerBottom) {
+        footerBottom.innerHTML = footerData.bottom || "";
     }
 });

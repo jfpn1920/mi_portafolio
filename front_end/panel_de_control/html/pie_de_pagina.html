@@ -64,20 +64,6 @@
             <i class="fa-solid fa-trash"></i> Contenedor
         </button>
     </div>
-    <!------------------------------->
-    <!--|estructura_agregar_imagen|-->
-    <!------------------------------->
-    <div class="imagen-container">
-        <div class="imagen-header">
-            <h3 class="imagen-title">Agregar imagen</h3>
-            <button class="imagen-btn">Agregar img</button>
-        </div>
-        <div class="imagen-body">
-            <div class="imagen-box">
-                <i class="fa-regular fa-image"></i>
-            </div>
-        </div>
-    </div>
     <!-------------------------------------------->
     <!--|estructura_formulario_de_pie_de_pagina|-->
     <!-------------------------------------------->
@@ -85,6 +71,16 @@
         <div class="cabecera1">
             <div class="titulo1">Formulario de pie de pagina</div>
             <button class="crear1" id="btnAgregar">agregar</button>
+        </div>
+        <div class="bloque-imagen">
+            <div class="imagen-header">
+                <h3 class="imagen-title">Agregar imagen</h3>
+            </div>
+            <div class="imagen-body">
+                <div class="imagen-box">
+                    <i class="fa-regular fa-image"></i>
+                </div>
+            </div>
         </div>
         <div class="bloque-pie">
             <label class="label-pie">añadir pie de página</label>
@@ -103,19 +99,19 @@
                     <input type="text" class="input-sub" placeholder="escribe el subtítulo">
                     <i class="fa-solid fa-bookmark icono-sub1"></i>
                 </div>
-                <label class="label-opciones">agregar nuevas opciones</label>
-                <input type="text" class="input-opciones" placeholder="escribe nueva opcion">
-            </div>
-            <div class="bloques2">
-                <div class="bloque2">
-                    <div class="subtitulo2">Seleccionar iconos</div>
-                    <div class="cajas-iconos2">
-                        <div class="caja2"><span class="mas2">+</span></div>
-                        <div class="caja2"><span class="mas2">+</span></div>
-                        <div class="caja2"><span class="mas2">+</span></div>
-                        <div class="caja2"><span class="mas2">+</span></div>
+                <div class="bloques2">
+                    <div class="bloque2">
+                        <div class="subtitulo2">Seleccionar iconos</div>
+                        <div class="cajas-iconos2">
+                            <div class="caja2"><span class="mas2">+</span></div>
+                            <div class="caja2"><span class="mas2">+</span></div>
+                            <div class="caja2"><span class="mas2">+</span></div>
+                            <div class="caja2"><span class="mas2">+</span></div>
+                        </div>
                     </div>
                 </div>
+                <label class="label-opciones">agregar nuevas opciones</label>
+                <input type="text" class="input-opciones" placeholder="escribe nueva opcion">
             </div>
             <div class="bloque paginas1">
                 <div class="subtitulo-azul1">Seleccionar opciones</div>
@@ -153,6 +149,7 @@
             <thead>
                 <tr>
                     <th>Pie de pagina</th>
+                    <th>Imagen</th>
                     <th>Titulo</th>
                     <th>Iconos</th>
                     <th>Subtitulo</th>
@@ -165,49 +162,11 @@
             </tbody>
         </table>
     </div>
-    <div id="modalAnadir" class="modal-ventana3">
-        <div class="modal-contenido3">
-            <div class="modal-encabezado3">
-                <h2>Añadir celda a vista previa</h2>
-                <button class="modal-cerrar3" id="cerrarModal">X</button>
-            </div>
-            <div class="modal-indicacion-wrapper3">
-                <p class="modal-indicacion3">Dinos qué opción deseas añadir</p>
-                <button class="modal-btn-confirmar-mini3" id="btnConfirmarEnvio">
-                    Confirmar
-                </button>
-            </div>
-            <input type="number" id="inputNumeroOpcion" class="modal-input3" placeholder="Coloca el número que irá a la vista previa">
-            <hr class="modal-separador3">
-            <h3 class="modal-subtitulo3">Menu de pie de página</h3>
-            <div class="modal-opcion3">
-                <span>Opción 1</span>
-                <div id="modalOpcion1" class="modal-campo3"></div>
-            </div>
-            <div class="modal-opcion3">
-                <span>Opción 2</span>
-                <div id="modalOpcion2" class="modal-campo3"></div>
-            </div>
-            <div class="modal-opcion3">
-                <span>Opción 3</span>
-                <div id="modalOpcion3" class="modal-campo3 modal-campo-grande3"></div>
-            </div>
-            <div class="modal-opcion3">
-                <span>Opción 4</span>
-                <div id="modalOpcion4" class="modal-campo3"></div>
-            </div>
-            <div class="modal-opcion3">
-                <span>Opción 5</span>
-                <div id="modalOpcion5" class="modal-campo-opcion5"></div>
-            </div>
-        </div>
-    </div>
     <!----------------------------------------------->
     <!--|estructura_vista_previa_del_pie_de_pagina|-->
     <!----------------------------------------------->
     <div class="header">
         <div class="title-box">Vista previa del pie de pagina</div>
-        <div class="header-box"></div>
         <button class="btn1">borrar pie de pagina</button>
         <button class="btn2">enviar pie de pagina</button>
     </div>
@@ -253,7 +212,7 @@
             </div>
         </div>
         <div class="divider2"></div>
-        <div class="bottom-box"></div>
+        <div class="bottom-box" contenteditable="true"></div>
     </div>
 </body>
 </html>

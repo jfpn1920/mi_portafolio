@@ -50,13 +50,13 @@
             <li><a href="../html/configuracion.html" class="enlace_opciones"><i class="fas fa-cog"></i> Configuración</a></li>
         </ul>
     </div>
-    <!------------------------------------------------->
-    <!--|estructura_edicion_predeterminada_contenido|-->
-    <!------------------------------------------------->
+    <!----------------------------------------------------->
+    <!--|estructura_edicion_predeterminada_pie_de_pagina|-->
+    <!----------------------------------------------------->
     <div class="contenedor-edicion">
         <div class="bloque-edicion">
             <p class="titulo-edicion">
-                Edición predeterminada - Paginas
+                Edición predeterminada - Pie de pagina
             </p>
             <div class="estado-edicion" id="estadoEdicion">Datos no encontrados</div>
         </div>
@@ -65,94 +65,154 @@
         </button>
     </div>
     <!-------------------------------------------->
-    <!--|estructura_tablero_editor_de_contenido|-->
+    <!--|estructura_formulario_de_pie_de_pagina|-->
     <!-------------------------------------------->
-    <div class="editor">
-        <div class="editor-header">
-            <h2>Tablero editor de contenido</h2>
-            <button class="btn-crear" id="btnCrear">Crear</button>
+    <div class="contenedor-menu-navegacion1">
+        <div class="cabecera1">
+            <div class="titulo1">Formulario de pie de pagina</div>
+            <button class="crear1" id="btnAgregar">agregar</button>
         </div>
-        <div class="editor-controls">
-            <div class="controls-row">
-                <div class="control1">
-                    <label>Tipo de texto</label>
-                    <select id="tipoTexto">
-                        <option>Seleccionar...</option>
-                        <option>Título</option>
-                        <option>Subtítulo</option>
-                        <option>Párrafo</option>
-                    </select>
-                </div>
-                <div class="control2">
-                    <label>Tamaño del texto</label>
-                    <select id="tamanoTexto">
-                        <option>Seleccionar...</option>
-                        <option>12 px</option>
-                        <option>14 px</option>
-                        <option>16 px</option>
-                        <option>18 px</option>
-                    </select>
-                </div>
-                <div class="control3">
-                    <label>Posición del texto</label>
-                    <select id="posicionTexto">
-                        <option>Seleccionar...</option>
-                        <option>Izquierda</option>
-                        <option>Centro</option>
-                        <option>Derecha</option>
-                        <option>Justificado</option>
-                    </select>
-                </div>
-                <div class="control4">
-                    <label>Fuente del texto</label>
-                    <select id="fuenteTexto">
-                        <option>Seleccionar...</option>
-                        <option style="font-family: Arial;" value="Arial">Arial</option>
-                        <option style="font-family: Calibri;" value="Calibri">Calibri</option>
-                        <option style="font-family:'Comic Sans MS';" value="Comic Sans MS">Comic Sans MS</option>
-                        <option style="font-family: Georgia;" value="Georgia">Georgia</option>
-                        <option style="font-family: Impact;" value="Impact">Impact</option>
-                        <option style="font-family: 'Lobster', cursive;" value="Lobster">Lobster</option>
-                        <option style="font-family: 'Courier New';" value="Courier New">Courier New</option>
-                        <option style="font-family: 'Comfortaa', cursive;" value="Comfortaa">Comfortaa</option>
-                        <option style="font-family: 'Anton', sans-serif;" value="Anton">Anton</option>
-                    </select>
+        <div class="bloque-imagen">
+            <div class="imagen-header">
+                <h3 class="imagen-title">Agregar imagen</h3>
+            </div>
+            <div class="imagen-body">
+                <div class="imagen-box">
+                    <i class="fa-regular fa-image"></i>
                 </div>
             </div>
-            <div class="controls-row">
-                <div class="control5">
-                    <label>Marcar el tipo de texto</label>
-                    <div class="format-buttons">
-                        <button class="buttons1" id="btnBold">B</button>
-                        <button class="buttons2" id="btnItalic"><i>I</i></button>
-                        <button class="buttons3" id="btnStrike">S</button>
-                        <button class="buttons4" id="btnColor">A</button>
+        </div>
+        <div class="bloque-pie">
+            <label class="label-pie">añadir pie de página</label>
+            <div class="fila-pie">
+                <input type="text" class="input-pie" id="inputPie" placeholder="Escribe el pie de página">
+            </div>
+        </div>
+        <div class="contenido1">
+            <div class="bloque-titulo">
+                <label class="label-titulo">añade un título</label>
+                <input class="input_titulo" type="text" id="inputTitulo" placeholder="Escribe el título">
+            </div>
+            <div class="bloque-subtitulos">
+                <label class="label-sub">añadir subtítulos</label>
+                <div class="fila-subtitulo">
+                    <input type="text" class="input-sub" placeholder="escribe el subtítulo">
+                    <i class="fa-solid fa-bookmark icono-sub1"></i>
+                </div>
+                <div class="bloques2">
+                    <div class="bloque2">
+                        <div class="subtitulo2">Seleccionar iconos</div>
+                        <div class="cajas-iconos2">
+                            <div class="caja2"><span class="mas2">+</span></div>
+                            <div class="caja2"><span class="mas2">+</span></div>
+                            <div class="caja2"><span class="mas2">+</span></div>
+                            <div class="caja2"><span class="mas2">+</span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="control6">
-                    <label>Selecciona la ubicación</label>
-                    <select id="ubicacionContenido">
-                        <option>No hay ubicación...</option>
-                    </select>
-                </div>
-                <div class="control7">
-                    <label>Selecciona el contenido</label>
-                    <select id="contenidoSeleccionado">
-                        <option>No hay contenido...</option>
-                        <option>Contenido 1</option>
-                        <option>Contenido 2</option>
-                        <option>Contenido 3</option>
-                        <option>Contenido 4</option>
-                        <option>Contenido 5</option>
-                        <option>Contenido 6</option>
-                    </select>
-                </div>
+                <label class="label-opciones">agregar nuevas opciones</label>
+                <input type="text" class="input-opciones" placeholder="escribe nueva opcion">
+            </div>
+            <div class="bloque paginas1">
+                <div class="subtitulo-azul1">Seleccionar opciones</div>
+                <div class="lista-paginas1"></div>
             </div>
         </div>
-        <div class="preview">
-            <h3>Vista previa del contenido</h3>
-            <div class="preview-box" id="previewBox"></div>
+    </div>
+    <div id="modalIconos" class="modal-iconos1">
+        <div class="modal-contenido-iconos1">
+            <h3 class="titulo-modal-iconos1">Selecciona un ícono</h3>
+            <div class="grid-iconos1">
+                <i class="fa-solid fa-user icono-opcion1"></i>
+                <i class="fa-solid fa-heart icono-opcion1"></i>
+                <i class="fa-solid fa-star icono-opcion1"></i>
+                <i class="fa-solid fa-bookmark icono-opcion1"></i>
+                <i class="fa-solid fa-gear icono-opcion1"></i>
+                <i class="fa-solid fa-shop icono-opcion1"></i>
+                <i class="fa-solid fa-bolt icono-opcion1"></i>
+                <i class="fa-solid fa-camera icono-opcion1"></i>
+                <i class="fa-solid fa-gamepad icono-opcion1"></i>
+                <i class="fa-solid fa-music icono-opcion1"></i>
+                <i class="fa-solid fa-comment icono-opcion1"></i>
+            </div>
+            <button id="cerrarModalIconos" class="btn-cerrar-modal1">Cerrar</button>
         </div>
+    </div>
+    <!-------------------------------------->
+    <!--|estructura_tablero_pie_de_pagina|-->
+    <!-------------------------------------->
+    <div class="contenedor-tablero1">
+        <div class="encabezado-tablero1">
+            <div class="titulo-tablero1">Tablero pie de pagina</div>
+        </div>
+        <table class="tabla-paginas1">
+            <thead>
+                <tr>
+                    <th>Pie de pagina</th>
+                    <th>Imagen</th>
+                    <th>Titulo</th>
+                    <th>Iconos</th>
+                    <th>Subtitulo</th>
+                    <th>Opciones</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las páginas creadas aparecerán aquí -->
+            </tbody>
+        </table>
+    </div>
+    <!----------------------------------------------->
+    <!--|estructura_vista_previa_del_pie_de_pagina|-->
+    <!----------------------------------------------->
+    <div class="header">
+        <div class="title-box">Vista previa del pie de pagina</div>
+        <button class="btn1">borrar pie de pagina</button>
+        <button class="btn2">enviar pie de pagina</button>
+    </div>
+    <div class="main-container">
+        <div class="big-left-box"></div>
+        <div class="top-right-box"></div>
+        <div class="divider1"></div>
+        <div class="mini-row-empleo">
+            <div class="mini"></div>
+            <div class="mini wide"></div>
+            <div class="mini"></div>
+            <div class="mini wide"></div>
+            <div class="mini"></div>
+            <div class="mini wide"></div>
+            <div class="mini"></div>
+            <div class="mini wide"></div>
+        </div>
+        <div class="columns">
+            <div class="col1">
+                <div class="item1"></div>
+                <div class="item1"></div>
+                <div class="item1"></div>
+                <div class="item1"></div>
+                <div class="item1"></div>
+            </div>
+            <div class="col2">
+                <div class="item2"></div>
+                <div class="item2"></div>
+            </div>
+            <div class="col3">
+                <div class="item3"></div>
+                <div class="item3"></div>
+                <div class="item3"></div>
+                <div class="item3"></div>
+                <div class="item3"></div>
+            </div>
+            <div class="col4">
+                <div class="item4"></div>
+                <div class="item4"></div>
+                <div class="item4"></div>
+                <div class="item4"></div>
+                <div class="item4"></div>
+            </div>
+        </div>
+        <div class="divider2"></div>
+        <div class="bottom-box" contenteditable="true"></div>
     </div>
 </body>
 </html>

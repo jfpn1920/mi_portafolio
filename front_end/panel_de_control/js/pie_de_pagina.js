@@ -7,7 +7,7 @@ menuBtn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 });
 //--------------------------------------------------------//
-//--|funcionalidad_edicion_predeterminada_pie de pagina|--//
+//--|funcionalidad_edicion_predeterminada_pie_de_pagina|--//
 //--------------------------------------------------------//
 function mostrarMensaje(texto, tipo = "info") {
     const estado = document.getElementById("estadoEdicion");
@@ -18,123 +18,6 @@ function mostrarMensaje(texto, tipo = "info") {
     mensaje.textContent = texto;
     estado.appendChild(mensaje);
 }
-//----------------------------------//
-//--|funcionalidad_agregar_imagen|--//
-//----------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ Script de agregar imagen pie_de_pagina cargado correctamente.");
-    const imagenBox_pie_de_pagina = document.querySelector(".imagen-box");
-    const botonAgregar_pie_de_pagina = document.querySelector(".imagen-btn");
-    const bigLeftBox = document.querySelector(".big-left-box");
-    if (!imagenBox_pie_de_pagina) console.error("No se encontró .imagen-box en el DOM");
-    if (!botonAgregar_pie_de_pagina) console.error("No se encontró .imagen-btn en el DOM");
-    const inputImagen_pie_de_pagina = document.createElement("input");
-    const estado_pie_de_pagina = document.getElementById("estadoEdicion");
-    inputImagen_pie_de_pagina.type = "file";
-    inputImagen_pie_de_pagina.accept = "image/*";
-    inputImagen_pie_de_pagina.multiple = true;
-    inputImagen_pie_de_pagina.style.display = "none";
-    document.body.appendChild(inputImagen_pie_de_pagina);
-    let imagenesSeleccionadas_pie_de_pagina = [];
-    function mostrarMensaje_pie_de_pagina(texto, tipo = "info") {
-        if (estado_pie_de_pagina) {
-            estado_pie_de_pagina.innerHTML = "";
-            const mensaje_pie_de_pagina = document.createElement("div");
-            mensaje_pie_de_pagina.classList.add("mensaje", tipo);
-            mensaje_pie_de_pagina.textContent = texto;
-            estado_pie_de_pagina.appendChild(mensaje_pie_de_pagina);
-            setTimeout(() => {
-                if (estado_pie_de_pagina.contains(mensaje_pie_de_pagina)) {
-                    mensaje_pie_de_pagina.remove();
-                }
-            }, 3500);
-            console.log(`[mensaje ${tipo}] ${texto}`);
-            return;
-        }
-        alert(texto);
-        console.log(`[alert fallback ${tipo}] ${texto}`);
-    }
-    if (imagenBox_pie_de_pagina) {
-        imagenBox_pie_de_pagina.addEventListener("click", () => {
-            inputImagen_pie_de_pagina.click();
-        });
-    }
-    inputImagen_pie_de_pagina.addEventListener("change", (e) => {
-        const archivos_pie_de_pagina = Array.from(e.target.files || []);
-        if (archivos_pie_de_pagina.length === 0) {
-            mostrarMensaje_pie_de_pagina("No se seleccionaron imágenes.", "info");
-            return;
-        }
-        imagenesSeleccionadas_pie_de_pagina = [];
-        if (imagenBox_pie_de_pagina) imagenBox_pie_de_pagina.innerHTML = "";
-        archivos_pie_de_pagina.forEach((archivo) => {
-            const lector_pie_de_pagina = new FileReader();
-            lector_pie_de_pagina.onload = (evento) => {
-                imagenesSeleccionadas_pie_de_pagina.push(evento.target.result);
-                const img_pie_de_pagina = document.createElement("img");
-                img_pie_de_pagina.src = evento.target.result;
-                img_pie_de_pagina.style.width = "100px";
-                img_pie_de_pagina.style.height = "100px";
-                img_pie_de_pagina.style.objectFit = "cover";
-                img_pie_de_pagina.style.margin = "5px";
-                img_pie_de_pagina.style.borderRadius = "5px";
-                imagenBox_pie_de_pagina.appendChild(img_pie_de_pagina);
-            };
-            lector_pie_de_pagina.readAsDataURL(archivo);
-        });
-        mostrarMensaje_pie_de_pagina(`🖼️ ${archivos_pie_de_pagina.length} imagen(es) seleccionada(s).`, "info");
-    });
-    if (botonAgregar_pie_de_pagina) {
-        botonAgregar_pie_de_pagina.addEventListener("click", () => {
-            if (imagenesSeleccionadas_pie_de_pagina.length === 0) {
-                mostrarMensaje_pie_de_pagina("no has agregado ninguna imagen", "error");
-                return;
-            }
-            if (bigLeftBox) {
-                bigLeftBox.innerHTML = ""; // limpiar contenido previo
-                imagenesSeleccionadas_pie_de_pagina.forEach(src => {
-                    const img = document.createElement("img");
-                    img.src = src;
-                    img.style.width = "100px";
-                    img.style.height = "100px";
-                    img.style.objectFit = "cover";
-                    img.style.margin = "5px";
-                    img.style.borderRadius = "5px";
-                    bigLeftBox.appendChild(img);
-                });
-            } else {
-                console.warn("⚠️ No existe .big-left-box en el DOM.");
-            }
-            localStorage.setItem(
-                "imagenesCarrusel_pie_de_pagina",
-                JSON.stringify(imagenesSeleccionadas_pie_de_pagina)
-            );
-            mostrarMensaje_pie_de_pagina("has agregado las imagenes correctamente", "exito");
-            if (imagenBox_pie_de_pagina)
-                imagenBox_pie_de_pagina.innerHTML = `<i class="fa-regular fa-image"></i>`;
-            inputImagen_pie_de_pagina.value = "";
-            imagenesSeleccionadas_pie_de_pagina = [];
-        });
-    }
-    if (bigLeftBox) {
-        const imagenesGuardadas = localStorage.getItem("imagenesCarrusel_pie_de_pagina");
-        if (imagenesGuardadas) {
-            const lista = JSON.parse(imagenesGuardadas);
-            bigLeftBox.innerHTML = "";
-            lista.forEach(src => {
-                const img = document.createElement("img");
-                img.src = src;
-                img.style.width = "267px";
-                img.style.height = "288px";
-                img.style.objectFit = "cover";
-                img.style.margin = "5px";
-                img.style.borderRadius = "5px";
-                bigLeftBox.appendChild(img);
-            });
-            console.log("🖼️ Imágenes cargadas desde localStorage");
-        }
-    }
-});
 //-----------------------------------------------//
 //--|funcionalidad_formulario_de_pie_de_pagina|--//
 //-----------------------------------------------//
@@ -146,11 +29,54 @@ const iconoSub = document.querySelector(".icono-sub1");
 const inputOpciones = document.querySelector(".input-opciones");
 const listaPaginas = document.querySelector(".lista-paginas1");
 const cajasIconos = document.querySelectorAll(".caja2");
+const imagenBox = document.querySelector(".imagen-box");
+const iconoImagen = imagenBox.querySelector("i");
+const inputImagen = document.createElement("input");
+inputImagen.type = "file";
+inputImagen.accept = "image/*";
+inputImagen.style.display = "none";
+document.body.appendChild(inputImagen);
+imagenBox.addEventListener("click", () => {
+    inputImagen.click();
+});
+inputImagen.addEventListener("change", () => {
+    const archivo = inputImagen.files[0];
+    if (!archivo) return;
+    if (!archivo.type.startsWith("image/")) {
+        mostrarMensaje("El archivo seleccionado no es una imagen.", "error");
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+        const base64 = reader.result;
+        imagenBox.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = base64;
+        img.alt = "Imagen seleccionada";
+        imagenBox.appendChild(img);
+        localStorage.setItem("imagen_pie_de_pagina", base64);
+        mostrarMensaje("Imagen agregada correctamente.", "exito");
+    };
+    reader.readAsDataURL(archivo);
+});
+window.addEventListener("load", () => {
+    const imagenGuardada = localStorage.getItem("imagen_pie_de_pagina");
+    if (imagenGuardada) {
+        imagenBox.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = imagenGuardada;
+        img.alt = "Imagen guardada";
+        imagenBox.appendChild(img);
+    }
+});
 btnAgregar.addEventListener("click", () => {
     const listaActual = JSON.parse(localStorage.getItem("pie_de_pagina_tablero")) || [];
     const LIMITE_TABLERO = 4;
     if (listaActual.length >= LIMITE_TABLERO) {
-        mostrarMensaje("Has alcanzado el límite de datos en el tablero. Máximo permitido: " + LIMITE_TABLERO, "error");
+        mostrarMensaje(
+            "Has alcanzado el límite de datos en el tablero. Máximo permitido: " + LIMITE_TABLERO,
+            "error"
+        );
         return;
     }
     const pie = inputPie.value.trim();
@@ -159,38 +85,29 @@ btnAgregar.addEventListener("click", () => {
     const opcionesExtra = JSON.parse(localStorage.getItem("opciones_extra")) || [];
     const iconosGuardados = JSON.parse(localStorage.getItem("iconos_cajas")) || {};
     const seleccionadas = JSON.parse(localStorage.getItem("paginas_seleccionadas")) || [];
+    const imagen = localStorage.getItem("imagen_pie_de_pagina") || "";
     const noHayDatos =
         pie === "" &&
         titulo === "" &&
         subtitulos.length === 0 &&
         opcionesExtra.length === 0 &&
         Object.keys(iconosGuardados).length === 0 &&
-        seleccionadas.length === 0;
+        seleccionadas.length === 0 &&
+        imagen === "";
     if (noHayDatos) {
         mostrarMensaje("No hay datos agregados en el formulario.", "error");
         return;
     }
     let errores = [];
-    if (pie === "") {
-        errores.push("• Falta añadir el pie de página");
-    } else {
-        localStorage.setItem("pie_de_pagina", pie);
-    }
-    if (titulo === "") {
-        errores.push("• Falta añadir el título");
-    } else {
-        localStorage.setItem("titulo_pagina", titulo);
-    }
-    if (subtitulos.length === 0)
-        errores.push("• Falta mínimo 1 subtítulo");
-    if (subtitulos.length > 4)
-        errores.push("• Solo se permiten 4 subtítulos");
-    if (opcionesExtra.length === 0)
-        errores.push("• Agrega al menos 1 nueva opción");
-    if (Object.keys(iconosGuardados).length < 4)
-        errores.push("• Selecciona los 4 iconos");
-    if (seleccionadas.length === 0)
-        errores.push("• Selecciona mínimo 1 opción de la lista");
+    if (pie === "") errores.push("• Falta añadir el pie de página");
+    else localStorage.setItem("pie_de_pagina", pie);
+    if (titulo === "") errores.push("• Falta añadir el título");
+    else localStorage.setItem("titulo_pagina", titulo);
+    if (subtitulos.length === 0) errores.push("• Falta mínimo 1 subtítulo");
+    if (subtitulos.length > 4) errores.push("• Solo se permiten 4 subtítulos");
+    if (opcionesExtra.length === 0) errores.push("• Agrega al menos 1 nueva opción");
+    if (Object.keys(iconosGuardados).length < 4) errores.push("• Selecciona los 4 iconos");
+    if (seleccionadas.length === 0) errores.push("• Selecciona mínimo 1 opción de la lista");
     if (errores.length > 0) {
         mostrarMensaje("Faltan datos en el formulario.", "error");
         return;
@@ -199,6 +116,7 @@ btnAgregar.addEventListener("click", () => {
     const nuevoPie = {
         pie,
         titulo,
+        imagen,
         iconos: Object.values(iconosGuardados).join(" "),
         subtitulo: subtitulos.join("<br>"),
         opciones: seleccionadas.join("<br>")
@@ -416,7 +334,9 @@ document.addEventListener("DOMContentLoaded", () => {
             `);
             const filaVacia = document.createElement("tr");
             filaVacia.innerHTML = `
-                <td colspan="6" style="text-align:center;">No hay pies de página creados</td>
+                <td colspan="7" style="text-align:center;">
+                    No hay pies de página creados
+                </td>
             `;
             tablaBody.appendChild(filaVacia);
             return;
@@ -425,6 +345,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${item.pie}</td>
+                <td class="celda-imagen">
+                    ${
+                        item.imagen
+                            ? `<img src="${item.imagen}" class="img-tablero" alt="Imagen pie">`
+                            : `<span>Sin imagen</span>`
+                    }
+                </td>
                 <td>${item.titulo}</td>
                 <td class="celda-iconos">${item.iconos}</td>
                 <td class="celda-subtitulos">${item.subtitulo}</td>
@@ -494,44 +421,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (btn.classList.contains("btn-anadir1")) {
             const item = pies[index];
-            document.getElementById("modalOpcion1").textContent = item.pie;
-            document.getElementById("modalOpcion2").textContent = item.titulo;
-            document.getElementById("modalOpcion3").innerHTML =
-                item.iconos.replace(/<br\s*\/?>/gi, " ");
-            document.getElementById("modalOpcion4").textContent =
-                item.subtitulo.replace(/<br\s*\/?>/gi, " | ");
-            document.getElementById("modalOpcion5").textContent =
-                item.opciones.replace(/<br\s*\/?>/gi, " | ");
-            document.getElementById("modalAnadir").style.display = "flex";
+            const datosVistaPrevia = {
+                imagen: item.imagen || "",
+                titulo: item.titulo || "",
+                iconos: item.iconos
+                    ? item.iconos.replace(/<br\s*\/?>/gi, "|")
+                    : "",
+                subtitulos: item.subtitulo
+                    ? item.subtitulo.replace(/<br\s*\/?>/gi, "|")
+                    : "",
+                opciones: item.opciones
+                    ? item.opciones.replace(/<br\s*\/?>/gi, "|")
+                    : ""
+            };
+            localStorage.setItem(
+                "datos_enviados_desde_tablero",
+                JSON.stringify(datosVistaPrevia)
+            );
+            mensajeHTML(`
+                <i class="fa-solid fa-circle-check"></i>
+                Datos enviados a la vista previa correctamente.
+            `);
         }
     });
-    document.getElementById("cerrarModal").addEventListener("click", () => {
-        document.getElementById("modalAnadir").style.display = "none";
-    });
-    const btnConfirmar = document.getElementById("btnConfirmarEnvio");
-    if (btnConfirmar) {
-        btnConfirmar.addEventListener("click", () => {
-            const numero = parseInt(document.getElementById("inputNumeroOpcion").value);
-            if (!numero || numero < 1 || numero > 5) {
-                mensajeHTML("<i class='fa-solid fa-eye'></i> Número inválido.");
-                return;
-            }
-            let textoSeleccionado =
-                numero === 1 ? document.getElementById("modalOpcion1").textContent :
-                numero === 2 ? document.getElementById("modalOpcion2").textContent :
-                numero === 3 ? document.getElementById("modalOpcion3").innerHTML :
-                numero === 4 ? document.getElementById("modalOpcion4").textContent :
-                numero === 5 ? document.getElementById("modalOpcion5").textContent : "";
-            colocarEnVistaPrevia(numero, textoSeleccionado);
-            mensajeHTML(`
-                <i class="fa-solid fa-eye"></i>
-                Opción ${numero} enviada a la vista previa.
-            `);
-            document.getElementById("modalAnadir").style.display = "none";
-        });
-    } else {
-        console.warn("⚠️ No se encontró el botón #btnConfirmarEnvio");
-    }
 });
 //--------------------------------------------------//
 //--|funcionalidad_vista_previa_del_pie_de_pagina|--//
@@ -548,6 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const socialElem = document.querySelector(".valor-social");
     const boxPie = document.querySelector(".header-box");
     const boxTitulo = document.querySelector(".top-right-box");
+    const bigLeftBox = document.querySelector(".big-left-box");
     let boxIconos = document.querySelectorAll(".mini:not(.wide)");
     let boxSubtitulos = document.querySelectorAll(".mini.wide");
     let boxOpciones = document.querySelectorAll(".item1, .item2, .item3, .item4");
@@ -556,190 +469,143 @@ document.addEventListener("DOMContentLoaded", () => {
     function ensureNodeLists() {
         if ((!boxIconos || boxIconos.length === 0) && fallbackMini) {
             boxIconos = [fallbackMini];
-            console.warn("⚠️ No se encontraron múltiples .mini — usando fallback único");
         }
         if ((!boxSubtitulos || boxSubtitulos.length === 0) && fallbackMiniWide) {
             boxSubtitulos = [fallbackMiniWide];
-            console.warn("⚠️ No se encontraron múltiples .mini.wide — usando fallback único");
         }
         if (!boxOpciones || boxOpciones.length === 0) {
             boxOpciones = [];
-            console.warn("⚠️ No se encontraron .item* (opciones)");
         }
     }
     ensureNodeLists();
     const bottomBox = document.querySelector(".bottom-box");
     if (bottomBox) {
-        bottomBox.addEventListener("click", () => {
-            bottomBox.setAttribute("contenteditable", "true");
-            bottomBox.focus();
-        });
+        const raw = localStorage.getItem("vista_previa_footer");
+        if (raw) {
+            try {
+                const datos = JSON.parse(raw);
+                if (datos.bottom) {
+                    bottomBox.innerHTML = datos.bottom;
+                }
+            } catch {}
+        }
+    }
+    if (bottomBox) {
+        bottomBox.setAttribute("contenteditable", "true");
         bottomBox.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 e.preventDefault();
-                bottomBox.removeAttribute("contenteditable");
-                let datos = JSON.parse(localStorage.getItem("vista_previa_footer")) || {};
-                datos.bottom = bottomBox.innerHTML.trim();
-                localStorage.setItem("vista_previa_footer", JSON.stringify(datos));
+                guardarVistaPrevia();
+                mostrarMensaje("Se ha guardado correctamente", "info");
                 bottomBox.blur();
             }
         });
+    }
+    function cargarDatosDesdeTablero() {
+        const raw = localStorage.getItem("datos_enviados_desde_tablero");
+        if (!raw) return;
+        let data;
+        try { data = JSON.parse(raw); } catch { return; }
+        if (bigLeftBox && data.imagen) {
+            bigLeftBox.innerHTML = `<img src="${data.imagen}" alt="Imagen pie">`;
+        }
+        if (boxTitulo && data.titulo) {
+            boxTitulo.innerHTML = data.titulo;
+        }
+        if (data.iconos) {
+            const lista = data.iconos.split("|").map(i => i.trim());
+            boxIconos.forEach((box, i) => box.innerHTML = lista[i] ?? "");
+        }
+        if (data.subtitulos) {
+            const lista = data.subtitulos.split("|").map(s => s.trim());
+            boxSubtitulos.forEach((box, i) => box.innerHTML = lista[i] ?? "");
+        }
+        if (data.opciones) {
+            const lista = data.opciones.split("|").map(o => o.trim()).filter(Boolean);
+            boxOpciones.forEach(b => b.innerHTML = "");
+            lista.forEach((v, i) => boxOpciones[i] && (boxOpciones[i].innerHTML = v));
+        }
+        guardarVistaPrevia();
+    }
+    cargarDatosDesdeTablero();
+    function guardarVistaPrevia() {
+        ensureNodeLists();
+        const datos = {
+            titulo: boxTitulo?.innerHTML.trim() || "",
+            iconos: Array.from(boxIconos).map(d => d.innerHTML),
+            subtitulos: Array.from(boxSubtitulos).map(d => d.innerHTML),
+            opciones: Array.from(boxOpciones).map(d => d.innerHTML.trim()),
+            bottom: bottomBox?.innerHTML.trim() || ""
+        };
+        localStorage.setItem("vista_previa_footer", JSON.stringify(datos));
     }
     function cargarVistaPrevGuardada() {
         const raw = localStorage.getItem("vista_previa_footer");
         if (!raw) return;
         let datos;
-        try { datos = JSON.parse(raw); }
-        catch { return; }
-        if (datos.pie && boxPie) boxPie.innerHTML = datos.pie;
+        try { datos = JSON.parse(raw); } catch { return; }
         if (datos.titulo && boxTitulo) boxTitulo.innerHTML = datos.titulo;
-        if (datos.iconos && Array.isArray(datos.iconos)) {
-            datos.iconos.forEach((v, i) => { 
-                if (boxIconos[i]) boxIconos[i].innerHTML = v; 
-            });
-        }
-        if (datos.subtitulos && Array.isArray(datos.subtitulos)) {
-            datos.subtitulos.forEach((v, i) => { 
-                if (boxSubtitulos[i]) boxSubtitulos[i].innerHTML = v; 
-            });
-        }
-        if (datos.opciones && Array.isArray(datos.opciones)) {
-            datos.opciones.forEach((v, i) => { 
-                if (boxOpciones[i]) boxOpciones[i].innerHTML = v; 
-            });
-        }
-        const bottomBox = document.querySelector(".bottom-box");
-        if (datos.bottom && bottomBox) {
-            bottomBox.innerHTML = datos.bottom;
-        }
+        if (datos.iconos) datos.iconos.forEach((v, i) => boxIconos[i] && (boxIconos[i].innerHTML = v));
+        if (datos.subtitulos) datos.subtitulos.forEach((v, i) => boxSubtitulos[i] && (boxSubtitulos[i].innerHTML = v));
+        if (datos.bottom && bottomBox) bottomBox.innerHTML = datos.bottom;
     }
     cargarVistaPrevGuardada();
-    function guardarVistaPrevia() {
-        ensureNodeLists();
-        const datos = {
-            pie: boxPie?.innerHTML.trim() || "",
-            titulo: boxTitulo?.innerHTML.trim() || "",
-            iconos: Array.from(boxIconos).map(d => d.innerHTML),
-            subtitulos: Array.from(boxSubtitulos).map(d => d.innerHTML),
-            opciones: Array.from(boxOpciones).map(d => d.innerHTML.trim()),
-        };
-        localStorage.setItem("vista_previa_footer", JSON.stringify(datos));
-    }
-    function limpiarMinis() {
-        const minis = document.querySelectorAll(".mini-row-empleo .mini");
-        minis.forEach(mini => mini.innerHTML = "");
-    }
-    window.colocarEnVistaPrevia = function (numero, contenido) {
-        ensureNodeLists();
-        if (numero == 3) {
-            limpiarMinis();
-            const icons = contenido.split("|").map(i => i.trim());
-            const minis = document.querySelectorAll(".mini-row-empleo .mini");
-            minis.forEach((mini, i) => {
-                if (icons[i] && icons[i] !== "") {
-                    mini.innerHTML = icons[i];
-                }
-            });
-            guardarVistaPrevia();
-            return;
-        }
-        function assignToList(list, value) {
-            if (!list || list.length === 0) return;
-            if (Array.isArray(value)) {
-                value.forEach((v, i) => {
-                    if (list[i]) list[i].innerHTML = v;
-                });
-                return;
-            }
-            if (typeof value === "string" && value.includes("|")) {
-                const parts = value.split("|").map(s => s.trim());
-                parts.forEach((p, i) => {
-                    if (list[i]) list[i].innerHTML = p;
-                });
-                return;
-            }
-            if (typeof value === "string") {
-                if (list[0]) list[0].innerHTML = value;
-                return;
-            }
-        }
-        if (numero == 1 && boxPie) boxPie.innerHTML = contenido;
-        if (numero == 2 && boxTitulo) boxTitulo.innerHTML = contenido;
-        if (numero == 4) assignToList(boxSubtitulos, contenido);
-        if (numero == 5) {
-            const lista = Array.isArray(contenido)
-                ? contenido
-                : (typeof contenido === "string"
-                    ? contenido.split("|").map(t => t.trim())
-                    : []);
-            boxOpciones.forEach((div, i) => {
-                div.innerHTML = lista[i] ?? "";
-            });
-        }
-        guardarVistaPrevia();
-    };
-    function cargarDatosIniciales() {
-        if (localStorage.getItem("vista_previa_footer")) return;
-        ensureNodeLists();
-        boxIconos.forEach(m => { if (!m.innerHTML.trim()) m.innerHTML = ""; });
-        boxSubtitulos.forEach(m => { if (!m.innerHTML.trim()) m.innerHTML = ""; });
-    }
-    cargarDatosIniciales();
-    function mostrarMensaje(texto, tipo = "info") {
-        const estado = document.getElementById("estadoEdicion");
-        if (!estado) return;
-        estado.innerHTML = "";
-        const mensaje = document.createElement("div");
-        mensaje.className = `mensaje ${tipo}`;
-        mensaje.textContent = texto;
-        estado.appendChild(mensaje);
-    }
-    window.actualizarPieDePagina = function (data) {
-        if (descripcionPreview && data.descripcion) descripcionPreview.textContent = data.descripcion;
-        if (telefonoElem && data.telefono) telefonoElem.textContent = data.telefono;
-        if (correoElem && data.correo) correoElem.textContent = data.correo;
-        if (quienElem && data.quien) quienElem.textContent = data.quien;
-        if (dondeElem && data.donde) dondeElem.textContent = data.donde;
-        if (direccionElem && data.direccion) direccionElem.textContent = data.direccion;
-        if (avisoElem && data.aviso) avisoElem.textContent = data.aviso;
-        if (socialElem && data.social) socialElem.textContent = data.social;
-        mostrarMensaje("Vista previa actualizada correctamente.");
-    };
-    const btnEliminarPie = document.querySelector(".btn-eliminar-pie") || document.querySelector(".btn1");
-    const btnEnviarPie   = document.querySelector(".btn-enviar-pie")   || document.querySelector(".btn2");
-    if (btnEliminarPie) {
-        btnEliminarPie.addEventListener("click", () => {
-            if (boxPie) boxPie.innerHTML = "";
+    const btnBorrar = document.querySelector(".btn1");
+    const btnEnviar = document.querySelector(".btn2");
+    if (btnBorrar) {
+        btnBorrar.addEventListener("click", () => {
+            if (bigLeftBox) bigLeftBox.innerHTML = "";
             if (boxTitulo) boxTitulo.innerHTML = "";
             if (bottomBox) bottomBox.innerHTML = "";
-            boxIconos.forEach(m => m.innerHTML = "");
-            boxSubtitulos.forEach(m => m.innerHTML = "");
-            boxOpciones.forEach(m => m.innerHTML = "");
+            boxIconos.forEach(b => b.innerHTML = "");
+            boxSubtitulos.forEach(b => b.innerHTML = "");
+            boxOpciones.forEach(b => b.innerHTML = "");
             localStorage.removeItem("vista_previa_footer");
-            mostrarMensaje(
-                "Se ha borrado completamente la vista previa del pie de página.",
-                "success"
-            );
+            mostrarMensaje("Se ha borrado el pie de página", "info");
         });
     }
-    if (btnEnviarPie) {
-        btnEnviarPie.addEventListener("click", () => {
-            const contenidoPie = boxPie?.innerHTML.trim();
-            const contenidoTitulo = boxTitulo?.innerHTML.trim();
-            const contenidoBottom = bottomBox?.innerHTML.trim();
-            const hayContenido =
-                contenidoPie || contenidoTitulo || contenidoBottom;
-            if (!hayContenido) {
-                mostrarMensaje(
-                    "No ha añadido ningún contenido al pie de página.",
-                    "error"
-                );
+    if (btnEnviar) {
+        btnEnviar.addEventListener("click", () => {
+            const raw = localStorage.getItem("vista_previa_footer");
+            if (!raw) {
+                mostrarMensaje("No hay ningún pie de página", "info");
                 return;
             }
-            mostrarMensaje(
-                "El pie de página se ha enviado correctamente.",
-                "success"
+            let datos;
+            try {
+                datos = JSON.parse(raw);
+            } catch {
+                mostrarMensaje("No hay ningún pie de página", "info");
+                return;
+            }
+            const hayContenido =
+                datos.titulo ||
+                datos.bottom ||
+                datos.iconos?.some(v => v.trim() !== "") ||
+                datos.subtitulos?.some(v => v.trim() !== "") ||
+                datos.opciones?.some(v => v.trim() !== "");
+            if (!hayContenido) {
+                mostrarMensaje("No hay ningún pie de página", "info");
+                return;
+            }
+            // 🔒 Guarda la vista previa actualizada
+            guardarVistaPrevia();
+            // 📦 Construye el footer final que usará plataforma_dinamica.html
+            const footerFinal = {
+                logo: bigLeftBox?.querySelector("img")?.src || "",
+                titulo: datos.titulo || "",
+                iconos: datos.iconos || [],
+                subtitulos: datos.subtitulos || [],
+                opciones: datos.opciones || [],
+                bottom: datos.bottom || ""
+            };
+            // 💾 Guarda DEFINITIVAMENTE el footer
+            localStorage.setItem(
+                "footer_plataforma_dinamica",
+                JSON.stringify(footerFinal)
             );
+            // ✅ Confirmación visual (sin redirección)
+            mostrarMensaje("Pie de página enviado correctamente", "success");
         });
     }
 });
