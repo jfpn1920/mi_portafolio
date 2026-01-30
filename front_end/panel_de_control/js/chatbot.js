@@ -127,137 +127,180 @@ document.addEventListener("DOMContentLoaded", () => {
 //--------------------------------------------//
 //--|funcionalidad_vista_previa_del_chatbot|--//
 //--------------------------------------------//
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("🤖 Script de vista previa del chatbot cargado.");
-    const nombreChatbotVista = document.querySelector(".nombre-chatbot-vista");
-    const areaChat = document.querySelector(".chatbot-area");
-    const inputMensaje = document.querySelector(".chatbot-input input");
-    const btnEnviar = document.querySelector(".chatbot-enviar");
-    const btnDesplegar = document.querySelector(".chatbot-boton");
-    const chatbotData = JSON.parse(
-        localStorage.getItem("_chatbot_vista_previa")
-    );
-    if (!chatbotData) {
-        nombreChatbotVista.textContent = "Sin chatbot";
-        mostrarMensaje("No hay un chatbot seleccionado para vista previa.");
-    } else {
-        nombreChatbotVista.textContent = chatbotData.chatbot;
-        mostrarMensaje("Vista previa del chatbot cargada correctamente.");
-    }
-    const CHAT_STORAGE_KEY = "_chatbot_historial_vista_previa";
-    const historialGuardado = JSON.parse(
-        localStorage.getItem(CHAT_STORAGE_KEY)
-    ) || [];
-    historialGuardado.forEach(msg => {
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("mensaje", msg.tipo);
-        mensaje.textContent = msg.texto;
-        areaChat.appendChild(mensaje);
-    });
+const inputMensaje = document.querySelector(".chatbot-input input");
+const btnEnviar = document.querySelector(".chatbot-enviar");
+const areaChat = document.querySelector(".chatbot-area");
+const nombreChatbot = document.querySelector(".nombre-chatbot-vista");
+
+// --------------------------------------------------
+// 🔹 CHATBOT CARGADO DESDE EL TABLERO
+// --------------------------------------------------
+let chatbotActivo = JSON.parse(
+    localStorage.getItem("_chatbot_vista_previa")
+);
+
+// preguntas añadidas al chatbot
+let preguntasSugeridas = chatbotActivo?.preguntas || [];
+
+let tiempoRespuesta = chatbotActivo?.tiempo
+    ? parseInt(chatbotActivo.tiempo) * 1000
+    : 600;
+
+// --------------------------------------------------
+// 🔹 DICCIONARIO A–Z
+// --------------------------------------------------
+const diccionario = {
+    a: ["ayuda", "asistencia", "atencion", "apoyo", "acceso"],
+    b: ["buenos", "buenas", "bien", "bienvenido"],
+    c: ["contacto", "correo", "categorias", "chatbot"],
+    d: ["datos", "direccion", "desarrollo"],
+    e: ["email", "equipo", "empresa"],
+    f: ["funciona", "funcionalidad"],
+    g: ["gracias", "genial"],
+    h: ["hola", "horario"],
+    i: ["informacion", "inicio"],
+    j: ["javascript", "js"],
+    k: [],
+    l: ["login", "loguear"],
+    m: ["mensaje", "menu"],
+    n: ["nombre", "nuevo"],
+    o: ["opciones"],
+    p: ["proyectos", "pagina", "precio"],
+    q: ["que", "quiero"],
+    r: ["recientes", "registro"],
+    s: ["soporte", "servicios"],
+    t: ["trabajo", "tienda"],
+    u: ["usuario"],
+    v: ["vista", "version"],
+    w: ["web"],
+    x: [],
+    y: [],
+    z: []
+};
+
+// --------------------------------------------------
+// 🔹 RESPUESTAS
+// --------------------------------------------------
+const respuestas = {
+    saludo: "¡Hola! 👋 ¿En qué puedo ayudarte?",
+    contacto: "Puedes contactarme desde la sección de contacto de la página.",
+    proyectos: "Si vas a la página de categorías encontrarás los proyectos disponibles.",
+    ayuda: "Claro, dime qué necesitas y con gusto te ayudo.",
+    despedida: "¡Con gusto! 😊 ¿Necesitas algo más?",
+    desconocido: "Lo siento, no entendí tu mensaje. ¿Podrías reformularlo?"
+};
+
+// --------------------------------------------------
+// 🔹 FUNCIONES
+// --------------------------------------------------
+
+// Crear mensaje
+function crearMensaje(texto, tipo) {
+    const mensaje = document.createElement("div");
+    mensaje.classList.add("mensaje", tipo);
+    mensaje.textContent = texto;
+    areaChat.appendChild(mensaje);
     areaChat.scrollTop = areaChat.scrollHeight;
-    function guardarMensaje(texto, tipo) {
-        const historial = JSON.parse(
-            localStorage.getItem(CHAT_STORAGE_KEY)
-        ) || [];
-        historial.push({ texto, tipo });
-        localStorage.setItem(
-            CHAT_STORAGE_KEY,
-            JSON.stringify(historial)
+}
+
+// --------------------------------------------------
+// 🔹 MOSTRAR SUGERENCIAS (SOLO MIENTRAS ESCRIBE)
+// --------------------------------------------------
+function mostrarSugerencias(textoUsuario) {
+    const texto = textoUsuario.toLowerCase().trim();
+
+    // eliminar sugerencias anteriores
+    const anteriores = document.querySelector(".sugerencias-chatbot");
+    if (anteriores) anteriores.remove();
+
+    if (!texto || !preguntasSugeridas.length) return;
+
+    const palabrasUsuario = texto.split(" ");
+
+    const coincidencias = preguntasSugeridas.filter(pregunta => {
+        const preguntaLower = pregunta.toLowerCase();
+        return palabrasUsuario.some(palabra =>
+            palabra.length > 2 && preguntaLower.includes(palabra)
         );
-    }
-    function agregarMensaje(texto, tipo = "usuario") {
-        const mensaje = document.createElement("div");
-        mensaje.classList.add("mensaje", tipo);
-        mensaje.textContent = texto;
-        areaChat.appendChild(mensaje);
-        areaChat.scrollTop = areaChat.scrollHeight;
-        guardarMensaje(texto, tipo);
-    }
-    function normalizarTexto(texto) {
-        return texto
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[¿?.,!]/g, "");
-    }
-    const stopWords = [
-        "el","la","los","las","un","una","unos",
-        "de","en","y","o","que","como","es",
-        "para","con","por","al","del"
-    ];
-    function obtenerPalabrasClave(texto) {
-        return normalizarTexto(texto)
-            .split(" ")
-            .filter(p => p.length > 2 && !stopWords.includes(p));
-    }
-    const intenciones = {
-        ayuda: ["ayuda", "ayudar", "ayudarte", "duda", "problema", "necesito"],
-        ingeniero: ["ingeniero", "profesional", "especialista"],
-        contacto: ["contactar", "correo", "email", "gmail", "whatsapp", "telefono"],
-        redes: ["redes", "facebook", "twitter", "instagram"],
-        saludo: ["hola", "buenos", "buenas", "saludos"],
-        agradecimiento: ["gracias", "muchas", "agradecido"]
-    };
-    function obtenerRespuesta(mensajeUsuario) {
-        if (!chatbotData || !Array.isArray(chatbotData.preguntas)) {
-            return "Chatbot no configurado correctamente.";
-        }
-        const palabrasUsuario = obtenerPalabrasClave(mensajeUsuario);
-        let mejorCoincidencia = null;
-        let mayorPuntaje = 0;
-        chatbotData.preguntas.forEach(pregunta => {
-            const palabrasPregunta = obtenerPalabrasClave(pregunta);
-            let puntaje = 0;
-            palabrasUsuario.forEach(palabra => {
-                palabrasPregunta.forEach(pPregunta => {
-                    if (palabra === pPregunta) {
-                        puntaje += 2;
-                    }
-                    Object.values(intenciones).forEach(lista => {
-                        if (lista.includes(palabra) && lista.includes(pPregunta)) {
-                            puntaje += 3;
-                        }
-                    });
-                });
-            });
-            if (puntaje > mayorPuntaje) {
-                mayorPuntaje = puntaje;
-                mejorCoincidencia = pregunta;
-            }
-        });
-        return mayorPuntaje > 0
-            ? mejorCoincidencia
-            : "No entendí tu mensaje 🤔, ¿puedes reformularlo?";
-    }
-    function enviarMensaje() {
-        const texto = inputMensaje.value.trim();
-        if (!texto) return;
-        agregarMensaje(texto, "usuario");
-        inputMensaje.value = "";
-        setTimeout(() => {
-            const respuesta = obtenerRespuesta(texto);
-            agregarMensaje(respuesta, "bot");
-        }, Number(chatbotData?.tiempo) || 1000);
-    }
-    btnEnviar.addEventListener("click", enviarMensaje);
-    inputMensaje.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            enviarMensaje();
-        }
     });
-    function desplegarChatbot() {
-        const despliegueValido =
-            chatbotData &&
-            chatbotData.chatbot &&
-            Array.isArray(chatbotData.preguntas) &&
-            chatbotData.preguntas.length > 0;
-        if (despliegueValido) {
-            mostrarMensaje("Despliegue de chatbot realizado con éxito.");
-        } else {
-            mostrarMensaje("No se ha podido desplegar el chatbot. Verifica la configuración.");
+
+    if (coincidencias.length === 0) return;
+
+    const contenedor = document.createElement("div");
+    contenedor.className = "sugerencias-chatbot";
+
+    contenedor.innerHTML = `
+        <div class="sugerencias-titulo">💡 Preguntas sugeridas</div>
+        ${coincidencias.map(p => `<div class="sugerencia">${p}</div>`).join("")}
+    `;
+
+    areaChat.appendChild(contenedor);
+    areaChat.scrollTop = areaChat.scrollHeight;
+}
+
+// --------------------------------------------------
+// 🔹 OBTENER RESPUESTA DEL BOT
+// --------------------------------------------------
+function obtenerRespuesta(textoUsuario) {
+    const texto = textoUsuario.toLowerCase();
+
+    for (let letra in diccionario) {
+        for (let palabra of diccionario[letra]) {
+            if (texto.includes(palabra)) {
+
+                if (diccionario.b.includes(palabra) || diccionario.h.includes(palabra))
+                    return respuestas.saludo;
+
+                if (diccionario.c.includes(palabra))
+                    return respuestas.contacto;
+
+                if (diccionario.p.includes(palabra) || diccionario.r.includes(palabra))
+                    return respuestas.proyectos;
+
+                if (diccionario.a.includes(palabra))
+                    return respuestas.ayuda;
+
+                if (diccionario.g.includes(palabra))
+                    return respuestas.despedida;
+            }
         }
     }
-    btnDesplegar.addEventListener("click", desplegarChatbot);
+    return respuestas.desconocido;
+}
+
+// --------------------------------------------------
+// 🔹 ENVIAR MENSAJE (RESPUESTA FINAL)
+// --------------------------------------------------
+function enviarMensaje() {
+    const texto = inputMensaje.value.trim();
+    if (!texto) return;
+
+    // eliminar sugerencias al enviar
+    const sugerencias = document.querySelector(".sugerencias-chatbot");
+    if (sugerencias) sugerencias.remove();
+
+    crearMensaje(texto, "usuario");
+    inputMensaje.value = "";
+
+    setTimeout(() => {
+        const respuestaBot = obtenerRespuesta(texto);
+        crearMensaje(respuestaBot, "bot");
+    }, tiempoRespuesta);
+}
+
+// --------------------------------------------------
+// 🔹 EVENTOS
+// --------------------------------------------------
+btnEnviar.addEventListener("click", enviarMensaje);
+
+inputMensaje.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        enviarMensaje();
+    }
+});
+
+inputMensaje.addEventListener("input", () => {
+    mostrarSugerencias(inputMensaje.value);
 });
 //--------------------------------------//
 //--|funcionalidad_tablero_de_chatbot|--//
