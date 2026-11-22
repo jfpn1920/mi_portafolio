@@ -79,12 +79,26 @@ h2 {
 /*----------------------------------*/
 /*--|distribucion_en_dos_columnas|--*/
 /*----------------------------------*/
-#v-sobre {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-}
 #v-sobre > section {
     padding-bottom:0;
+}
+#sobre-mi, #mi-formacion, #mas-alla-del-trabajo, #proyecto-de-grado {
+    float:left;
+    clear:left;
+    width:50%;
+    padding-right:0.75rem;
+}
+#experiencia-laboral, #formacion-academica, #hacia-donde-voy, #habilidades_parte_2 {
+    float:right;
+    clear:right;
+    width:50%;
+    padding-left:0.75rem;
+}
+#habilidades_parte_2 {
+    padding-top:0;
+}
+footer {
+    clear:both;
 }
 /*-------------------------------*/
 /*--|estilo_menu_de_navegacion|--*/
@@ -250,6 +264,9 @@ nav .svg-inline--fa {
 /*-------------------------*/
 /*--|estilo_mi_formacion|--*/
 /*-------------------------*/
+#mi-formacion {
+    padding-top:1rem;
+}
 #mi-formacion .bloque {
     max-width:46rem;
     margin:0;
@@ -282,6 +299,9 @@ nav .svg-inline--fa {
 /*--------------------------------*/
 /*--|estilo_formacion_academica|--*/
 /*--------------------------------*/
+#formacion-academica {
+    padding-top:1rem;
+}
 #formacion-academica .bloque {
     max-width:46rem;
     margin:0;
@@ -314,6 +334,9 @@ nav .svg-inline--fa {
 /*---------------------------------*/
 /*--|estilo_mas_alla_del_trabajo|--*/
 /*---------------------------------*/
+#mas-alla-del-trabajo {
+    padding-top:1rem;
+}
 #mas-alla-del-trabajo .bloque {
     max-width:46rem;
     margin:0;
@@ -352,6 +375,9 @@ nav .svg-inline--fa {
 /*----------------------------*/
 /*--|estilo_hacia_donde_voy|--*/
 /*----------------------------*/
+#hacia-donde-voy {
+    padding-top:1rem;
+}
 #hacia-donde-voy .bloque {
     max-width:46rem;
     margin:0;
@@ -371,6 +397,7 @@ nav .svg-inline--fa {
 /*------------------------------*/
 #proyecto-de-grado {
     display:flex;
+    padding-top:1rem;
 }
 #proyecto-de-grado .w {
     display:flex;
@@ -437,35 +464,35 @@ nav .svg-inline--fa {
 /*----------------------------*/
 /*--|estilo_mis_habilidades|--*/
 /*----------------------------*/
-#habilidades .bloque {
+#habilidades_parte_2 .bloque_parte_2 {
     max-width:46rem;
     margin:0;
 }
-#habilidades h2 {
+#habilidades_parte_2 h2 {
     margin-top:1rem;
 }
-#habilidades .grid3 {
+#habilidades_parte_2 .grid3_parte_2 {
     display:grid;
     grid-template-columns:1fr;
     gap:1.375rem;
     margin-top:0.5rem;
 }
-#habilidades .card {
+#habilidades_parte_2 .card_parte_2 {
     padding:1.5rem;
     background:var(--card);
     border:1px solid var(--bd);
     border-radius:0.3125rem;
 }
-#habilidades .card h3 {
+#habilidades_parte_2 .card_parte_2 h3 {
     margin-bottom:0.375rem;
     color:var(--ac);
 }
-#habilidades .tags {
+#habilidades_parte_2 .tags_parte_2 {
     display:flex;
     flex-wrap:wrap;
     gap:0.5rem;
 }
-#habilidades .tags span {
+#habilidades_parte_2 .tags_parte_2 span {
     padding:0.3125rem 0.8125rem;
     background:var(--bg);
     border:1px solid var(--bd);

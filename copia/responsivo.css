@@ -114,7 +114,7 @@
         margin-bottom:1rem;
     }
     #sobre-mi h2 {
-        font-size:1.6rem;
+        font-size: 18px;
     }
     #sobre-mi p {
         font-size:.95rem;
@@ -128,7 +128,7 @@
         float:none;
         clear:both;
         width:100%;
-        margin-top:0;
+        margin-top:-5px;
         padding:0 1.25rem 2rem;
     }
     #habilidades .bloque {
@@ -136,7 +136,7 @@
     }
     #habilidades h2 {
         margin-top:0;
-        font-size:1.6rem;
+        font-size: 18px;
     }
     #habilidades .grid3 {
         gap:1rem;
@@ -146,7 +146,8 @@
         padding:1rem;
     }
     #habilidades .card h3 {
-        font-size:1.05rem;
+        font-size:14px;
+        text-align:justify;
     }
     #habilidades .tags {
         gap:0.4rem;
@@ -185,14 +186,14 @@
         float:none;
         clear:both;
         width:100%;
-        margin-top:-20px;
+        margin-top:-27px;
         padding:1.5rem 1.25rem 2rem;
     }
     #proyectos .w {
         margin:0 auto;
     }
     #proyectos h2 {
-        font-size:1.6rem;
+        font-size: 18px;
     }
     #proyectos .lista-proyectos {
         grid-template-columns:1fr;
@@ -347,6 +348,194 @@
     #inicio-contacto .btn {
         padding:0.75rem 1rem;
         font-size:.95rem;
+    }
+    /*-------------------------*/
+    /*--|experiencia_laboral|--*/
+    /*-------------------------*/
+    #experiencia-laboral {
+        float:none;
+        clear:both;
+        margin-top: -35px;
+        width:100%;
+        padding:2rem 1.25rem 0;
+    }
+    #experiencia-laboral h2 {
+        margin-bottom:1.25rem;
+        font-size: 18px;
+    }
+    #experiencia-laboral .lista {
+        gap:0.875rem;
+    }
+    #experiencia-laboral .card {
+        padding:1.125rem;
+    }
+    #experiencia-laboral .card h3 {
+        font-size:1rem;
+    }
+    #experiencia-laboral .card small {
+        font-size:0.75rem;
+    }
+    #experiencia-laboral .card ul {
+        margin-top:0.5rem;
+        text-align:justify;
+        padding-left:1.1rem;
+        font-size:0.9rem;
+    }
+    /*------------------*/
+    /*--|mi_formacion|--*/
+    /*------------------*/
+    #mi-formacion {
+        float:none;
+        clear:both;
+        width:100%;
+        margin-top: -10px;
+        padding:2rem 1.25rem 0;
+    }
+    #mi-formacion h2 {
+        margin-bottom:1.25rem;
+        font-size: 18px;
+    }
+    #mi-formacion .lista {
+        gap:0.875rem;
+    }
+    #mi-formacion .card {
+        padding:1.125rem;
+    }
+    #mi-formacion .card h3 {
+        font-size:1rem;
+    }
+    #mi-formacion .card small {
+        font-size:0.75rem;
+    }
+    /*-------------------------*/
+    /*--|formacion_academica|--*/
+    /*-------------------------*/
+    #formacion-academica {
+        float:none;
+        clear:both;
+        margin-top: -10px;
+        width:100%;
+        padding:2rem 1.25rem 0;
+    }
+    #formacion-academica h2 {
+        margin-bottom:1.25rem;
+        font-size: 18px;
+    }
+    #formacion-academica .lista {
+        gap:0.875rem;
+    }
+    #formacion-academica .card {
+        padding:1.125rem;
+    }
+    #formacion-academica .card h3 {
+        font-size:1rem;
+    }
+    #formacion-academica .card small {
+        font-size:0.75rem;
+    }
+    /*--------------------------*/
+    /*--|mas_alla_del_trabajo|--*/
+    /*--------------------------*/
+    #mas-alla-del-trabajo {
+        float:none;
+        clear:both;
+        width:100%;
+        margin-top: -5px;
+        padding:2rem 1.25rem 0;
+    }
+    #mas-alla-del-trabajo h2 {
+        margin-bottom:1.25rem;
+        font-size: 18px;
+    }
+    #mas-alla-del-trabajo p {
+        font-size:0.95rem;
+        text-align:justify;
+    }
+    #mas-alla-del-trabajo .tags {
+        gap:0.5rem;
+    }
+    #mas-alla-del-trabajo .tags span {
+        gap:0.375rem;
+        padding:0.25rem 0.625rem;
+        font-size:0.8rem;
+    }
+    /*-------------------------*/
+    /*--|formacion_academica|--*/
+    /*-------------------------*/
+    #hacia-donde-voy {
+        float:none;
+        clear:both;
+        width:100%;
+        margin-top: -5px;
+        padding:2rem 1.25rem 0;
+    }
+    #hacia-donde-voy h2 {
+        margin-bottom:1.25rem;
+        font-size: 18px;
+    }
+    #hacia-donde-voy p {
+        font-size:0.95rem;
+        text-align:justify;
+    }
+    /*-----------------------*/
+    /*--|proyecto_de_grado|--*/
+    /*-----------------------*/
+    #proyecto-de-grado {
+        float:none;
+        clear:both;
+        margin-top: -5px;
+        width:100%;
+        padding:2rem 1.25rem 0;
+    }
+    #proyecto-de-grado h2 {
+        margin-bottom:1.25rem;
+        font-size: 18px;
+    }
+    #proyecto-de-grado .srv-img {
+        min-height:8rem;
+        margin-bottom:1rem;
+        font-size:2.5rem;
+    }
+    #proyecto-de-grado h3 {
+        font-size:1rem;
+    }
+    #proyecto-de-grado p {
+        font-size:0.95rem;
+        text-align:justify;
+    }
+    #proyecto-de-grado .btn {
+        margin-top:1rem;
+        padding:0.75rem 1rem;
+        font-size:0.95rem;
+    }
+    /*---------------------*/
+    /*--|mis_habilidades|--*/
+    /*---------------------*/
+    #habilidades_parte_2 {
+        float:none;
+        clear:both;
+        margin-top: -5px;
+        width:100%;
+        padding:1rem 1.25rem 0;
+        margin-bottom:2rem;
+    }
+    #habilidades_parte_2 h2 {
+        margin-bottom:1.25rem;
+        font-size: 18px;
+    }
+    #habilidades_parte_2 .grid3_parte_2 {
+        gap:0.875rem;
+    }
+    #habilidades_parte_2 .card_parte_2 {
+        padding:1.125rem;
+    }
+    #habilidades_parte_2 .card_parte_2 h3 {
+        font-size:14px;
+        text-align:justify;
+    }
+    #habilidades_parte_2 .tags_parte_2 span {
+        padding:0.25rem 0.625rem;
+        font-size:0.8rem;
     }
     /*-------------------*/
     /*--|pie_de_pagina|--*/
