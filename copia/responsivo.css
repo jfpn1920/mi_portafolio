@@ -537,6 +537,100 @@
         padding:0.25rem 0.625rem;
         font-size:0.8rem;
     }
+    /*------------------------------*/
+    /*--|por_que_trabajar_conmigo|--*/
+    /*------------------------------*/
+    #por-que-conmigo {
+        float:none;
+        clear:both;
+        width:100%;
+        padding:2rem 1.25rem 0;
+    }
+    #por-que-conmigo h2 {
+        margin-bottom:1rem;
+        font-size:17px;
+        text-align:center;
+    }
+    #por-que-conmigo .it {
+        margin-top:1rem;
+    }
+    #por-que-conmigo .it b {
+        font-size:0.95rem;
+    }
+    #por-que-conmigo .it span {
+        font-size:0.9rem;
+        text-align:justify;
+    }
+    /*-----------------*/
+    /*--|como_cotizo|--*/
+    /*-----------------*/
+    #como-cotizo {
+        float:none;
+        clear:both;
+        width:100%;
+        padding:2rem 1.25rem 0;
+    }
+    #como-cotizo h2 {
+        margin-bottom:1rem;
+        font-size:17px;
+        text-align:center;
+    }
+    #como-cotizo p {
+        font-size:0.9rem;
+        text-align:justify;
+    }
+    /*--------------------------*/
+    /*--|preguntas_frecuentes|--*/
+    /*--------------------------*/
+    #preguntas-frecuentes {
+        float:none;
+        clear:both;
+        width:100%;
+        padding:2rem 1.25rem 0;
+    }
+    #preguntas-frecuentes h2 {
+        margin-bottom:1rem;
+        font-size:17px;
+        text-align:center;
+    }
+    #preguntas-frecuentes .it {
+        margin-top:1rem;
+    }
+    #preguntas-frecuentes .it b {
+        font-size:0.95rem;
+    }
+    #preguntas-frecuentes .it span {
+        font-size:0.9rem;
+        text-align:justify;
+    }
+    /*------------------*/
+    /*--|como_trabajo|--*/
+    /*------------------*/
+    #como-trabajo {
+        float:none;
+        clear:both;
+        width:100%;
+        padding:2rem 1.25rem 0;
+    }
+    #como-trabajo h2 {
+        margin-bottom:1rem;
+        font-size:1.6rem;
+    }
+    #como-trabajo .it {
+        margin-top:0.875rem;
+    }
+    #como-trabajo .it b {
+        gap:0.5rem;
+        font-size:0.95rem;
+    }
+    #como-trabajo .it b .n {
+        width:1.375rem;
+        height:1.375rem;
+        font-size:0.75rem;
+    }
+    #como-trabajo .it > span {
+        font-size:0.9rem;
+    }
     /*-------------------*/
     /*--|pie_de_pagina|--*/
     /*-------------------*/

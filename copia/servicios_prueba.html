@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>servicios</title>
+    <link rel="stylesheet" href="./servicios_prueba.css">
+    <link rel="stylesheet" href="./responsivo.css">
+    <script src="./servicios_prueba.js" defer></script>
+</head>
+<body>
+    <!-------------------------------------->
+    <!--|estructurando_menu_de_navegacion|-->
+    <!-------------------------------------->
+    <nav>
+        <b>&lt;/&gt; Mi Portafolio</b>
+        <ul id="menu-lista">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="sobre_mi.html">Sobre mí</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="contactame.html">Contáctame</a></li>
+            <li>
+                <a class="btn sm" download="" href="cv.pdf">
+                    <svg class="svg-inline--fa fa-download" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path>
+                    </svg>Descargar CV
+                </a>
+            </li>
+        </ul>
+        <div class="nbtns">
+            <button aria-label="Cambiar a modo claro" id="tema" type="button">
+                <svg class="svg-inline--fa fa-moon ic-m" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg="">
+                    <path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                </svg>
+                <svg class="svg-inline--fa fa-sun ic-s" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                    <path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+                </svg>
+            </button>
+            <button id="menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-lista">
+                <svg class="svg-inline--fa fa-bars" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                    <path fill="currentColor" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <!----------------------------->
+    <!--|estructurando_servicios|-->
+    <!----------------------------->
+    <section id="inicio-servicios">
+        <div class="w">
+            <h2>💼 Cuenta con mis servicios</h2>
+            <div class="srv">
+                <div class="srv-i">
+                    <h3>💻 Lenguajes de programación</h3>
+                    <div class="srv-img">
+                        <svg class="svg-inline--fa fa-code" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="code" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="">
+                            <path fill="currentColor" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"></path>
+                        </svg>
+                    </div>
+                    <p>Lógica de programación, algoritmos y desarrollo de software en distintos lenguajes según lo que el proyecto necesite.</p>
+                </div>
+                <div class="srv-i">
+                    <h3>🌐 Desarrollo de sitios web</h3>
+                    <div class="srv-img">
+                        <svg class="svg-inline--fa fa-globe" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="globe" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                            <path fill="currentColor" d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64H348.7c2.2 20.4 3.3 41.8 3.3 64zm28.8-64H503.9c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0H18.6C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192H131.2c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6H344.3c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352H135.3zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6H493.4z"></path>
+                        </svg>
+                    </div>
+                    <p>Sitios y aplicaciones web construidos desde cero, adaptados a las necesidades específicas de cada proyecto.</p>
+                </div>
+                <div class="srv-i">
+                    <h3>🎮 Desarrollo de juegos</h3>
+                    <div class="srv-img">
+                        <svg class="svg-inline--fa fa-gamepad" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="gamepad" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="">
+                            <path fill="currentColor" d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 304a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24v32h32c13.3 0 24 10.7 24 24s-10.7 24-24 24H216v32c0 13.3-10.7 24-24 24s-24-10.7-24-24V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h32V200z"></path>
+                        </svg>
+                    </div>
+                    <p>Mecánicas, prototipos y juegos completos, desde una idea inicial hasta un producto jugable.</p>
+                </div>
+                <div class="srv-i">
+                    <h3>📊 Paneles de control</h3>
+                    <div class="srv-img">
+                        <svg class="svg-inline--fa fa-chart-column" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-column" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                            <path fill="currentColor" d="M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zM160 224c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm128-64V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32s32 14.3 32 32zm64 32c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32zM480 96V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32z"></path>
+                        </svg>
+                    </div>
+                    <p>Sistemas de gestión para controlar inventario, ventas o procesos internos de manera ordenada y eficiente.</p>
+                </div>
+                <div class="srv-i">
+                    <h3>🧩 Proyectos personalizados</h3>
+                    <div class="srv-img">
+                        <svg class="svg-inline--fa fa-sliders" aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M32 96a24 24 0 0 1 24-24h132.7a64 64 0 0 1 118.6 0H456a24 24 0 0 1 0 48H307.3a64 64 0 0 1-118.6 0H56a24 24 0 0 1-24-24zm0 160a24 24 0 0 1 24-24h28.7a64 64 0 0 1 118.6 0H456a24 24 0 0 1 0 48H227.3a64 64 0 0 1-118.6 0H56a24 24 0 0 1-24-24zm0 160a24 24 0 0 1 24-24h196.7a64 64 0 0 1 118.6 0H456a24 24 0 0 1 0 48h-76.7a64 64 0 0 1-118.6 0H56a24 24 0 0 1-24-24z"/>
+                        </svg>
+                    </div>
+                    <p>Soluciones hechas a la medida: tomo tu idea y la desarrollo, desde el planteamiento inicial hasta un producto funcional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-------------------------------------------->
+    <!--|estructurando_por_que_trabajar_conmigo|-->
+    <!-------------------------------------------->
+    <section id="por-que-conmigo">
+        <div class="w">
+            <div class="bloque">
+                <h2 id="s-por-que">🤝 ¿Por qué trabajar conmigo?</h2>
+                <div class="it">
+                    <b>Comunicación constante</b>
+                    <span>Sabes en qué va tu proyecto en todo momento.</span>
+                </div>
+                <div class="it">
+                    <b>Atención al detalle</b>
+                    <span>Cuido tanto la lógica como la experiencia final.</span>
+                </div>
+                <div class="it">
+                    <b>Soluciones a la medida</b>
+                    <span>Nada de plantillas genéricas, cada proyecto se adapta.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!------------------------------->
+    <!--|estructurando_como_cotizo|-->
+    <!------------------------------->
+    <section id="como-cotizo">
+        <div class="w">
+            <div class="bloque">
+                <h2 id="s-como-cotizo">🧮 Cómo cotizo</h2>
+                <p>Cada proyecto es distinto, así que no manejo precios fijos publicados. Al contarme tu idea en el formulario, te doy un estimado según el alcance real que necesitas, sin compromiso.</p>
+            </div>
+        </div>
+    </section>
+    <!---------------------------------------->
+    <!--|estructurando_preguntas_frecuentes|-->
+    <!---------------------------------------->
+    <section id="preguntas-frecuentes">
+        <div class="w">
+            <div class="bloque">
+                <h2 id="s-preguntas">❓ Preguntas frecuentes</h2>
+                <div class="it">
+                    <b>¿Cuánto tiempo toma un proyecto?</b>
+                    <span>Depende del alcance; te doy un estimado al definirlo juntos.</span>
+                </div>
+                <div class="it">
+                    <b>¿Trabajas con proyectos pequeños?</b>
+                    <span>Sí, desde ajustes puntuales hasta sistemas completos.</span>
+                </div>
+                <div class="it">
+                    <b>¿Cómo es el pago?</b>
+                    <span>Lo definimos juntos al acordar el alcance, según el tamaño del proyecto.</span>
+                </div>
+                <div class="it">
+                    <b>¿Entrego el código fuente?</b>
+                    <span>Sí, recibes el proyecto completo, listo para usar o seguir modificando.</span>
+                </div>
+                <div class="it">
+                    <b>¿Puedo pedir cambios después de la entrega?</b>
+                    <span>Sí, dentro de lo acordado. Ajustes mayores se cotizan aparte.</span>
+                </div>
+                <div class="it">
+                    <b>¿Necesito tener el diseño listo?</b>
+                    <span>No, si no tienes uno, te ayudo a definirlo como parte del proyecto.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-------------------------------->
+    <!--|estructurando_como_trabajo|-->
+    <!-------------------------------->
+    <section id="como-trabajo">
+        <div class="w">
+            <div class="bloque">
+                <h2 id="s-como-trabajo">🧩 Cómo trabajo</h2>
+                <div class="it">
+                    <b><span class="n">1</span>Cuéntame tu idea</b>
+                    <span>Por cualquiera de mis canales de contacto.</span>
+                </div>
+                <div class="it">
+                    <b><span class="n">2</span>Definimos el alcance</b>
+                    <span>Qué se construye y en qué tiempo.</span>
+                </div>
+                <div class="it">
+                    <b><span class="n">3</span>Desarrollo el proyecto</b>
+                    <span>Con avances constantes.</span>
+                </div>
+                <div class="it">
+                    <b><span class="n">4</span>Entrega y soporte</b>
+                    <span>Con ajustes posteriores si lo necesitas.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!----------------------------------------------->
+    <!--|estructurando_tienes_un_proyecto_en_mente|-->
+    <!----------------------------------------------->
+    <section id="cta-contactame">
+        <div class="w">
+            <div class="bloque">
+                <div class="cta">
+                    <h2>¿Tienes un proyecto en mente?</h2>
+                    <p>Cuéntame tu idea y te doy un estimado sin compromiso.</p>
+                    <a class="btn" href="contactame.html">Contáctame</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--------------------------------->
+    <!--|estructurando_pie_de_pagina|-->
+    <!--------------------------------->
+    <footer>
+        <div class="fw">
+            <div class="fcol"><h4>Enlaces rápidos</h4><ul>
+                <li><a href="inicio.html">Inicio</a></li>
+                <li><a href="sobre_mi.html">Sobre mí</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="proyectos.html">Proyectos</a></li>
+                <li><a href="contactame.html">Contáctame</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="sobre_mi.html">Sobre mí</a></h4>
+            <ul>
+                <li><a href="sobre_mi.html#s-experiencia">Experiencia laboral</a></li>
+                <li><a href="sobre_mi.html#s-formacion">Mi formación</a></li>
+                <li><a href="sobre_mi.html#s-academica">Mi formación académica</a></li>
+                <li><a href="sobre_mi.html#s-mas-alla">Más allá del trabajo</a></li>
+                <li><a href="sobre_mi.html#s-hacia-donde">Hacia dónde voy</a></li>
+                <li><a href="sobre_mi.html#s-habilidades">Mis habilidades</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="servicios.html">Servicios</a></h4>
+            <ul>
+                <li><a href="servicios.html#s-ofrezco">Lo que ofrezco</a></li>
+                <li><a href="servicios.html#s-por-que">¿Por qué trabajar conmigo?</a></li>
+                <li><a href="servicios.html#s-como-cotizo">Cómo cotizo</a></li>
+                <li><a href="servicios.html#s-como-trabajo">Cómo trabajo</a></li>
+                <li><a href="servicios.html#s-preguntas">Preguntas frecuentes</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="proyectos.html">Proyectos</a></h4>
+            <ul>
+                <li><a href="proyectos.html#s-proximo-proyecto">Próximos proyectos</a></li>
+                <li><a href="proyectos.html#s-destacados">Proyectos destacados</a></li>
+                <li><a href="proyectos.html?cat=lenguajes#filtros">Lenguajes de programación</a></li>
+                <li><a href="proyectos.html?cat=web#filtros">Desarrollo de sitios web</a></li>
+                <li><a href="proyectos.html?cat=juegos#filtros">Desarrollo de juegos</a></li>
+                <li><a href="proyectos.html#filtros">Otros proyectos</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4>Tecnologías</h4>
+            <ul>
+                <li><a href="proyectos.html?tec=PSeInt#filtros">PSeInt</a></li>
+                <li><a href="proyectos.html?tec=Python#filtros">Python</a></li>
+                <li><a href="proyectos.html?tec=Java#filtros">Java</a></li>
+                <li><a href="proyectos.html?tec=Visual%20Basic#filtros">Visual Basic</a></li>
+                <li><a href="proyectos.html?tec=Frontend#filtros">Frontend</a></li>
+                <li><a href="proyectos.html?tec=Backend#filtros">Backend</a></li>
+                <li><a href="proyectos.html?tec=Videojuegos#filtros">Videojuegos</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="contactame.html">Contáctame</a></h4>
+            <ul>
+                <li><a href="mailto:juanprueba@gmail.com">juanprueba@gmail.com</a></li>
+                <li><a href="tel:+571234567890">+57 1234567890</a></li>
+                <li><span>Cartagena de Indias, Colombia</span></li>
+            </ul>
+        </div>
+        <div class="fbot">
+            <span>© 2026 Mi Portafolio · Ingeniero Informático</span>
+        </div>
+    </footer>
+</body>
+</html>
