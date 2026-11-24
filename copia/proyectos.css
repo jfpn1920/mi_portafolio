@@ -503,15 +503,16 @@ nav .svg-inline--fa {
     font-weight:500;
     text-align:center;
 }
-/*-----------------------------------------------*/
-/*--|estilo_contenido_lenguaje_de_programacion|--*/
-/*-----------------------------------------------*/
+/*------------------------------*/
+/*--|estilo_contenido_ocultos|--*/
+/*------------------------------*/
 #plista-lenguajes {
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:1.125rem;
     max-width:none;
     margin-top:-24px;
+    margin-bottom:24px;
     margin-left:58px;
     margin-right:58px;
 }
@@ -591,6 +592,11 @@ nav .svg-inline--fa {
     border-radius:0.3125rem;
     font-weight:500;
     text-align:center;
+}
+#plista .pvacio, #plista-lenguajes .pvacio {
+    grid-column:1 / -1;
+    text-align:center;
+    color:var(--mut);
 }
 /*---------------------------------*/
 /*--|estilo_paginacion_proyectos|--*/

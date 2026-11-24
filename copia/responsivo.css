@@ -655,6 +655,113 @@
         padding:0.75rem 1.25rem;
         font-size:0.95rem;
     }
+    /*----------------------*/
+    /*--|proximo_proyecto|--*/
+    /*----------------------*/
+    #proximo-proyecto {
+        padding-top:0.75rem;
+    }
+    #proximo-proyecto .pp {
+        max-width:none;
+        margin:0;
+    }
+    #proximo-proyecto h2 {
+        margin-bottom:1rem;
+        font-size:1.2rem;
+    }
+    #proximo-proyecto .pp-img {
+        min-height:12rem;
+        margin-bottom:1rem;
+        font-size:3rem;
+    }
+    #proximo-proyecto .pp-txt h3 {
+        font-size:1rem;
+        text-align: center;
+    }
+    #proximo-proyecto .pp-txt p {
+        margin-top:0.625rem;
+        font-size:0.85rem;
+        text-align: justify;
+    }
+    #proximo-proyecto .pp-txt .pp-sub {
+        margin-top:1rem;
+    }
+    #proximo-proyecto .pp-tec {
+        gap:0.4rem;
+        margin-top:0.75rem;
+    }
+    #proximo-proyecto .pp-tec span {
+        padding:0.25rem 0.625rem;
+        font-size:0.8rem;
+    }
+    #proximo-proyecto .btn {
+        width:100%;
+        margin:1rem 0 0;
+        padding:0.7rem 1rem;
+        font-size:0.95rem;
+    }
+    /*--------------------------*/
+    /*--|proyectos_destacados|--*/
+    /*--------------------------*/
+    #proyectos-destacados {
+        box-sizing:border-box;
+        align-self:stretch;
+        width:100%;
+        margin-top: 15px;
+        padding:0.75rem 0 0;
+    }
+    #proyectos-destacados .w {
+        box-sizing:border-box;
+        width:100%;
+        max-width:none;
+        margin:0;
+        padding:0 1.25rem;
+    }
+    #proyectos-destacados .fila {
+        display:block;
+        width:100%;
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+    #proyectos-destacados h2 {
+        display:block;
+        width:100%;
+        margin:0 0 1rem;
+        font-size:1.2rem;
+        text-align:center;
+    }
+    #proyectos-destacados #pdestacados {
+        display:grid;
+        grid-template-columns:1fr;
+        width:100%;
+        gap:0.75rem;
+    }
+    #proyectos-destacados .pdest {
+        box-sizing:border-box;
+        width:100%;
+        gap:0.75rem;
+        padding:0.75rem;
+    }
+    #proyectos-destacados .pico {
+        width:2.25rem;
+        height:2.25rem;
+        font-size:1.125rem;
+    }
+    #proyectos-destacados .pdest b {
+        font-size:0.9rem;
+    }
+    #proyectos-destacados .pdest small {
+        font-size:0.75rem;
+    }
+    #proyectos-destacados .pdest .btn {
+        padding:0.35rem 0.75rem;
+        font-size:0.8rem;
+    }
+    /*-----------------------*/
+    /*--|filtros_proyectos|--*/
+    /*-----------------------*/
+
     /*-------------------*/
     /*--|pie_de_pagina|--*/
     /*-------------------*/
