@@ -1,7 +1,4 @@
 @media(min-width:300px) and (max-width:399.98px) {
-    /*----------------------------*/
-    /*--|orden_de_las_secciones|--*/
-    /*----------------------------*/
     html, body {
         overflow-x:hidden;
     }
@@ -761,7 +758,191 @@
     /*-----------------------*/
     /*--|filtros_proyectos|--*/
     /*-----------------------*/
-
+    #filtros-proyectos {
+        box-sizing:border-box;
+        align-self:stretch;
+        width:100%;
+        margin-top:60px;
+        padding:0;
+    }
+    #filtros-proyectos .w {
+        box-sizing:border-box;
+        width:100%;
+        max-width:none;
+        margin:0;
+        padding:0 1.25rem;
+    }
+    #filtros-proyectos .fbar {
+        box-sizing:border-box;
+        flex-direction:column;
+        align-items:stretch;
+        width:100%;
+        gap:0.875rem;
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+    #filtros-proyectos .busca {
+        flex:none;
+        width:100%;
+    }
+    #filtros-proyectos .busca svg {
+        width:2.5rem;
+        padding:0 0.75rem;
+    }
+    #filtros-proyectos .busca input {
+        padding:0.75rem 0.75rem 0.75rem 3rem;
+        font-size:0.85rem;
+    }
+    #filtros-proyectos .tipo {
+        flex:none;
+        width:100%;
+    }
+    #filtros-proyectos .tipo select {
+        padding:0.7rem 3.25rem 0.7rem 0.875rem;
+        font-size:0.85rem;
+    }
+    #lista-proyectos {
+        margin-top:2.5rem;
+    }
+    #plista-lenguajes {
+        margin-top:2.5rem;
+    }
+    /*---------------------*/
+    /*--|lista_proyectos|--*/
+    /*---------------------*/
+    #lista-proyectos {
+        box-sizing:border-box;
+        align-self:stretch;
+        width:100%;
+        padding:0;
+    }
+    #lista-proyectos .w {
+        box-sizing:border-box;
+        width:100%;
+        max-width:none;
+        margin:0;
+        padding:0 1.25rem;
+    }
+    #lista-proyectos .pgrid {
+        box-sizing:border-box;
+        grid-template-columns:1fr;
+        width:100%;
+        gap:1rem;
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+    #lista-proyectos .logo {
+        height:5.5rem;
+        font-size:2.25rem;
+    }
+    #lista-proyectos .pc h3 {
+        padding:0.75rem 1rem;
+        font-size:0.95rem;
+    }
+    #lista-proyectos .pc-body {
+        padding:0.875rem 1rem 1rem;
+    }
+    #lista-proyectos .pc-body h4 {
+        font-size:0.85rem;
+    }
+    #lista-proyectos .pc-body ul {
+        font-size:0.8rem;
+    }
+    #lista-proyectos .tech {
+        margin-top:1rem;
+        margin-bottom:1rem;
+    }
+    #lista-proyectos .tech small {
+        font-size:0.85rem;
+    }
+    #lista-proyectos .tech b {
+        font-size:0.8rem;
+    }
+    #lista-proyectos .pc .btn {
+        padding:0.6rem 1rem;
+        font-size:0.9rem;
+    }
+    /*-----------------------*/
+    /*--|contenido_ocultos|--*/
+    /*-----------------------*/
+    #plista-lenguajes {
+        box-sizing:border-box;
+        align-self:stretch;
+        grid-template-columns:1fr;
+        width:auto;
+        gap:1rem;
+        max-width:none;
+        margin-bottom:0;
+        margin-left:1.25rem;
+        margin-right:1.25rem;
+        padding:0;
+    }
+    #lista-proyectos:has(#plista[style*="none"]) {
+        display:none;
+    }
+    #plista-lenguajes .logo {
+        height:5.5rem;
+        font-size:2.25rem;
+    }
+    #plista-lenguajes .pc h3 {
+        padding:0.75rem 1rem;
+        font-size:0.95rem;
+    }
+    #plista-lenguajes .pc-body {
+        padding:0.875rem 1rem 1rem;
+    }
+    #plista-lenguajes .pc-body h4 {
+        font-size:0.85rem;
+    }
+    #plista-lenguajes .pc-body ul {
+        font-size:0.8rem;
+    }
+    #plista-lenguajes .tech {
+        margin-top:1rem;
+        margin-bottom:1rem;
+    }
+    #plista-lenguajes .tech small {
+        font-size:0.85rem;
+    }
+    #plista-lenguajes .tech b {
+        font-size:0.8rem;
+    }
+    #plista-lenguajes .pc .btn {
+        padding:0.6rem 1rem;
+        font-size:0.9rem;
+    }
+    /*--------------------------*/
+    /*--|paginacion_proyectos|--*/
+    /*--------------------------*/
+    #paginacion-proyectos {
+        box-sizing:border-box;
+        align-self:stretch;
+        width:100%;
+        margin-top:1.5rem;
+        padding:0 0 2.5rem;
+    }
+    #paginacion-proyectos .w {
+        box-sizing:border-box;
+        width:100%;
+        max-width:none;
+        margin:0;
+        padding:0 1.25rem;
+    }
+    #paginacion-proyectos .pag {
+        box-sizing:border-box;
+        width:100%;
+        gap:0.5rem;
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+    #paginacion-proyectos .pag-btn {
+        width:2.5rem;
+        height:2.5rem;
+        font-size:0.9rem;
+    }
     /*-------------------*/
     /*--|pie_de_pagina|--*/
     /*-------------------*/
