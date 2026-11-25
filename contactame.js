@@ -1,13 +1,32 @@
-/* Página Contáctame: el formulario abre el correo con el mensaje listo */
-
-/* ===== Formulario de la página Contáctame: abre el correo con el mensaje listo ===== */
-document.getElementById('form2').addEventListener('submit',e=>{
-  e.preventDefault();
-  const g=id=>document.getElementById(id).value.trim();
-  const cuerpo='Nombre: '+g('c-n')+'\nEmail: '+g('c-e')+'\nTipo de consulta: '+g('c-t')+'\n\n'+g('c-d');
-  const a=document.createElement('a');
-  a.href='mailto:dacamo0502@gmail.com?subject='+encodeURIComponent(g('c-a'))+'&body='+encodeURIComponent(cuerpo);
-  a.click();
-  document.getElementById('cmsg').textContent='Se abrió tu correo con el mensaje listo. Si no se abrió, escríbeme a dacamo0502@gmail.com.';
-});
-
+//--------------------------------------//
+//--|funcionalidad_menu_de_navegacion|--//
+//--------------------------------------//
+const barra = document.querySelector('nav');
+const medirBarra = () => document.documentElement.style.setProperty('--navh', barra.offsetHeight + 'px');
+medirBarra();
+addEventListener('resize', medirBarra);
+new ResizeObserver(medirBarra).observe(barra);
+const raiz = document.documentElement;
+const btnTema = document.getElementById('tema');
+let tema;
+try { tema = localStorage.getItem('tema'); } catch (e) {}
+if (!tema) tema = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+function aplicarTema() {
+    raiz.dataset.theme = tema;
+    btnTema.setAttribute('aria-label', tema === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+}
+btnTema.onclick = () => {
+    tema = tema === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('tema', tema); } catch (e) {}
+    aplicarTema();
+};
+aplicarTema();
+const btnMenu = document.getElementById('menu');
+function menu(abrir) {
+    barra.classList.toggle('open', abrir);
+    btnMenu.setAttribute('aria-expanded', abrir);
+    btnMenu.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+}
+btnMenu.onclick = () => menu(!barra.classList.contains('open'));                      
+barra.addEventListener('click', e => { if (e.target.closest('ul a')) menu(false); }); 
+addEventListener('keydown', e => { if (e.key === 'Escape') menu(false); });

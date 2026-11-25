@@ -1,109 +1,254 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Contáctame | Portafolio | Ingeniero Informático</title>
-<link rel="stylesheet" href="base.css">
-<link rel="stylesheet" href="contactame.css">
-<link rel="stylesheet" href="responsivo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contactame</title>
+    <link rel="stylesheet" href="./contactame.css">
+    <link rel="stylesheet" href="./responsivo.css">
+    <script src="./contactame.js" defer></script>
 </head>
 <body>
-<nav class="">
-<b>&lt;/&gt; Mi Portafolio</b>
-<ul id="menu-lista">
-<li><a href="inicio.html">Inicio</a></li>
-<li><a href="sobre_mi.html">Sobre mí</a></li>
-<li><a href="servicios.html">Servicios</a></li>
-<li><a href="proyectos.html">Proyectos</a></li>
-<li><a href="contactame.html">Contáctame</a></li>
-<li><a class="btn sm" download="" href="cv.pdf"><svg class="svg-inline--fa fa-download" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg><!-- <i class="fa-solid fa-download"></i> Font Awesome fontawesome.com --> Descargar CV</a></li>
-
-</ul><div class="nbtns"><button aria-label="Cambiar a modo claro" id="tema" type="button"><svg class="svg-inline--fa fa-moon ic-m" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></svg><!-- <i class="fa-solid fa-moon ic-m"></i> Font Awesome fontawesome.com --><svg class="svg-inline--fa fa-sun ic-s" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path></svg><!-- <i class="fa-solid fa-sun ic-s"></i> Font Awesome fontawesome.com --></button><button id="menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-lista"><svg class="svg-inline--fa fa-bars" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path></svg><!-- <i class="fa-solid fa-bars"></i> Font Awesome fontawesome.com --></button></div>
-</nav>
-<main id="v-contacto">
-<section>
-<div class="w">
-<h2 class="big">📩 <span class="hl">Contáctame</span></h2>
-<p class="sub" style="max-width:45rem;margin:.5rem auto 2.75rem;font-size:1.1rem;text-align:center;color:var(--mut)">¿Tienes un proyecto, una oportunidad o una idea para colaborar? Escríbeme y conversemos.</p>
-<div class="cont">
-<div class="cinfo">
-<h3 id="s-info-contacto">Información de contacto</h3>
-<p>Estoy disponible para proyectos freelance, oportunidades laborales y colaboraciones. Puedes escribirme por cualquiera de estos medios.</p>
-<a class="ci" href="mailto:dacamo0502@gmail.com"><span class="ico"><svg class="svg-inline--fa fa-envelope" aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"></path></svg><!-- <i class="fa-regular fa-envelope"></i> Font Awesome fontawesome.com --></span><div><b>Email</b><small>dacamo0502@gmail.com</small></div></a>
-<a class="ci" href="tel:+573116061807"><span class="ico"><svg class="svg-inline--fa fa-phone" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="phone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path></svg><!-- <i class="fa-solid fa-phone"></i> Font Awesome fontawesome.com --></span><div><b>Teléfono</b><small>+57 (311) 606-1807</small></div></a>
-<div class="ci"><span class="ico"><svg class="svg-inline--fa fa-location-dot" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-dot" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg><!-- <i class="fa-solid fa-location-dot"></i> Font Awesome fontawesome.com --></span><div><b>Ubicación</b><small>Cartagena de Indias, Colombia</small></div></div>
-<div class="ci cvc"><span class="ico"><svg class="svg-inline--fa fa-file-pdf" aria-hidden="true" focusable="false" data-prefix="far" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"></path></svg><!-- <i class="fa-regular fa-file-pdf"></i> Font Awesome fontawesome.com --></span><div><b>Hoja de vida</b><small>Descárgala en formato PDF</small></div><a class="btn sm" download="" href="cv.pdf"><svg class="svg-inline--fa fa-download" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg><!-- <i class="fa-solid fa-download"></i> Font Awesome fontawesome.com --> Descargar</a></div>
-<h4>Estoy disponible para:</h4>
-<div class="pills"><span class="pill">Proyectos freelance</span><span class="pill">Oportunidades laborales</span><span class="pill">Colaboraciones</span></div>
-<h4>También me puedes encontrar en:</h4>
-<div class="soc"><a aria-label="GitHub" href="#"><svg class="svg-inline--fa fa-github" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fa-brands fa-github"></i> Font Awesome fontawesome.com --></a><a aria-label="LinkedIn" href="#"><svg class="svg-inline--fa fa-linkedin-in" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="linkedin-in" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path></svg><!-- <i class="fa-brands fa-linkedin-in"></i> Font Awesome fontawesome.com --></a></div>
-</div>
-<form class="fcard" id="form2">
-<h3>Envíame un mensaje</h3>
-<div><label for="c-n">Nombre</label><input autocomplete="name" id="c-n" required=""></div>
-<div><label for="c-e">Email</label><input autocomplete="email" id="c-e" required="" type="email"></div>
-<div><label for="c-t">Tipo de consulta</label><select id="c-t"><option>Proyecto freelance</option><option>Oportunidad laboral</option><option>Colaboración</option><option>Otro</option></select></div>
-<div><label for="c-a">Asunto</label><input id="c-a" required=""></div>
-<div><label for="c-d">Mensaje</label><textarea id="c-d" required="" rows="5"></textarea></div>
-<button class="btn" type="submit"><svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false" data-prefix="far" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z"></path></svg><!-- <i class="fa-regular fa-paper-plane"></i> Font Awesome fontawesome.com --> Enviar mensaje</button>
-<p class="nota">Se abrirá tu aplicación de correo con el mensaje listo para enviar.</p>
-<div aria-live="polite" id="cmsg"></div>
-</form>
-</div>
-</div>
-</section>
-</main>
-<footer>
-<div class="fw">
-<div class="fcol"><h4>Enlaces rápidos</h4><ul>
-<li><a href="inicio.html">Inicio</a></li>
-<li><a href="sobre_mi.html">Sobre mí</a></li>
-<li><a href="servicios.html">Servicios</a></li>
-<li><a href="proyectos.html">Proyectos</a></li>
-<li><a href="contactame.html">Contáctame</a></li>
-</ul></div>
-<div class="fcol"><h4><a href="sobre_mi.html">Sobre mí</a></h4><ul>
-<li><a href="sobre_mi.html#s-experiencia">Experiencia laboral</a></li>
-<li><a href="sobre_mi.html#s-formacion">Mi formación</a></li>
-<li><a href="sobre_mi.html#s-academica">Mi formación académica</a></li>
-<li><a href="sobre_mi.html#s-mas-alla">Más allá del trabajo</a></li>
-<li><a href="sobre_mi.html#s-hacia-donde">Hacia dónde voy</a></li>
-<li><a href="sobre_mi.html#s-habilidades">Mis habilidades</a></li>
-</ul></div>
-<div class="fcol"><h4><a href="servicios.html">Servicios</a></h4><ul>
-<li><a href="servicios.html#s-ofrezco">Lo que ofrezco</a></li>
-<li><a href="servicios.html#s-por-que">¿Por qué trabajar conmigo?</a></li>
-<li><a href="servicios.html#s-como-cotizo">Cómo cotizo</a></li>
-<li><a href="servicios.html#s-como-trabajo">Cómo trabajo</a></li>
-<li><a href="servicios.html#s-preguntas">Preguntas frecuentes</a></li>
-</ul></div>
-<div class="fcol"><h4><a href="proyectos.html">Proyectos</a></h4><ul>
-<li><a href="proyectos.html#s-proximo-proyecto">Próximos proyectos</a></li>
-<li><a href="proyectos.html#s-destacados">Proyectos destacados</a></li>
-<li><a href="proyectos.html?cat=lenguajes#filtros">Lenguajes de programación</a></li>
-<li><a href="proyectos.html?cat=web#filtros">Desarrollo de sitios web</a></li>
-<li><a href="proyectos.html?cat=juegos#filtros">Desarrollo de juegos</a></li>
-<li><a href="proyectos.html#filtros">Otros proyectos</a></li>
-</ul></div>
-<div class="fcol"><h4>Tecnologías</h4><ul>
-<li><a href="proyectos.html?tec=PSeInt#filtros">PSeInt</a></li>
-<li><a href="proyectos.html?tec=Python#filtros">Python</a></li>
-<li><a href="proyectos.html?tec=Java#filtros">Java</a></li>
-<li><a href="proyectos.html?tec=Visual%20Basic#filtros">Visual Basic</a></li>
-<li><a href="proyectos.html?tec=Frontend#filtros">Frontend</a></li>
-<li><a href="proyectos.html?tec=Backend#filtros">Backend</a></li>
-<li><a href="proyectos.html?tec=Videojuegos#filtros">Videojuegos</a></li>
-</ul></div>
-<div class="fcol"><h4><a href="contactame.html">Contáctame</a></h4><ul>
-<li><a href="mailto:juanprueba@gmail.com">juanprueba@gmail.com</a></li>
-<li><a href="tel:+571234567890">+57 1234567890</a></li>
-<li><span>Cartagena de Indias, Colombia</span></li>
-</ul></div>
-</div>
-<div class="fbot"><span>© 2026 Mi Portafolio · Ingeniero Informático</span></div>
-</footer>
-<script src="comun.js"></script>
-<script src="contactame.js"></script>
+    <!-------------------------------------->
+    <!--|estructurando_menu_de_navegacion|-->
+    <!-------------------------------------->
+    <nav>
+        <b>&lt;/&gt; Mi Portafolio</b>
+        <ul id="menu-lista">
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="sobre_mi.html">Sobre mí</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="contactame.html">Contáctame</a></li>
+            <li>
+                <a class="btn sm" download="" href="cv.pdf">
+                    <svg class="svg-inline--fa fa-download" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path>
+                    </svg>Descargar CV
+                </a>
+            </li>
+        </ul>
+        <div class="nbtns">
+            <button aria-label="Cambiar a modo claro" id="tema" type="button">
+                <svg class="svg-inline--fa fa-moon ic-m" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg="">
+                    <path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                </svg>
+                <svg class="svg-inline--fa fa-sun ic-s" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                    <path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+                </svg>
+            </button>
+            <button id="menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-lista">
+                <svg class="svg-inline--fa fa-bars" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                    <path fill="currentColor" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <!--------------------------------------->
+    <!--|estructurando_contacto_encabezado|-->
+    <!--------------------------------------->
+    <section id="contacto-encabezado">
+        <div class="w">
+            <div class="bloque">
+                <h2 class="big">📩 <span class="hl">Contáctame</span></h2>
+                <p class="sub" style="max-width:45rem;margin:.5rem auto 2.75rem;font-size:1.1rem;text-align:center;color:var(--mut)">¿Tienes un proyecto, una oportunidad o una idea para colaborar? Escríbeme y conversemos.</p>
+            </div>
+        </div>
+    </section>
+    <!------------------------------------------->
+    <!--|estructurando_informacion_de_contacto|-->
+    <!------------------------------------------->
+    <section id="contacto-info">
+        <div class="w">
+            <div class="bloque cinfo">
+                <h3 id="s-info-contacto">Información de contacto</h3>
+                <p>Estoy disponible para proyectos freelance, oportunidades laborales y colaboraciones. Puedes escribirme por cualquiera de estos medios.</p>
+                <a class="ci" href="mailto:dacamo0502@gmail.com">
+                    <span class="ico">
+                        <svg class="svg-inline--fa fa-envelope" aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"></path>
+                        </svg>
+                    </span>
+                    <div>
+                        <b>Email</b>
+                        <small>dacamo0502@gmail.com</small>
+                    </div>
+                </a>
+                <a class="ci" href="tel:+573116061807">
+                    <span class="ico">
+                        <svg class="svg-inline--fa fa-phone" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="phone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"></path>
+                        </svg>
+                    </span>
+                    <div>
+                        <b>Teléfono</b>
+                        <small>+57 (311) 606-1807</small>
+                    </div>
+                </a>
+                <div class="ci">
+                    <span class="ico">
+                        <svg class="svg-inline--fa fa-location-dot" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-dot" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path>
+                        </svg>
+                    </span>
+                    <div>
+                        <b>Ubicación</b>
+                        <small>Cartagena de Indias, Colombia</small>
+                    </div>
+                </div>
+                <div class="ci cvc">
+                    <span class="ico">
+                        <svg class="svg-inline--fa fa-file-pdf" aria-hidden="true" focusable="false" data-prefix="far" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"></path>
+                        </svg>
+                    </span>
+                    <div>
+                        <b>Hoja de vida</b>
+                        <small>Descárgala en formato PDF</small>
+                    </div>
+                    <a class="btn sm" download="" href="cv.pdf">
+                        <svg class="svg-inline--fa fa-download" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path>
+                        </svg>
+                        Descargar
+                    </a>
+                </div>
+                <div class="cdisp">
+                    <h4>Estoy disponible para:</h4>
+                    <div class="pills">
+                        <span class="pill">Proyectos freelance</span>
+                        <span class="pill">Oportunidades laborales</span>
+                        <span class="pill">Colaboraciones</span>
+                    </div>
+                </div>
+                <div class="credes">
+                    <h4>También me puedes encontrar en:</h4>
+                    <div class="soc">
+                        <a aria-label="GitHub" href="#">
+                            <svg class="svg-inline--fa fa-github" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                                <path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
+                            </svg>
+                        </a>
+                        <a aria-label="LinkedIn" href="#">
+                            <svg class="svg-inline--fa fa-linkedin-in" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="linkedin-in" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-------------------------------------->
+    <!--|estructurando_enviame_un_mensaje|-->
+    <!-------------------------------------->
+    <section id="contacto-formulario">
+        <div class="w">
+            <form class="bloque fcard" id="form2">
+                <h3>Envíame un mensaje</h3>
+                <div>
+                    <label for="c-n">Nombre</label>
+                    <input autocomplete="name" id="c-n" required="">
+                </div>
+                <div>
+                    <label for="c-e">Email</label>
+                    <input autocomplete="email" id="c-e" required="" type="email">
+                </div>
+                <div>
+                    <label for="c-t">Tipo de consulta</label>
+                    <select id="c-t">
+                        <option>Proyecto freelance</option>
+                        <option>Oportunidad laboral</option>
+                        <option>Colaboración</option>
+                        <option>Otro</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="c-a">Asunto</label>
+                    <input id="c-a" required="">
+                </div>
+                <div>
+                    <label for="c-d">Mensaje</label>
+                    <textarea id="c-d" required="" rows="5"></textarea>
+                </div>
+                <button class="btn" type="submit">
+                    <svg class="svg-inline--fa fa-paper-plane" aria-hidden="true" focusable="false" data-prefix="far" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path fill="currentColor" d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z"></path>
+                    </svg> Enviar mensaje
+                </button>
+                <p class="nota">Se abrirá tu aplicación de correo con el mensaje listo para enviar.</p>
+                <div aria-live="polite" id="cmsg"></div>
+            </form>
+        </div>
+    </section>
+    <!--------------------------------->
+    <!--|estructurando_pie_de_pagina|-->
+    <!--------------------------------->
+    <footer>
+        <div class="fw">
+            <div class="fcol"><h4>Enlaces rápidos</h4><ul>
+                <li><a href="inicio.html">Inicio</a></li>
+                <li><a href="sobre_mi.html">Sobre mí</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="proyectos.html">Proyectos</a></li>
+                <li><a href="contactame.html">Contáctame</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="sobre_mi.html">Sobre mí</a></h4>
+            <ul>
+                <li><a href="sobre_mi.html#s-experiencia">Experiencia laboral</a></li>
+                <li><a href="sobre_mi.html#s-formacion">Mi formación</a></li>
+                <li><a href="sobre_mi.html#s-academica">Mi formación académica</a></li>
+                <li><a href="sobre_mi.html#s-mas-alla">Más allá del trabajo</a></li>
+                <li><a href="sobre_mi.html#s-hacia-donde">Hacia dónde voy</a></li>
+                <li><a href="sobre_mi.html#s-habilidades">Mis habilidades</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="servicios.html">Servicios</a></h4>
+            <ul>
+                <li><a href="servicios.html#s-ofrezco">Lo que ofrezco</a></li>
+                <li><a href="servicios.html#s-por-que">¿Por qué trabajar conmigo?</a></li>
+                <li><a href="servicios.html#s-como-cotizo">Cómo cotizo</a></li>
+                <li><a href="servicios.html#s-como-trabajo">Cómo trabajo</a></li>
+                <li><a href="servicios.html#s-preguntas">Preguntas frecuentes</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="proyectos.html">Proyectos</a></h4>
+            <ul>
+                <li><a href="proyectos.html#s-proximo-proyecto">Próximos proyectos</a></li>
+                <li><a href="proyectos.html#s-destacados">Proyectos destacados</a></li>
+                <li><a href="proyectos.html?cat=lenguajes#filtros">Lenguajes de programación</a></li>
+                <li><a href="proyectos.html?cat=web#filtros">Desarrollo de sitios web</a></li>
+                <li><a href="proyectos.html?cat=juegos#filtros">Desarrollo de juegos</a></li>
+                <li><a href="proyectos.html#filtros">Otros proyectos</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4>Tecnologías</h4>
+            <ul>
+                <li><a href="proyectos.html?tec=PSeInt#filtros">PSeInt</a></li>
+                <li><a href="proyectos.html?tec=Python#filtros">Python</a></li>
+                <li><a href="proyectos.html?tec=Java#filtros">Java</a></li>
+                <li><a href="proyectos.html?tec=Visual%20Basic#filtros">Visual Basic</a></li>
+                <li><a href="proyectos.html?tec=Frontend#filtros">Frontend</a></li>
+                <li><a href="proyectos.html?tec=Backend#filtros">Backend</a></li>
+                <li><a href="proyectos.html?tec=Videojuegos#filtros">Videojuegos</a></li>
+            </ul>
+        </div>
+        <div class="fcol">
+            <h4><a href="contactame.html">Contáctame</a></h4>
+            <ul>
+                <li><a href="mailto:juanprueba@gmail.com">juanprueba@gmail.com</a></li>
+                <li><a href="tel:+571234567890">+57 1234567890</a></li>
+                <li><span>Cartagena de Indias, Colombia</span></li>
+            </ul>
+        </div>
+        <div class="fbot">
+            <span>© 2026 Mi Portafolio · Ingeniero Informático</span>
+        </div>
+    </footer>
 </body>
 </html>
