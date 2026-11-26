@@ -943,6 +943,161 @@
         height:2.5rem;
         font-size:0.9rem;
     }
+    /*-------------------------*/
+    /*--|contacto_encabezado|--*/
+    /*-------------------------*/
+    #contacto-encabezado {
+        padding: 2.5rem 0 0;
+    }
+    #contacto-encabezado .bloque {
+        box-sizing: border-box;
+        padding: 0 1.25rem;
+    }
+    #contacto-encabezado .big {
+        gap: .5rem;
+        font-size: 2rem;
+        line-height: 1.15;
+    }
+    #contacto-encabezado .bloque .sub {
+        max-width: 100%;
+        margin: .5rem auto 1.75rem;
+        font-size: .95rem;
+        line-height: 1.5;
+        text-align: justify;
+        text-align-last: center;
+        hyphens: auto;
+    }
+    /*-----------------------------*/
+    /*--|informacion_de_contacto|--*/
+    /*-----------------------------*/
+    #contacto-info {
+        float: none;
+        clear: both;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    #contacto-info > .w {
+        padding: 0 1.25rem;
+        margin: 0;
+    }
+    #contacto-info .bloque {
+        padding: 0;
+    }
+    #contacto-info h3 {
+        margin: 0 0 .6rem;
+        font-size: 1.15rem;
+        text-align: center;
+    }
+    #contacto-info > .w > .bloque > p {
+        margin: 0 0 1rem;
+        font-size: .88rem;
+        line-height: 1.5;
+    }
+    #contacto-info .ci {
+        gap: .75rem;
+        margin-bottom: .7rem;
+        padding: .85rem;
+    }
+    #contacto-info .ci > div {
+        min-width: 0;
+    }
+    #contacto-info .ci b {
+        font-size: .88rem;
+    }
+    #contacto-info .ci small {
+        font-size: .78rem;
+        overflow-wrap: anywhere;
+    }
+    #contacto-info .ico {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+    #contacto-info .ico svg {
+        width: .95rem;
+        height: .95rem;
+    }
+    #contacto-info .cvc {
+        flex-wrap: wrap;
+    }
+    #contacto-info .cvc > div {
+        flex: 1 1 0;
+    }
+    #contacto-info .cvc .btn {
+        flex: 1 1 100%;
+        justify-content: center;
+        margin-left: 0;
+        padding: .55rem .7rem;
+    }
+    #contacto-info .cdisp, #contacto-info .credes {
+        margin-top: 1.25rem;
+    }
+    #contacto-info h4 {
+        margin: 0 0 .6rem;
+        font-size: .88rem;
+    }
+    #contacto-info .pills {
+        gap: .45rem;
+    }
+    #contacto-info .pill {
+        padding: .5rem .65rem;
+        font-size: .76rem;
+    }
+    #contacto-info .soc {
+        gap: .5rem;
+    }
+    #contacto-info .soc a {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+    /*------------------------*/
+    /*--|enviame_un_mensaje|--*/
+    /*------------------------*/
+    #contacto-formulario {
+        float: none;
+        clear: both;
+        width: 100%;
+        padding: 0;
+        margin: 2rem 0 0;
+    }
+    #contacto-formulario > .w {
+        padding: 0 1.25rem;
+        margin: 0;
+    }
+    #contacto-formulario .fcard {
+        margin-left: 0;
+        padding: 1.25rem;
+    }
+    #contacto-formulario h3 {
+        margin: 0 0 1rem;
+        font-size: 1.15rem;
+        text-align: center;
+    }
+    #contacto-formulario .fcard > div:not(#cmsg) {
+        margin-bottom: .6rem;
+    }
+    #contacto-formulario label {
+        font-size: .78rem;
+    }
+    #contacto-formulario input, #contacto-formulario select, #contacto-formulario textarea {
+        padding: .7rem .85rem;
+        font-size: 1rem;
+    }
+    #contacto-formulario select {
+        padding: .65rem .85rem;
+    }
+    #contacto-formulario textarea {
+        height: 7rem;
+    }
+    #contacto-formulario .btn {
+        padding: .75rem;
+        font-size: .85rem;
+    }
+    #contacto-formulario .nota {
+        margin-top: .7rem;
+        font-size: .72rem;
+        text-align: justify;
+    }
     /*-------------------*/
     /*--|pie_de_pagina|--*/
     /*-------------------*/

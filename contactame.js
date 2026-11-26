@@ -30,3 +30,14 @@ function menu(abrir) {
 btnMenu.onclick = () => menu(!barra.classList.contains('open'));                      
 barra.addEventListener('click', e => { if (e.target.closest('ul a')) menu(false); }); 
 addEventListener('keydown', e => { if (e.key === 'Escape') menu(false); });
+//--------------------------------------//
+//--|funcionalidad_enviame_un_mensaje|--//
+//--------------------------------------//
+const form2 = document.getElementById('form2');
+if (form2) {
+    form2.addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('Se acaba de enviar tu solicitud, pronto recibirás respuesta del ingeniero.');
+        form2.reset();
+    });
+}
