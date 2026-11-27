@@ -15,7 +15,17 @@
     /*------------------------*/
     /*--|menu_de_navegacion|--*/
     /*------------------------*/
+    html {
+        scroll-padding-top:var(--navh,3.6rem);
+    }
+    body {
+        padding-top:var(--navh,3.6rem);
+    }
     nav {
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
         flex-wrap:wrap;
         width:100%;
         gap:0.5rem;
@@ -34,13 +44,18 @@
     }
     nav ul {
         display:none;
-        order:3;
-        width:100%;
+        position:absolute;
+        top:calc(100% + 1px);
+        left:0;
+        right:0;
         flex-direction:column;
         align-items:stretch;
         gap:0.25rem;
-        padding:0.5rem 0 0.25rem;
-        max-height:calc(100dvh - 4.5rem);
+        padding:0.5rem 0.875rem 0.75rem;
+        background:var(--card);
+        border-bottom:1px solid var(--bd);
+        box-shadow:0 0.5rem 1rem rgba(0,0,0,.25);
+        max-height:calc(100dvh - var(--navh,3.5rem));
         overflow-y:auto;
     }
     nav.open ul {

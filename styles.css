@@ -76,6 +76,43 @@ h2 {
 [hidden] {
     display:none !important;
 }
+/*----------------------------------*/
+/*--|distribucion_en_dos_columnas|--*/
+/*----------------------------------*/
+#sobre-mi, #habilidades {
+    float:left;
+    clear:left;
+    width:50%;
+    padding-right:0.75rem;
+}
+#proximo-proyecto, #proyectos {
+    float:right;
+    clear:right;
+    width:50%;
+    padding-left:0.75rem;
+}
+#habilidades, #proyectos {
+    padding-top:0;
+}
+#habilidades {
+    margin-top:-0.25rem;
+}
+#sobre-mi {
+    padding-bottom:0;
+}
+#proximo-proyecto {
+    padding-bottom:0;
+}
+#proyectos {
+    padding-top:2rem;
+}
+#proximo-proyecto .w {
+    max-width:46rem;
+    margin:0 0 0 auto;
+}
+#inicio-servicios {
+    clear:both;
+}
 /*-------------------------------*/
 /*--|estilo_menu_de_navegacion|--*/
 /*-------------------------------*/
@@ -266,43 +303,6 @@ nav .svg-inline--fa {
 }
 .dots button.on {
     background:var(--dk);
-}
-/*----------------------------------*/
-/*--|distribucion_en_dos_columnas|--*/
-/*----------------------------------*/
-#sobre-mi, #habilidades {
-    float:left;
-    clear:left;
-    width:50%;
-    padding-right:0.75rem;
-}
-#proximo-proyecto, #proyectos {
-    float:right;
-    clear:right;
-    width:50%;
-    padding-left:0.75rem;
-}
-#habilidades, #proyectos {
-    padding-top:0;
-}
-#habilidades {
-    margin-top:-0.25rem;
-}
-#sobre-mi {
-    padding-bottom:0;
-}
-#proximo-proyecto {
-    padding-bottom:0;
-}
-#proyectos {
-    padding-top:2rem;
-}
-#proximo-proyecto .w {
-    max-width:46rem;
-    margin:0 0 0 auto;
-}
-#inicio-servicios {
-    clear:both;
 }
 /*---------------------*/
 /*--|estilo_sobre_mi|--*/
