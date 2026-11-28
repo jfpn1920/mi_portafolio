@@ -820,9 +820,621 @@ nav.open ul li:nth-child(6) { animation-delay: .30s; }
         transition-duration: .01ms !important;
     }
 }
-/*------------------------*/
-/*--|animacion_sobre_mi|--*/
-/*------------------------*/
+/*-----------------------------------*/
+/*--|animacion_experiencia_laboral|--*/
+/*-----------------------------------*/
+@keyframes expTituloEntra {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+}
+@keyframes expCardEntra {
+    from {
+        opacity: 0;
+        transform: translateY(2rem) scale(.96);
+    }
+}
+@keyframes expSube {
+    from {
+        opacity: 0;
+        transform: translateY(.75rem);
+    }
+}
+@keyframes expItemEntra {
+    from {
+        opacity: 0;
+        transform: translateX(-1rem);
+    }
+}
+#experiencia-laboral h2 {
+    animation: expTituloEntra .7s ease-out 1.4s backwards;
+}
+#experiencia-laboral .card:nth-child(1) { --d: 1.6s; }
+#experiencia-laboral .card:nth-child(2) { --d: 1.9s; }
+#experiencia-laboral .card:nth-child(3) { --d: 2.2s; }
+#experiencia-laboral .card {
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    animation: expCardEntra .8s cubic-bezier(.22, 1, .36, 1) var(--d) backwards;
+}
+#experiencia-laboral .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--ac);
+    box-shadow: 0 .75rem 1.5rem rgba(185, 168, 255, .2);
+}
+#experiencia-laboral .card h3 {
+    animation: expSube .6s ease-out calc(var(--d) + .25s) backwards;
+}
+#experiencia-laboral .card small {
+    animation: expSube .6s ease-out calc(var(--d) + .4s) backwards;
+}
+#experiencia-laboral .card li {
+    animation: expItemEntra .5s ease-out backwards;
+}
+#experiencia-laboral .card li:nth-child(1) { animation-delay: calc(var(--d) + .55s); }
+#experiencia-laboral .card li:nth-child(2) { animation-delay: calc(var(--d) + .65s); }
+#experiencia-laboral .card li:nth-child(3) { animation-delay: calc(var(--d) + .75s); }
+#experiencia-laboral .card li:nth-child(4) { animation-delay: calc(var(--d) + .85s); }
+@media (prefers-reduced-motion: reduce) {
+    #experiencia-laboral, #experiencia-laboral * {
+        animation: none !important;
+        transition-duration: .01ms !important;
+    }
+}
+/*----------------------------*/
+/*--|animacion_mi_formacion|--*/
+/*----------------------------*/
+@keyframes formTituloEntra {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+}
+@keyframes formCardEntra {
+    from {
+        opacity: 0;
+        transform: translateY(2rem) scale(.96);
+    }
+}
+@keyframes formSube {
+    from {
+        opacity: 0;
+        transform: translateY(.75rem);
+    }
+}
+#mi-formacion h2 {
+    animation: formTituloEntra .7s ease-out 2.6s backwards;
+}
+#mi-formacion .card:nth-child(1) { --d: 2.8s; }
+#mi-formacion .card:nth-child(2) { --d: 3.1s; }
+#mi-formacion .card {
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    animation: formCardEntra .8s cubic-bezier(.22, 1, .36, 1) var(--d) backwards;
+}
+#mi-formacion .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--ac);
+    box-shadow: 0 .75rem 1.5rem rgba(185, 168, 255, .2);
+}
+#mi-formacion .card h3 {
+    animation: formSube .6s ease-out calc(var(--d) + .25s) backwards;
+}
+#mi-formacion .card small {
+    animation: formSube .6s ease-out calc(var(--d) + .4s) backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+    #mi-formacion, #mi-formacion * {
+        animation: none !important;
+        transition-duration: .01ms !important;
+    }
+}
+/*-----------------------------------*/
+/*--|animacion_formacion_academica|--*/
+/*-----------------------------------*/
+@keyframes acaTituloEntra {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+}
+@keyframes acaCardEntra {
+    from {
+        opacity: 0;
+        transform: translateY(2rem) scale(.96);
+    }
+}
+@keyframes acaSube {
+    from {
+        opacity: 0;
+        transform: translateY(.75rem);
+    }
+}
+#formacion-academica h2 {
+    animation: acaTituloEntra .7s ease-out 3.6s backwards;
+}
+#formacion-academica .card:nth-child(1) { --d: 3.8s; }
+#formacion-academica .card:nth-child(2) { --d: 4.1s; }
+#formacion-academica .card {
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    animation: acaCardEntra .8s cubic-bezier(.22, 1, .36, 1) var(--d) backwards;
+}
+#formacion-academica .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--ac);
+    box-shadow: 0 .75rem 1.5rem rgba(185, 168, 255, .2);
+}
+#formacion-academica .card h3 {
+    animation: acaSube .6s ease-out calc(var(--d) + .25s) backwards;
+}
+#formacion-academica .card small {
+    animation: acaSube .6s ease-out calc(var(--d) + .4s) backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+    #formacion-academica, #formacion-academica * {
+        animation: none !important;
+        transition-duration: .01ms !important;
+    }
+}
+/*------------------------------------*/
+/*--|animacion_mas_alla_del_trabajo|--*/
+/*------------------------------------*/
+#mas-alla-del-trabajo h2 {
+    animation: mat-titulo .7s ease-out 4.2s backwards;
+}
+#mas-alla-del-trabajo p {
+    animation: mat-texto .8s ease-out 4.4s backwards;
+}
+#mas-alla-del-trabajo .tags span {
+    animation: mat-etiqueta .6s cubic-bezier(.2,.8,.3,1.2) backwards;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+#mas-alla-del-trabajo .tags span:nth-child(1) { animation-delay: 4.6s; }
+#mas-alla-del-trabajo .tags span:nth-child(2) { animation-delay: 4.8s; }
+#mas-alla-del-trabajo .tags span:nth-child(3) { animation-delay: 5s; }
+#mas-alla-del-trabajo .tags svg {
+    animation: mat-icono .5s ease-out backwards;
+    transition: transform .25s ease;
+}
+#mas-alla-del-trabajo .tags span:nth-child(1) svg { animation-delay: 4.85s; }
+#mas-alla-del-trabajo .tags span:nth-child(2) svg { animation-delay: 5.05s; }
+#mas-alla-del-trabajo .tags span:nth-child(3) svg { animation-delay: 5.25s; }
+#mas-alla-del-trabajo .tags span:hover {
+    transform: translateY(-3px);
+    border-color: var(--ac);
+    box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+#mas-alla-del-trabajo .tags span:hover svg {
+    transform: rotate(-12deg) scale(1.2);
+}
+@keyframes mat-titulo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mat-texto {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mat-etiqueta {
+    from { opacity: 0; transform: translateY(18px) scale(.85); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes mat-icono {
+    from { opacity: 0; transform: rotate(-90deg) scale(.4); }
+    to   { opacity: 1; transform: rotate(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #mas-alla-del-trabajo h2,
+    #mas-alla-del-trabajo p,
+    #mas-alla-del-trabajo .tags span,
+    #mas-alla-del-trabajo .tags svg {
+        animation: none;
+        transition: none;
+    }
+    #mas-alla-del-trabajo .tags span:hover,
+    #mas-alla-del-trabajo .tags span:hover svg {
+        transform: none;
+    }
+}
+/*-------------------------------*/
+/*--|animacion_hacia_donde_voy|--*/
+/*-------------------------------*/
+#hacia-donde-voy h2 {
+    animation: hdv-titulo .8s cubic-bezier(.2,.8,.3,1.15) 5.4s backwards;
+}
+#hacia-donde-voy p {
+    animation: hdv-texto .9s ease-out 5.7s backwards;
+}
+@keyframes hdv-titulo {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hdv-texto {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #hacia-donde-voy h2,
+    #hacia-donde-voy p {
+        animation: none;
+    }
+}
+/*---------------------------------*/
+/*--|animacion_proyecto_de_grado|--*/
+/*---------------------------------*/
+#proyecto-de-grado h2 {
+    animation: pdg-titulo .7s ease-out 1s backwards;
+}
+#proyecto-de-grado .srv-img {
+    animation: pdg-recuadro .8s cubic-bezier(.2,.8,.3,1.1) 1.2s backwards;
+}
+#proyecto-de-grado .srv-img svg {
+    animation: pdg-icono .6s ease-out 1.5s backwards;
+    transition: transform .3s ease;
+}
+#proyecto-de-grado h3 {
+    animation: pdg-texto .7s ease-out 1.6s backwards;
+}
+#proyecto-de-grado p:nth-of-type(1) {
+    animation: pdg-texto .7s ease-out 1.8s backwards;
+}
+#proyecto-de-grado p:nth-of-type(2) {
+    animation: pdg-texto .7s ease-out 2s backwards;
+}
+#proyecto-de-grado .btn {
+    animation: pdg-boton .7s cubic-bezier(.2,.8,.3,1.1) 2.2s backwards;
+    transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+#proyecto-de-grado .srv-img:hover svg {
+    transform: scale(1.12);
+}
+#proyecto-de-grado .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    filter: brightness(1.08);
+}
+@keyframes pdg-titulo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pdg-recuadro {
+    from { opacity: 0; transform: translateY(18px) scale(.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pdg-icono {
+    from { opacity: 0; transform: rotate(-20deg) scale(.5); }
+    to   { opacity: 1; transform: rotate(0) scale(1); }
+}
+@keyframes pdg-texto {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pdg-boton {
+    from { opacity: 0; transform: translateY(16px) scale(.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #proyecto-de-grado h2,
+    #proyecto-de-grado .srv-img,
+    #proyecto-de-grado .srv-img svg,
+    #proyecto-de-grado h3,
+    #proyecto-de-grado p,
+    #proyecto-de-grado .btn {
+        animation: none;
+        transition: none;
+    }
+    #proyecto-de-grado .srv-img:hover svg,
+    #proyecto-de-grado .btn:hover {
+        transform: none;
+    }
+}
+/*-------------------------------*/
+/*--|animacion_mis_habilidades|--*/
+/*-------------------------------*/
+#habilidades_parte_2 .card_parte_2:nth-child(1) { --b: 1.2s; }
+#habilidades_parte_2 .card_parte_2:nth-child(2) { --b: 1.5s; }
+#habilidades_parte_2 .card_parte_2:nth-child(3) { --b: 1.8s; }
+#habilidades_parte_2 .tags_parte_2 span:nth-child(1) { --i: 1; }
+#habilidades_parte_2 .tags_parte_2 span:nth-child(2) { --i: 2; }
+#habilidades_parte_2 .tags_parte_2 span:nth-child(3) { --i: 3; }
+#habilidades_parte_2 .tags_parte_2 span:nth-child(4) { --i: 4; }
+#habilidades_parte_2 .tags_parte_2 span:nth-child(5) { --i: 5; }
+#habilidades_parte_2 .tags_parte_2 span:nth-child(6) { --i: 6; }
+#habilidades_parte_2 h2 {
+    animation: mh-titulo .7s ease-out 1s backwards;
+}
+#habilidades_parte_2 .card_parte_2 {
+    animation: mh-tarjeta .7s cubic-bezier(.2,.8,.3,1.1) var(--b) backwards;
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+#habilidades_parte_2 .card_parte_2 h3 {
+    animation: mh-texto .6s ease-out calc(var(--b) + .2s) backwards;
+}
+#habilidades_parte_2 .tags_parte_2 span {
+    animation: mh-etiqueta .5s cubic-bezier(.2,.8,.3,1.2) calc(var(--b) + .3s + var(--i) * .08s) backwards;
+    transition: transform .25s ease, border-color .25s ease, color .25s ease;
+}
+#habilidades_parte_2 .card_parte_2:hover {
+    transform: translateY(-4px);
+    border-color: var(--ac);
+    box-shadow: 0 8px 20px rgba(0,0,0,.28);
+}
+#habilidades_parte_2 .tags_parte_2 span:hover {
+    transform: translateY(-2px);
+    border-color: var(--ac);
+    color: var(--ac);
+}
+@keyframes mh-titulo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mh-tarjeta {
+    from { opacity: 0; transform: translateY(22px) scale(.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes mh-texto {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mh-etiqueta {
+    from { opacity: 0; transform: translateY(10px) scale(.85); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #habilidades_parte_2 h2,
+    #habilidades_parte_2 .card_parte_2,
+    #habilidades_parte_2 .card_parte_2 h3,
+    #habilidades_parte_2 .tags_parte_2 span {
+        animation: none;
+        transition: none;
+    }
+    #habilidades_parte_2 .card_parte_2:hover,
+    #habilidades_parte_2 .tags_parte_2 span:hover {
+        transform: none;
+    }
+}
+/*----------------------------------------*/
+/*--|animacion_por_que_trabajar_conmigo|--*/
+/*----------------------------------------*/
+#por-que-conmigo .it:nth-of-type(1) { --b: 1.2s; }
+#por-que-conmigo .it:nth-of-type(2) { --b: 1.5s; }
+#por-que-conmigo .it:nth-of-type(3) { --b: 1.8s; }
+#por-que-conmigo h2 {
+    animation: pqc-titulo .7s ease-out 1s backwards;
+}
+#por-que-conmigo .it {
+    animation: pqc-punto .7s ease-out var(--b) backwards;
+    transition: transform .3s ease;
+}
+#por-que-conmigo .it b {
+    animation: pqc-texto .6s ease-out calc(var(--b) + .1s) backwards;
+    transition: color .3s ease;
+}
+#por-que-conmigo .it span {
+    animation: pqc-texto .6s ease-out calc(var(--b) + .3s) backwards;
+}
+#por-que-conmigo .it:hover {
+    transform: translateX(6px);
+}
+#por-que-conmigo .it:hover b {
+    color: var(--ac);
+}
+@keyframes pqc-titulo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pqc-punto {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pqc-texto {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #por-que-conmigo h2,
+    #por-que-conmigo .it,
+    #por-que-conmigo .it b,
+    #por-que-conmigo .it span {
+        animation: none;
+        transition: none;
+    }
+    #por-que-conmigo .it:hover {
+        transform: none;
+    }
+}
+/*---------------------------*/
+/*--|animacion_como_cotizo|--*/
+/*---------------------------*/
+#como-cotizo h2 {
+    animation: cc-titulo .7s ease-out 1s backwards;
+}
+#como-cotizo p {
+    animation: cc-texto .8s ease-out 1.3s backwards;
+}
+@keyframes cc-titulo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes cc-texto {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #como-cotizo h2,
+    #como-cotizo p {
+        animation: none;
+    }
+}
+/*------------------------------------*/
+/*--|animacion_preguntas_frecuentes|--*/
+/*------------------------------------*/
+#preguntas-frecuentes .it:nth-of-type(1) { --b: 1.2s; }
+#preguntas-frecuentes .it:nth-of-type(2) { --b: 1.35s; }
+#preguntas-frecuentes .it:nth-of-type(3) { --b: 1.5s; }
+#preguntas-frecuentes .it:nth-of-type(4) { --b: 1.65s; }
+#preguntas-frecuentes .it:nth-of-type(5) { --b: 1.8s; }
+#preguntas-frecuentes .it:nth-of-type(6) { --b: 1.95s; }
+#preguntas-frecuentes h2 {
+    animation: pf-titulo .7s ease-out 1s backwards;
+}
+#preguntas-frecuentes .it {
+    animation: pf-punto .6s ease-out var(--b) backwards;
+    transition: transform .3s ease;
+}
+#preguntas-frecuentes .it b {
+    animation: pf-texto .5s ease-out calc(var(--b) + .1s) backwards;
+    transition: color .3s ease;
+}
+#preguntas-frecuentes .it span {
+    animation: pf-texto .5s ease-out calc(var(--b) + .25s) backwards;
+}
+#preguntas-frecuentes .it:hover {
+    transform: translateX(6px);
+}
+#preguntas-frecuentes .it:hover b {
+    color: var(--ac);
+}
+@keyframes pf-titulo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pf-punto {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pf-texto {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #preguntas-frecuentes h2,
+    #preguntas-frecuentes .it,
+    #preguntas-frecuentes .it b,
+    #preguntas-frecuentes .it span {
+        animation: none;
+        transition: none;
+    }
+    #preguntas-frecuentes .it:hover {
+        transform: none;
+    }
+}
+/*----------------------------*/
+/*--|animacion_como_trabajo|--*/
+/*----------------------------*/
+#como-trabajo .it:nth-of-type(1) { --b: 1.2s; }
+#como-trabajo .it:nth-of-type(2) { --b: 1.5s; }
+#como-trabajo .it:nth-of-type(3) { --b: 1.8s; }
+#como-trabajo .it:nth-of-type(4) { --b: 2.1s; }
+#como-trabajo h2 {
+    animation: ct-titulo .7s ease-out 1s backwards;
+}
+#como-trabajo .it {
+    animation: ct-paso .7s ease-out var(--b) backwards;
+    transition: transform .3s ease;
+}
+#como-trabajo .it b {
+    transition: color .3s ease;
+}
+#como-trabajo .it b .n {
+    animation: ct-numero .6s cubic-bezier(.2,.8,.3,1.4) calc(var(--b) + .15s) backwards;
+    transition: transform .25s ease;
+}
+#como-trabajo .it > span {
+    animation: ct-texto .6s ease-out calc(var(--b) + .3s) backwards;
+}
+#como-trabajo .it:hover {
+    transform: translateX(6px);
+}
+#como-trabajo .it:hover b {
+    color: var(--ac);
+}
+#como-trabajo .it:hover b .n {
+    transform: scale(1.15);
+}
+@keyframes ct-titulo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ct-paso {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ct-numero {
+    from { opacity: 0; transform: scale(.3); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes ct-texto {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #como-trabajo h2,
+    #como-trabajo .it,
+    #como-trabajo .it b,
+    #como-trabajo .it b .n,
+    #como-trabajo .it > span {
+        animation: none;
+        transition: none;
+    }
+    #como-trabajo .it:hover,
+    #como-trabajo .it:hover b .n {
+        transform: none;
+    }
+}
+/*-------------------------------------------*/
+/*--|animacion_tienes_un_proyecto_en_mente|--*/
+/*-------------------------------------------*/
+#cta-contactame .cta {
+    animation: cta-recuadro .8s cubic-bezier(.2,.8,.3,1.1) 1s backwards;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+#cta-contactame .cta h2 {
+    animation: cta-texto .7s ease-out 1.3s backwards;
+}
+#cta-contactame .cta p {
+    animation: cta-texto .7s ease-out 1.5s backwards;
+}
+#cta-contactame .cta .btn {
+    animation: cta-boton .7s cubic-bezier(.2,.8,.3,1.3) 1.7s backwards;
+    transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+#cta-contactame .cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+}
+#cta-contactame .cta .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,.35);
+    filter: brightness(1.15);
+}
+@keyframes cta-recuadro {
+    from { opacity: 0; transform: translateY(24px) scale(.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes cta-texto {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes cta-boton {
+    from { opacity: 0; transform: translateY(16px) scale(.9); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    #cta-contactame .cta,
+    #cta-contactame .cta h2,
+    #cta-contactame .cta p,
+    #cta-contactame .cta .btn {
+        animation: none;
+        transition: none;
+    }
+    #cta-contactame .cta:hover,
+    #cta-contactame .cta .btn:hover {
+        transform: none;
+    }
+}
+/*--------------------------------*/
+/*--|animacion_proximo_proyecto|--*/
+/*--------------------------------*/
 
 /*-----------------------------*/
 /*--|animacion_pie_de_pagina|--*/
